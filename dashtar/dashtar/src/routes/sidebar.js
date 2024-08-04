@@ -54,7 +54,7 @@ const sidebar = [
   {
     path: "/orders",
     icon: FiCompass,
-    name: "Orders",
+    name: "My Events",
   },
 
   {

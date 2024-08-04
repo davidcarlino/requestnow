@@ -138,7 +138,7 @@ const Header = () => {
   return (
     <>
       <header className="z-30 py-4 bg-white shadow-sm dark:bg-gray-800">
-        <div className="container flex items-center justify-between h-full px-6 mx-auto text-emerald-500 dark:text-emerald-500">
+        <div className="container flex items-center justify-between h-full px-6 mx-auto text-blue-500 dark:text-blue-500">
           <button
             type="button"
             onClick={() => setNavBar(!navBar)}

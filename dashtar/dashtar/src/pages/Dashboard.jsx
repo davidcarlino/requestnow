@@ -382,7 +382,7 @@ const Dashboard = () => {
           </TableFooter>
         </TableContainer>
       ) : (
-        <NotFound title="Sorry, There are no orders right now." />
+        <NotFound title="Sorry, There are no Events right now." />
       )}
     </>
   );
