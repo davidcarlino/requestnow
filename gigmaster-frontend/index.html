@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
 
-    <!-- Page Title -->
+    <!-- Page Title    https://naylahtml.pethemes.com/home-app-landing.html    -->
     <title>GigMaster</title>
-    <!--/ Page Title -->
+    <!--/ Page Title https://naylahtml.pethemes.com/home-app-landing.html   -->
 
     <meta name="author" content="Pe Themes">
     <meta name="description" content="Multi-Concept Creative Portfolio Template">
@@ -23,39 +23,61 @@
     <link href="css/plugins.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
 
-    <!-- Favicons -->
-    <link rel="shortcut icon" href="img/favicon.png">
-    <link rel="apple-touch-icon" href="img/favicon.png">
-    <!--/ Favicons -->
+     <!-- Favicons -->
+     <link rel="shortcut icon" href="img/favicon.png">
+     <link rel="apple-touch-icon" href="img/favicon.png">
+     <!--/ Favicons -->
+
+    <!-- Color Options -->
+    <style id="nayla-body-styles">
+        body.light {
+            --mainColor: #191919 !important;
+            --mainBackground: #fff !important;
+            --secondaryBackground: #191919 !important;
+        }
+
+        body.dark,
+        .light:not(body, .site-footer) {
+            --mainColor: #fff !important;
+            --mainBackground: #191919 !important;
+            --secondaryBackground: #fff !important;
+        }
+
+    </style>
+    <!--/ Color Options -->
+
+
 </head>
 
 <body class="light" data-barba="wrapper">
 
     <!-- Page Loader -->
-    <div class="page-loader columns">
+    <div class="page-loader blocks up">
 
-        <!-- Percentage (Don't Touch) -->
-        <div class="page-loader-percentage"></div>
-        <!-- Percentage (Don't Touch) -->
+        <!-- Caption -->
+        <div class="page-loader-caption light">
+            GIGMASTER™
+        </div>
+        <!-- Caption -->
+
 
     </div>
     <!--/ Page Loader -->
 
     <!-- Page Transitions -->
-    <div class="nayla-page-transition columns up capt-bottom-left">
+    <div class="nayla-page-transition block up bottom-left offset-x">
 
         <!-- Caption -->
-        <div class="page-transition-caption">
-            LOADING PLEASE WAIT..
+        <div class="page-transition-caption light">
+            LOADING, PLEASE WAIT...
         </div>
         <!--/ Caption -->
 
     </div>
-    <!--/ Page Transitions -->
-
+    <!-- Page Transitions -->
 
     <!-- Mouse Cursor -->
-    <div id="mouseCursor" class="dot"> </div>
+    <div id="mouseCursor" class="circle"> </div>
     <!--/ Mouse Cursor -->
 
     <!-- Page -->
@@ -64,12 +86,11 @@
         <div class="menu-overlay"></div>
 
         <!-- Site Header -->
-        <div id="header" class="site-header light dynamic">
+        <div id="header" class="site-header dynamic dark">
 
-            <!-- Header Wrapper -->
-            <div class="header-wrapper wrapper">
+            <div class="header-wrapper wrapper-full">
 
-                <div class="c-col-4 sm-6">
+                <div class="c-col-2 sm-6">
 
                     <!--  Site Branding -->
                     <div class="site-branding">
@@ -97,157 +118,76 @@
 
                 </div>
 
-                <div class="c-col-4 hide-mobile">
+                <div class="c-col-6 sm-6">
 
-                    <!--  Text -->
-                    <div class="text-wrapper hide-sticky align-center">
+                    <!-- Main Navigation -->
+                    <div id="site-navigation" class="classic align-center" data-sub-background="gray">
 
-                        <p>Creativity meets functionality.</p>
+                        <ul class="menu main-menu">
+                            <li><a href="http://localhost/nayla-last/home-digital-agency-gray.html">Home</a></li>
+                            <li><a href="http://localhost/nayla-last/pages/works-digital-gray.html">Works</a></li>
+                            <li><a href="http://localhost/nayla-last/pages/about-digital-gray.html">About</a></li>
+                            <li><a href="http://localhost/nayla-last/pages/services-digital-gray.html">Services</a></li>
 
-                    </div>
-                    <!--/ Text -->
-
-                </div>
-
-                <div class="c-col-4 sm-6 align-right">
-
-                    <!--  Button -->
-                    <div class="nayla-button outline icon-right hide-mobile hide-sticky" data-icon="arrow_outward">
-
-                        <a href="mailto:hello@pethemes.com">REQUEST NOW</a>
+                            <li><a href="http://localhost/nayla-last/pages/contact-digital-gray.html">Contact</a></li>
+                        </ul>
 
                     </div>
+                    <!--/ Main Navigation -->
 
-                    <div class="nayla-button outline icon-right hide-mobile hide-sticky" data-icon="arrow_outward">
-
-                        <a href="mailto:hello@pethemes.com">LOG IN</a>
-
-                    </div>
-                    <!--/ Button -->
-
-                    <!--  Menu Toggle -->
-                    <div class="menu-toggle">
+                    <!--Menu Toggle (For Mobile) -->
+                    <div class="menu-toggle hide-desktop">
 
                         <div class="toggle-lines">
 
                             <div class="toggle-line"></div>
                             <div class="toggle-line"></div>
+
                         </div>
 
+                    </div>
+                    <!--/ Menu Toggle (For Mobile) -->
+
+                </div>
+
+                <div class="c-col-2">
+
+                    <div class="nayla-layout-switcher ls_button">
+
+                        <div>
+                            <div class="nls-hold">
+                                <div>LIGHT</div>
+                                <div>DARK</div>
+                            </div>
+                        </div>
+
+                        <div class="nls-dot"></div>
 
                     </div>
-                    <!--/  Menu Toggle -->
+
+                </div>
+
+                <div class="c-col-2 sm-6 hide-mobile align-right">
+
+
+
+                   <!--  Button -->
+                   <div class="nayla-button outline icon-right hide-mobile hide-sticky" data-icon="arrow_outward">
+
+                    <a href="mailto:hello@pethemes.com">REQUEST NOW</a>
+
+                </div>
+
+                <div class="nayla-button outline icon-right hide-mobile hide-sticky" data-icon="arrow_outward">
+
+                    <a href="mailto:hello@pethemes.com">LOG IN</a>
+
+                </div>
+                <!--/ Button -->
 
                 </div>
 
             </div>
-            <!--/ Header Wrapper -->
-
-            <!-- Fullscreen Menu -->
-            <div id="site-navigation" class="fullscreen_menu fullscreen" data-bg="gray">
-
-                <div class="wrapper fullscreen-menu-wrapper">
-
-                    <div class="c-col-3 hide-mobile self-center">
-
-                        <!-- Menu -->
-                        <ul class="menu" data-animation="linesUp">
-
-                            <li><a href="#.">Documentation</a></li>
-                            <li><a href="#.">Support</a></li>
-                            <li><a href="#.">Purchase</a></li>
-
-                        </ul>
-                        <!--/ Menu -->
-
-                    </div>
-
-                    <div class="c-col-3 hide-mobile self-center">
-
-                        <!-- Menu -->
-                        <ul class="menu" data-animation="linesUp">
-
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Instagram</a></li>
-                            <li><a href="#">Behance</a></li>
-
-                        </ul>
-                        <!--/ Menu -->
-
-                    </div>
-
-                    <div class="c-col-6 sm-12">
-
-                        <!-- Main Menu -->
-                        <ul class="menu main-menu">
-
-                            <li><a href="http://localhost/nayla-last">Home</a></li>
-                            <li><a href="http://localhost/nayla-last/pages/works.html">Projects</a></li>
-                            <li><a href="http://localhost/nayla-last/pages/about-us.html">About</a></li>
-                            <li><a href="http://localhost/nayla-last/pages/services.html">Services</a></li>
-                            <li><a href="http://localhost/nayla-last/pages/team.html">Team</a></li>
-                            <li><a href="http://localhost/nayla-last/home-blog.html">Insights</a></li>
-                            <li><a href="http://localhost/nayla-last/pages/contact.html">Contact</a></li>
-
-                        </ul>
-                        <!--/ Main Menu -->
-
-                    </div>
-
-                    <!-- Empty Column (For Spacing) -->
-                    <div class="c-col-2 hide-mobile"></div>
-                    <!--/ Empty Column (For Spacing) -->
-
-                    <!-- Fullscreen Menu Bottom -->
-                    <div class="fullscreen-menu-wrap-bottom">
-
-                        <div class="c-col-3 hide-mobile has-anim maskDown" data-delay=.2>
-
-                            <!-- Video -->
-                            <div class="nayla-video n-vimeo cursor-play play-lightbox" data-play="WATCH" data-controls="play progress mute fullscreen" data-autoplay=true data-muted=true data-loop=true>
-
-                                <div class="n-video" data-plyr-provider="vimeo" data-plyr-embed-id="852811469"></div>
-
-                            </div>
-                            <!--/ Video -->
-
-                        </div>
-
-                        <!-- Empty Column (For Spacing) -->
-                        <div class="c-col-3 hide-mobile"> </div>
-                        <!--/ Empty Column (For Spacing) -->
-
-                        <div class="c-col-3 sm-12 has-anim fadeDown" data-delay=.4>
-
-                            <!-- Button -->
-                            <div class="nayla-button underline icon-right" data-icon="arrow_forward">
-
-                                <a href="#">hello@pethemes.com</a>
-
-                            </div>
-                            <!--/ Button -->
-
-                        </div>
-
-                        <div class="c-col-3 sm-12 has-anim fadeDown" data-delay=.4>
-
-                            <!-- Button -->
-                            <div class="nayla-button underline icon-right" data-icon="arrow_forward">
-
-                                <a href="#">+44 852 748 45 12</a>
-
-                            </div>
-                            <!--/ Button -->
-
-                        </div>
-
-                    </div>
-                    <!--/ Fullscreen Menu Bottom -->
-
-                </div>
-
-            </div>
-            <!-- Fullscreen Menu -->
 
         </div>
         <!--/ Site Header -->
@@ -258,235 +198,106 @@
             <!-- Page Content -->
             <div id="content" class="page-content">
 
-                <div class="section fullscreen" style="padding-top: 0">
+                <div class="section">
 
-                    <div class="wrapper-full no-gap no-margin">
+                    <div class="wrapper">
 
-                        <div class="c-col-12 no-gap no-margin">
+                        <div class="c-col-12">
 
-                            <!-- Showcase Carousel -->
-                            <div class="showcase-carousel fullscreen animate-colors animate-in light" data-speed="10000">
+                            <div class="text-wrapper align-center">
 
-                                <!-- Showcase Overlay -->
-                                <div class="sfc-overlay"></div>
-                                <!--/ Showcase Overlay -->
+                                <h1 class="has-anim-text charsUp">All In One Platform for Gigsters™ </h1>
 
-                                <!-- Showcase Lines -->
-                                <div class="sc-lines">
-                                    <span class="sc-line"></span>
-                                    <span class="sc-line sc-line-fill"></span>
-                                </div>
-                                <!--/ Showcase Lines -->
-
-                                <!-- Showcase Images -->
-                                <div class="sc-images"></div>
-                                <!--/ Showcase Images -->
-
-                                <!-- Showcase Wrapper -->
-                                <div class="sc-wrapper">
-
-                                    <!-- Projects Wrap -->
-                                    <div class="sc-projects-wrap">
-
-                                        <!-- Showcase Project -->
-                                        <div class="showcase-project" data-primary-color="#15181c">
-
-                                            <!-- Project URL --><a href="projects/project-snaps-app.html">
-
-                                                <!-- Project Title -->
-                                                <div class="project-title">
-                                                    Manage Your Events
-                                                </div>
-                                                <!--/ Project Title -->
-
-                                                <!-- Project Meta -->
-                                                <div class="project-meta">
-
-                                                    <div class="project-categoy">UX/UI Design</div>
-                                                    <div class="project-year">2017</div>
-
-                                                </div>
-                                                <!--/ Project Meta -->
-
-                                                <!-- Project Image -->
-                                                <div class="project-image">
-
-                                                    <!-- Video -->
-                                                    <div class="nayla-video no-interactions n-vimeo" data-controls="false" data-autoplay=true data-muted=true data-loop=true>
-
-                                                        <div class="n-video" data-plyr-provider="vimeo" data-plyr-embed-id="852807981"></div>
-
-                                                    </div>
-                                                    <!--/ Video -->
-
-
-                                                </div>
-                                                <!--/ Project Image -->
-
-                                            </a>
-
-                                        </div>
-                                        <!--/ Showcase Project -->
-
-                                        <!-- Showcase Project -->
-                                        <div class="showcase-project" data-primary-color="#000000">
-
-                                            <!-- Project URL --><a href="projects/project-primo.html">
-
-                                                <!-- Project Title -->
-                                                <div class="project-title">
-                                                    QR Requests
-                                                </div>
-                                                <!--/ Project Title -->
-
-                                                <!-- Project Meta -->
-                                                <div class="project-meta">
-
-                                                    <div class="project-categoy">Photography</div>
-                                                    <div class="project-year">2022</div>
-
-                                                </div>
-                                                <!--/ Project Meta -->
-
-                                                <!-- Project Image -->
-                                                <div class="project-image">
-
-                                                    <img alt="Project Image" src="img/projects/mockup1.png">
-
-                                                </div>
-                                                <!--/ Project Image -->
-
-                                            </a>
-
-                                        </div>
-                                        <!--/ Showcase Project -->
-
-                                        <!-- Showcase Project -->
-                                        <div class="showcase-project" data-primary-color="#D4CABD" data-secondary-color="#2B241D">
-
-                                            <!-- Project URL --><a href="projects/project-lifes-stories.html">
-
-                                                <!-- Project Title -->
-                                                <div class="project-title">
-                                                   Manage Invoices
-                                                </div>
-                                                <!--/ Project Title -->
-
-                                                <!-- Project Meta -->
-                                                <div class="project-meta">
-
-                                                    <div class="project-categoy">Photography</div>
-                                                    <div class="project-year">2017</div>
-
-                                                </div>
-                                                <!--/ Project Meta -->
-
-                                                <!-- Project Image -->
-                                                <div class="project-image">
-
-                                                    <img alt="Project Image" src="img/projects/slide3.png">
-
-                                                </div>
-                                                <!--/ Project Image -->
-
-                                            </a>
-                                        </div>
-                                        <!--/ Showcase Project -->
-
-                                        <!-- Showcase Project -->
-                                        <div class="showcase-project" data-primary-color="#ebebeb">
-
-                                            <!-- Project URL --><a href="projects/project-nyc-street-life.html">
-
-                                                <!-- Project Title -->
-                                                <div class="project-title">
-                                                    No Hidden Fees
-                                                </div>
-                                                <!--/ Project Title -->
-
-                                                <!-- Project Meta -->
-                                                <div class="project-meta">
-
-                                                    <div class="project-categoy">Photography</div>
-                                                    <div class="project-year">2020</div>
-
-                                                </div>
-                                                <!--/ Project Meta -->
-
-                                                <!-- Project Image -->
-                                                <div class="project-image">
-
-                                                    <img alt="Project Image" src="img/projects/slide4.png">
-
-                                                </div>
-                                                <!--/ Project Image -->
-
-                                            </a>
-
-                                        </div>
-                                        <!--/ Showcase Project -->
-
-                                       
-
-                                    </div>
-                                    <!--/ Projects Wrap -->
-
-                                </div>
-                                <!--/ Showcase Wrapper -->
-
-                                <!-- Showcase Footer -->
-                                <div class="showcase-footer wrapper no-gap">
-
-                                    <!-- Showcase Footer Left -->
-                                    <div class="showcase-footer-left c-col-4 sm-6 no-gap no-margin">
-
-                                        <!-- Fraction (Don't Edit) -->
-                                        <div class="slides-fraction">
-                                            <div class="slide-current text-h6"></div>
-                                            <span class="fraction-line"></span>
-                                            <div class="slide-total text-h6"></div>
-
-                                        </div>
-                                        <!--/ Fraction (Don't Edit) -->
-
-                                    </div>
-                                    <!--/ Showcase Footer Left -->
-
-                                    <div class="showcase-footer-center c-col-4 sm-6">
-
-                                        <div class="text-wrapper align-center hide-mobile">
-
-                                            <p>(SCROLL)</p>
-
-                                        </div>
-
-                                        <div class="text-wrapper align-right hide-desktop">
-
-                                            <p>(DRAG)</p>
-
-                                        </div>
-
-                                    </div>
-
-                                    <!-- Showcase Footer Right -->
-                                    <div class="showcase-footer-right c-col-4 no-margin align-right hide-mobile">
-
-                                        <!-- Button -->
-                                        <div class="nayla-button underline icon-right" data-icon="arrow_outward">
-
-                                            <a href="http://localhost/nayla-last/pages/works.html">All Projects</a>
-
-                                        </div>
-                                        <!--/ Button -->
-
-                                    </div>
-                                    <!--/ Showcase Footer Right -->
-
-                                </div>
-                                <!--/ Showcase Footer -->
 
                             </div>
-                            <!--/ Showcase Carousel -->
+
+                            <div class="text-wrapper align-center" style="--width: 75%;--mobileWidth: 100%">
+
+                                <p class="text-h4 has-anim-text wordsUp">Manage your Services, Clients, Invoices, Song Requests live with no need for multiple services. Built with the need to help every Gigsters out there that are needing to complete jobs ASAP.  </p>
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="wrapper-small">
+
+                        <div class="c-col-6 sm-12 has-anim slideUp ">
+
+                            <div class="single-image has-parallax" data-parallax-speed=40>
+
+                                <img src="img\projects\slide3.png">
+
+                            </div>
+
+                        </div>
+
+                        <div class="c-col-6 sm-12 has-anim slideUp">
+
+                            <span class="empty-space" style="height: 100px"></span>
+
+                            <div class="single-image has-parallax" data-parallax-direction="down" data-parallax-speed=35>
+
+                                <img src="img\projects\mockup1.png">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="wrapper-small">
+
+                        <div class="c-col-8 sm-12 col-center">
+
+                            <div class="text-wrapper">
+
+                                <p class="text-h5">Are you ready to revolutionize the way you manage your business?</p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div id="animPin" class="section fullscreen">
+
+                    <div class="section-background">
+
+                        <!-- Video -->
+                        <div class="nayla-video no-interactions" data-controls="false">
+
+                            <video autoplay playsinline muted loop style="height: 100vh" class="n-video">
+                                <source src="https://www.gigmaster.co/img/home/vid1.mp4">
+                            </video>
+
+                        </div>
+                        <!--/ Video -->
+
+                    </div>
+
+                    <div class="wrapper">
+
+                        <div class="c-col-8 sm-12 col-center self-center">
+
+
+                            <div class="text-wrapper align-center " data-pin=true data-scrub=true>
+
+
+                                <p class="text-h2 wordsUp has-anim-text fade" data-pin=true data-trigger="#animPin" style="color: #fff">
+
+                                    GigMaster is designed to unleash the full potential of your clients and events. It brings a seamless and intuitive interface to manage clients and services at every interaction.
+
+                                </p>
+
+                            </div>
 
                         </div>
 
@@ -496,956 +307,425 @@
 
                 <div class="section">
 
-                    <div class="wrapper">
-
-                        <div class="c-col-3 hide-mobile">
-
-                            <!-- Nayla Circular Text -->
-                            <div class="nayla-circular-text counter-clockwise" data-height="230" data-duration=12 data-target="max" data-seperator="circle" style="--fontSize: 20px">
-
-                                <!-- Circle Text -->
-                                <h3 class="circle-text">
-                                    CREATIVITY MEETS FUNCTIONALITY
-                                </h3>
-                                <!--/Circle Text -->
-
-                            </div>
-                            <!--/Nayla Circular Text -->
-
-                        </div>
-
-                        <div class="c-col-8 sm-12">
-
-                            <!-- Text -->
-                            <div class="text-wrapper">
-
-                                <h4 class="has-anim-text linesUp">Whether you're hosting a party, organizing a wedding, or setting up a corporate event, Gigmaster connects you with talented DJs and live performers who can bring your vision to life. Our intuitive website allows you to easily request songs in real-time, ensuring that your event's playlist is perfectly tailored to your taste. 
-                                </h4>
-
-                            </div>
-                            <!--/ Text -->
-
-                            <!-- Text -->
-                            <div class="text-wrapper" style="width: 70%">
-
-                                <p class="text-h6">With robust event management tools, you can effortlessly coordinate every detail, making sure your event runs smoothly from start to finish. At Gigmaster, we turn every gathering into a memorable experience.</p>
-
-                            </div>
-                            <!--/ Text -->
-
-                            <!-- Empty Space -->
-                            <span class="empty-space" style="height: 50px"></span>
-                            <!--/ Empty Space -->
-
-                            <!-- Button -->
-                            <div class="nayla-button underline">
-
-                                <a href="http://localhost/nayla-last/pages/about-us.html">About Us</a>
-
-                            </div>
-                            <!--/ Button -->
-
-                        </div>
-
-                    </div>
-
-                    <div class="wrapper">
+                    <div class="wrapper-small">
 
                         <div class="c-col-12">
 
-                            <!-- Marquee -->
-                            <div class="nayla-marquee right-to-left" data-duration="10" data-seperator="remove">
-
-                                <p class="text-h2">QR Code To Request Songs – Manage Gigs – Create & Manage Invoices – Onboard Event Clients – All In One Console – Australia Based – 24/7 Support</p>
-
-                            </div>
-                            <!--/ Marquee -->
-
-                            <!-- Empty Space -->
-                            <span class="empty-space hide-mobile" style="height: 35px"></span>
-                            <!--/ Empty Space -->
-
-                            <!-- Marquee -->
-                            <div class="nayla-marquee left-to-right" data-duration="10" data-seperator="remove">
-
-                                <p class="text-h2">QR Code To Request Songs – Manage Gigs – Create & Manage Invoices – Onboard Event Clients – All In One Console – Australia Based – 24/7 Support</p>
-
-                            </div>
-                            <!--/ Marquee -->
-
-                        </div>
-
-                    </div>
-
-                    <div class="wrapper">
-
-                        <div class="c-col-3 sm-12">
-
-                            <!-- Single Image -->
-                            <div class="single-image">
-
-                                <img alt="Single Image" src="img/projects/sidedashboard.png">
-
-                            </div>
-                            <!--/ Single Image -->
-
-                            <!-- Empty Space -->
-                            <span class="empty-space hide-mobile" style="height: 35px"></span>
-                            <!--/  -->
-                            <!-- Text -->
                             <div class="text-wrapper">
 
-                                <p>Together, we will challenge conventions,
-                                    break barriers, and redefine what is
-                                    possible.</p>
+                                 
+
+                                <p class="md-title has-anim-text charsUp">Smart Organization</p>
 
                             </div>
-                            <!--/ Text -->
-
-                            <!-- Empty Space -->
-                            <span class="empty-space hide-mobile" style="height: 35px"></span>
-                            <!--/ Empty Sapce -->
-
-                            <!-- Button -->
-                            <div class="nayla-button underline">
-
-                                <a href="#">Our Services</a>
-
-                            </div>
-                            <!--/ Button -->
 
                         </div>
 
-                        <!-- Empty Column (For Spacing) -->
-                        <div class="c-col-3 hide-mobile"></div>
-                        <!--/ Empty Column (For Spacing) -->
+                        <div class="c-col-6 hide-mobile"></div>
 
                         <div class="c-col-6 sm-12">
 
-                            <!-- Accordion Small -->
-                            <div class="nayla-accordion" data-toggle-icon="fiber_manual_record">
+                            <div class="text-wrapper">
 
-                                <ul class="accordion-wrap">
+                                <p class="text-h5 has-anim-text wordsUp">
 
-                                    <!-- Accordion Item -->
-                                    <li class="accordion-item">
+                                    Tired of scrolling through a cluttered app drawer? AppXcel's smart organization feature categorizes your apps intelligently, making it a breeze to find what you need, precisely when you need it.
 
-                                        <!-- Title -->
-                                        <div class="accordion-title text-h6">Responsive Web Design</div>
-                                        <!--/ Title -->
 
-                                        <!-- Content -->
-                                        <div class="accordion-content">
-
-                                            <p class="text-h6">Our web design and development services focus on creating custom, responsive websites that are both visually stunning and user-friendly. From the initial wireframe to the final launch, we collaborate with clients to ensure their website reflects their brand and business needs.</p>
-
-                                        </div>
-                                        <!--/ Content -->
-
-                                    </li>
-                                    <!--/ Accordion Item -->
-
-                                    <!-- Accordion Item -->
-                                    <li class="accordion-item">
-
-                                        <!-- Title -->
-                                        <div class="accordion-title text-h6">Brand Guidelines Development</div>
-                                        <!--/ Title -->
-
-                                        <!-- Content -->
-                                        <div class="accordion-content">
-
-                                            <p class="text-h6">At our agency, we understand that building a strong brand identity is key to achieving success in today's competitive market. That's why we offer a comprehensive brand strategy service that helps businesses establish a strong foundation for their brand. We start by conducting thorough research to understand your target audience, competition, and industry trends.</p>
-
-                                        </div>
-                                        <!--/ Content -->
-
-                                    </li>
-                                    <!--/ Accordion Item -->
-
-                                    <!-- Accordion Item -->
-                                    <li class="accordion-item">
-
-                                        <!-- Title -->
-                                        <div class="accordion-title text-h6">Visual Identity Design </div>
-                                        <!--/ Title -->
-
-                                        <!-- Content -->
-                                        <div class="accordion-content">
-
-                                            <p class="text-h6">Then, we work closely with you to develop a brand positioning statement, messaging platform, and visual identity that sets you apart from the competition. From logo design to brand guidelines, we ensure every touchpoint communicates the right message to your audience, creating a lasting impression and building trust in your brand. With over 10+ years of experience in brand strategy and identity design, we have helped numerous businesses achieve their branding goals and stand out in their respective industries.</p>
-
-                                        </div>
-                                        <!--/ Content -->
-
-                                    </li>
-                                    <!--/ Accordion Item -->
-
-                                    <!-- Accordion Item -->
-                                    <li class='accordion-item'>
-
-                                        <!-- Title -->
-                                        <div class="accordion-title text-h6">CMS Integration & Customization</div>
-                                        <!--/ Title -->
-
-                                        <!-- Content -->
-                                        <div class="accordion-content">
-
-                                            <p class="text-h6">Our content marketing services focus on creating high-quality, engaging content that resonates with your target audience. From blog posts to social media content, we help businesses establish themselves as thought leaders in their industry and build strong relationships with their target audience.</p>
-
-                                        </div>
-                                        <!--/ Content -->
-
-                                    </li>
-                                    <!--/ Accordion Item -->
-
-                                    <!-- Accordion Item -->
-                                    <li class='accordion-item'>
-
-                                        <!-- Title -->
-                                        <div class="accordion-title text-h6">E-commerce Website Development</div>
-                                        <!--/ Title -->
-
-                                        <!-- Content -->
-                                        <div class="accordion-content">
-
-                                            <p class="text-h6">We help businesses build and maintain strong relationships with their customers through comprehensive email marketing strategies. From email list building to automated campaigns, we help businesses deliver targeted messages that drive engagement and conversions.</p>
-
-                                        </div>
-                                        <!--/ Content -->
-
-                                    </li>
-                                    <!--/ Accordion Item -->
-
-                                    <!-- Accordion Item -->
-                                    <li class='accordion-item'>
-
-                                        <!-- Title -->
-                                        <div class="accordion-title text-h6">Social Media Content Creation</div>
-                                        <!--/ Title -->
-
-                                        <!-- Content -->
-                                        <div class="accordion-content">
-
-                                            <p class="text-h6">Our social media marketing services help businesses build and maintain a strong online presence by developing a comprehensive social media strategy that aligns with their business goals. From content creation to community management, we help brands engage with their target audience on social media.</p>
-
-                                        </div>
-                                        <!--/ Content -->
-
-                                    </li>
-                                    <!--/ Accordion Item -->
-
-                                    <!-- Accordion Item -->
-                                    <li class='accordion-item'>
-
-                                        <!-- Title -->
-                                        <div class="accordion-title text-h6">Video Production & Editing</div>
-                                        <!--/ Title -->
-
-                                        <!-- Content -->
-                                        <div class="accordion-content">
-
-                                            <p class="text-h6">ur photography and video production services help businesses create visually stunning content that tells their brand story. From product photography to brand videos, we help businesses establish a strong visual identity that resonates with their target audience.</p>
-
-                                        </div>
-                                        <!--/ Content -->
-
-                                    </li>
-                                    <!--/ Accordion Item -->
-
-                                    <!-- Accordion Item -->
-                                    <li class='accordion-item'>
-
-                                        <!-- Title -->
-                                        <div class="accordion-title text-h6">User Research & Testing</div>
-                                        <!--/ Title -->
-
-                                        <!-- Content -->
-                                        <div class="accordion-content">
-
-                                            <p class="text-h6">We help businesses build and maintain strong relationships with their customers through comprehensive email marketing strategies. From email list building to automated campaigns, we help businesses deliver targeted messages that drive engagement and conversions.</p>
-
-                                        </div>
-                                        <!--/ Content -->
-
-                                    </li>
-                                    <!--/ Accordion Item -->
-
-                                    <!-- Accordion Item -->
-                                    <li class='accordion-item'>
-
-                                        <!-- Title -->
-                                        <div class="accordion-title text-h6">App Store Optimization</div>
-                                        <!--/ Title -->
-
-                                        <!-- Content -->
-                                        <div class="accordion-content">
-
-                                            <p class="text-h6">We develop and implement comprehensive PPC advertising strategies that help businesses drive targeted traffic to their website and increase conversions. From keyword research to ad copy development, we help businesses achieve their advertising goals while staying within budget.</p>
-
-                                        </div>
-                                        <!--/ Content -->
-
-                                    </li>
-                                    <!--/ Accordion Item -->
-
-                                </ul>
+                                </p>
 
                             </div>
-                            <!-- Accordion Small -->
 
                         </div>
+
+
 
                     </div>
 
                     <div class="wrapper">
 
-                        <div class="c-col-12">
+                        <div class="c-col-2 sm-12">
 
-                            <!-- Single Image -->
+                            <div class="text-wrapper has-anim fadeUp">
+
+                                <p>AppXcel's innovative split-screen functionality allows you to multitask effortlessly, saving you time and making you more productive.</p>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="c-col-8 sm-12">
+
+                            <div class="single-image">
+
+                                <img src="img/app_3.png">
+
+                            </div>
+
+                        </div>
+
+                        <div class="c-col-2 sm-12 align-bottom">
+
+                            <div class="text-wrapper has-anim fadeUp">
+
+                                <p>AppXcel analyzes your app usage patterns and provides personalized recommendations, ensuring you never miss out on hidden gems.</p>
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="c-col-8 sm-12 col-center sm-12">
+
+                            <span class="empty-space" style="height: 100px"></span>
+
+                            <div class="text-wrapper align-center">
+
+                                <p class="text-h4 has-anim-text wordsUp">Your privacy is our top priority. AppXcel employs state-of-the-art security measures to safeguard your data, ensuring you have peace of mind while enjoying the full capabilities of the app.</p>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div class="section">
+
+                    <div class="wrapper">
+
+                        <div class="c-col-8 sm-12">
+
                             <div class="single-image parallax-image">
 
-                                <!--<img alt="Single Image" src="img/office_3_hor.jpg"> -->
-
-                            </div>
-                            <!--/ Single Image -->
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="section light anim-bg" style="background: #191919">
-
-                    <div class="wrapper">
-
-                        <div class="c-col-12">
-
-                            <!-- Nayla Infinite Tabs -->
-                            <div class="nayla-infinite-tabs" data-duration='0.5'>
-
-                                <!-- Tab Titles Wrap -->
-                                <ul class="tab-title-wrap">
-                                    <li class="tab-title md-title active">
-                                        Approach
-                                    </li>
-                                    <li class="tab-title md-title">
-                                        Focus
-                                    </li>
-                                    <li class="tab-title md-title">
-                                        Component
-                                    </li>
-                                    <li class="tab-title md-title">
-                                        Mission
-                                    </li>
-                                    <li class="tab-title md-title">
-                                        Success
-                                    </li>
-                                </ul>
-                                <!--/Tab Titles Wrap -->
-
-                                <!-- Tab Contents Wrap -->
-                                <div class="tab-contents-wrap">
-
-                                    <!-- Tab Content -->
-                                    <div class="tab-content active">
-
-                                        <div class="c-col-2 sm-12">
-
-                                            <!-- Text -->
-                                            <div class="text-wrapper">
-
-                                                <h6>Unleashing Creativity, Empowering Success</h6>
-
-                                            </div>
-                                            <!--/Text -->
-
-                                        </div>
-
-                                        <!-- Empty Column (For Spacing) -->
-                                        <div class="c-col-1 hide-mobile"></div>
-                                        <!--/Empty Column (For Spacing) -->
-
-                                        <div class="c-col-2 sm-12">
-
-                                            <!-- Single Image -->
-                                            <div class="single-image">
-
-                                                <img alt="Single Image" src="https://rubenwyttenbach.ch/wp-content/uploads/RWY7098-1-823x960.jpg">
-
-                                            </div>
-                                            <!--/Single Image -->
-
-                                        </div>
-
-                                        <!-- Empty Column (For Spacing) -->
-                                        <div class="c-col-1 hide-mobile"></div>
-                                        <!--/Empty Column (For Spacing) -->
-
-                                        <div class="c-col-6 sm-12">
-
-                                            <!-- Text Wrapper -->
-                                            <div class="text-wrapper">
-
-                                                <p class="text-h6">Collaboration lies at the heart of our process. We believe in forging strong partnerships with our clients, working closely with them to truly understand their vision, goals, and aspirations. By immersing ourselves in their brand, industry, and target audience, we uncover insights that fuel our creative solutions.</p>
-
-                                                <p class="text-h6">Our team of talented and diverse professionals brings a wealth of expertise across various creative disciplines. From designers to strategists, writers to technologists, we foster a collaborative environment that encourages cross-pollination of ideas and perspectives. This collective synergy allows us to push boundaries and create truly exceptional work.</p>
-
-                                            </div>
-                                            <!--/Text Wrapper -->
-
-                                            <!-- Empty Space -->
-                                            <span class="empty-space hide-mobile" style="height: 35px"></span>
-                                            <!--/Empty Space -->
-
-                                            <!-- Nayla List -->
-                                            <div class="nayla-list text-h6">
-
-                                                <ul>
-                                                    <li>Custom website design</li>
-                                                    <li>E-commerce website development</li>
-                                                    <li>Responsive web design</li>
-                                                    <li>CMS integration and customization</li>
-                                                    <li>Website maintenance and support</li>
-                                                </ul>
-
-                                            </div>
-                                            <!--/Nayla List -->
-
-                                        </div>
-
-                                    </div>
-                                    <!--/Tab Content -->
-
-                                    <!-- Tab Content -->
-                                    <div class="tab-content">
-
-                                        <div class="c-col-3 sm-12">
-
-                                            <!-- Text -->
-                                            <div class="text-wrapper">
-
-                                                <p>We’re a motion design &
-                                                    <br>animation studio.
-                                                </p>
-
-                                            </div>
-                                            <!--/Text -->
-
-                                        </div>
-
-                                        <div class="c-col-3 sm-12">
-
-                                            <!-- Nayla Icon -->
-                                            <div class="nayla-icon" style="--fontSize: 50px">
-
-                                                <span class="material-icons">
-                                                    draw
-                                                </span>
-
-                                            </div>
-                                            <!--/Nayla Icon -->
-
-                                            <!-- Text -->
-                                            <div class="text-wrapper" style="width: 90%">
-
-                                                <p>From designers to strategists, writers to technologists, we foster a collaborative environment that encourages cross-pollination of ideas and perspectives. This collective synergy allows us to push boundaries and create truly exceptional work.
-                                                </p>
-
-                                            </div>
-
-                                            <!-- Empty Space -->
-                                            <span class="empty-space hide-mobile" style="height: 50px"></span>
-                                            <!--/Empty Space -->
-
-                                            <!-- Nayla Icon -->
-                                            <div class="nayla-icon" style="--fontSize: 50px">
-
-                                                <span class="material-icons">
-                                                    video_stable
-                                                </span>
-
-                                            </div>
-                                            <!--/Nayla Icon -->
-
-                                            <!-- Text -->
-                                            <div class="text-wrapper" style="width: 90%">
-
-                                                <p>We believe in thinking beyond the conventional, embracing bold ideas, and challenging the status quo. Our creative process is fueled by curiosity, experiment, and a relentless pursuit of innovation. We strive to create impactful and memorable experiences that resonate with audiences and drive tangible results.</p>
-
-                                            </div>
-                                            <!--/Text -->
-
-                                        </div>
-
-                                        <div class="c-col-3 sm-12">
-
-                                            <!-- Nayla Icon -->
-                                            <div class="nayla-icon" style="--fontSize: 50px">
-
-                                                <span class="material-icons">
-                                                    sports_basketball
-                                                </span>
-                                            </div>
-                                            <!--/Nayla Icon -->
-
-                                            <!-- Text -->
-                                            <div class="text-wrapper" style="width: 90%">
-
-                                                <p>Craftsmanship and attention to detail define our work. We believe in the power of meticulous execution, ensuring that every aspect of our creative output is meticulously crafted to perfection. From the smallest design element to the most complex campaign strategy, we leave no stone unturned in delivering excellence.</p>
-
-                                            </div>
-                                            <!--/Text -->
-
-                                        </div>
-
-                                        <div class="c-col-3 align-center">
-
-                                            <!-- Nayla Button -->
-                                            <div class="nayla-button has-anim maskUp">
-
-                                                <a href="#" class="outline" data-hover="all">
-                                                    Previligies
-                                                </a>
-
-                                            </div>
-                                            <!--/Nayla Button -->
-
-                                        </div>
-
-                                    </div>
-                                    <!--/Tab Content -->
-
-                                    <!-- Tab Content -->
-                                    <div class="tab-content">
-
-                                        <!-- Empty column (For Spacing) -->
-                                        <div class="c-col-4"></div>
-                                        <!--/Empty Column (For Spacing) -->
-
-                                        <div class="c-col-8 sm-12">
-
-                                            <!-- Text -->
-                                            <div class="text-wrapper">
-
-                                                <p class="text-h5">We believe in the strength of collaboration. We work closely with our clients, viewing them as true partners in the creative process. By immersing ourselves in their brand story, values, and objectives, we gain deep insights that enable us to craft tailored solutions that resonate with their target audience.
-                                                    <br>
-                                                    <br>Our team consists of talented individuals with diverse backgrounds and expertise. From imaginative designers to perceptive strategists, our collective knowledge fuels a multidimensional creative approach. By leveraging the strengths of each team member, we deliver holistic and cohesive solutions that seamlessly integrate creativity, strategy, and innovation.
-                                                </p>
-
-                                            </div>
-                                            <!--/Text -->
-
-                                            <!-- Empty Space -->
-                                            <span class="empty-space hide-mobile" style="height: 75px"></span>
-                                            <!--/Empty Space -->
-
-                                            <!-- Nayla Button -->
-                                            <div class="nayla-button has-anim maskUp">
-
-                                                <a href="#" class="outline" data-hover="all">
-                                                    View our profile
-                                                </a>
-
-                                            </div>
-                                            <!--/Nayla Button -->
-
-                                        </div>
-
-                                    </div>
-                                    <!--/Tab Content -->
-
-                                    <!-- Tab Content -->
-                                    <div class="tab-content">
-
-                                        <div class="c-col-4 sm-12">
-
-                                            <!-- Single Image -->
-                                            <div class="single-image">
-
-                                                <img alt="Single Image" src="../img/agency_vertical.jpg">
-
-                                            </div>
-                                            <!--/Single Image -->
-
-                                        </div>
-
-                                        <!-- Empty Column (For Spacing) -->
-                                        <div class="c-col-2 hide-mobile"></div>
-                                        <!--/Empty Column (For Spacing) -->
-
-                                        <div class="c-col-6 sm-12">
-
-                                            <!-- Text -->
-                                            <div class="text-wrapper">
-
-                                                <p class="text-h6">Creativity is the lifeblood of our agency. We thrive on pushing boundaries, exploring new frontiers, and thinking beyond conventions. Our creative process is driven by curiosity, a relentless pursuit of originality, and an unwavering commitment to excellence. We embrace experimentation and encourage our team to challenge the norms, enabling us to consistently deliver groundbreaking work.</p>
-
-                                            </div>
-                                            <!--/Text -->
-
-                                            <!-- Empty Space -->
-                                            <span class="empty-space hide-mobile" style="height: 35px"></span>
-                                            <!--/Empty Space -->
-
-                                            <!-- Nayla List -->
-                                            <div class="nayla-list underlined text-h6">
-
-                                                <ul>
-                                                    <li>User research and testing</li>
-                                                    <li>Information architecture design</li>
-                                                    <li>Wireframing and prototyping</li>
-                                                    <li>Interface design</li>
-                                                    <li>Usability consulting</li>
-                                                    <li>Copywriting and content creation</li>
-                                                </ul>
-
-                                            </div>
-                                            <!--/Nayla List -->
-
-                                        </div>
-
-                                    </div>
-                                    <!--/Tab Content -->
-
-                                    <!-- Tab Content -->
-                                    <div class="tab-content">
-
-                                        <!-- Empty Column (For Spacing) -->
-                                        <div class="c-col-4 hide-mobile"></div>
-                                        <!--/Empty Column (For Spacing) -->
-
-                                        <div class="c-col-8 sm-12">
-
-                                            <!-- Nayla Services -->
-                                            <div class="nayla-services ordered">
-
-                                                <!-- Service -->
-                                                <div class="nayla-service">
-
-                                                    <!-- Service Title -->
-                                                    <div class="service-title-wrap">
-
-                                                        <h5 class="has-anim-text charsUp">Web Design <br>& Development</h5>
-
-                                                    </div>
-                                                    <!--/Service Title -->
-
-                                                    <!-- Service Content -->
-                                                    <div class="service-content-wrap">
-
-                                                        <!-- Text -->
-                                                        <div class="text-wrapper">
-
-                                                            <p class="text-h6">Our web design and development services focus on creating custom, responsive websites that are both visually stunning and user-friendly.</p>
-
-                                                        </div>
-                                                        <!--/Text -->
-
-                                                    </div>
-                                                    <!--/Service Content -->
-
-                                                </div>
-                                                <!--/Service -->
-
-                                                <!-- Service -->
-                                                <div class="nayla-service">
-
-                                                    <!-- Service Title -->
-                                                    <div class="service-title-wrap">
-
-                                                        <h5 class="has-anim-text charsUp">Brand Strategy <br>& Identity</h5>
-
-                                                    </div>
-                                                    <!--/Service Title -->
-
-                                                    <!-- Service Content -->
-                                                    <div class="service-content-wrap">
-
-                                                        <!-- Text -->
-                                                        <div class="text-wrapper">
-
-                                                            <p class="text-h6">
-                                                                At our agency, we understand that building a strong brand identity is key to achieving success in today's competitive market.
-                                                            </p>
-
-                                                        </div>
-                                                        <!--/Text -->
-
-                                                    </div>
-                                                    <!--/Service Content -->
-
-                                                </div>
-                                                <!--/Service -->
-
-                                                <!-- Service -->
-                                                <div class="nayla-service">
-
-                                                    <!-- Service Title -->
-                                                    <div class="service-title-wrap">
-
-                                                        <h5 class="has-anim-text charsUp">UI/UX Design</h5>
-
-                                                    </div>
-                                                    <!--/Service Title -->
-
-                                                    <!-- Service Content -->
-                                                    <div class="service-content-wrap">
-
-                                                        <!-- Text -->
-                                                        <div class="text-wrapper">
-
-                                                            <p class="text-h6">We specialize in designing intuitive and engaging user experiences that prioritize usability and functionality. Our user interface design.</p>
-
-                                                        </div>
-                                                        <!--/Text -->
-
-                                                    </div>
-                                                    <!--/Service Content -->
-
-                                                </div>
-                                                <!--/Service -->
-
-                                                <!-- Service -->
-                                                <div class="nayla-service">
-
-                                                    <!-- Service Title -->
-                                                    <div class="service-title-wrap">
-
-                                                        <h5 class="has-anim-text charsUp">Social Media <br>Marketing</h5>
-
-                                                    </div>
-                                                    <!--/Service Title -->
-
-                                                    <!-- Service Content -->
-                                                    <div class="service-content-wrap">
-
-                                                        <!-- Text -->
-                                                        <div class="text-wrapper">
-
-                                                            <p class="text-h6">Our social media marketing services help businesses build and maintain a strong online presence by developing a comprehensive.</p>
-
-                                                        </div>
-                                                        <!--/Text -->
-
-                                                    </div>
-                                                    <!--/Service Content -->
-
-                                                </div>
-                                                <!--/Service -->
-
-                                            </div>
-                                            <!--/Nayla Services -->
-
-                                        </div>
-
-                                    </div>
-                                    <!--/Tab Content -->
-
-                                </div>
-                                <!--/Tab Contents Wrap -->
-
-                            </div>
-                            <!--/Nayla Infinite Tabs -->
-
-                        </div>
-
-                    </div>
-
-                    <div class="wrapper">
-
-                        <!-- Nayla Awards -->
-                        <div class="nayla-awards">
-
-                            <!-- Awards Detect -->
-                            <div class="nayla-awards-head detect-pov">
-
-                                <div class="nah-col wordsUp">PROJECT</div>
-                                <div class="nah-col wordsUp">HONORS</div>
-                                <div class="nah-col wordsUp">YEAR</div>
-
-                            </div>
-                            <!--/ Awards Detect -->
-
-                            <div class="nayla-awards-list-wrap">
-
-                                <!-- Awards List -->
-                                <ul class="nayla-awards-list animate" data-animation="wordsUp" style="text-transform: uppercase">
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-                                            <span class="awards-col">Pastel Ladies</span>
-                                            <span class="awards-col">Featured Branding Awards</span>
-                                            <span class="awards-col">2019</span>
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-
-                                            <span class="awards-col">UXUnleashed</span>
-                                            <span class="awards-col">Site of the day.</span>
-                                            <span class="awards-col">2022</span>
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-                                            <span class="awards-col">Vibrant Horizons</span>
-                                            <span class="awards-col">Photo of the year.</span>
-                                            <span class="awards-col">2022</span>
-
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-
-                                            <span class="awards-col">Spirits of #Illusion</span>
-                                            <span class="awards-col">Studio of the Month</span>
-                                            <span class="awards-col">2018</span>
-
-
-
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-                                            <span class="awards-col">Taller Alvarado</span>
-                                            <span class="awards-col">Design of the Year.</span>
-                                            <span class="awards-col">2023</span>
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-
-                                            <span class="awards-col">Snaps App</span>
-                                            <span class="awards-col">User Interface Awards</span>
-                                            <span class="awards-col">2021</span>
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-                                            <span class="awards-col">Style Scape</span>
-                                            <span class="awards-col">Site of the Month</span>
-                                            <span class="awards-col">2020</span>
-
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-
-                                            <span class="awards-col">Archotexture</span>
-                                            <span class="awards-col">Architectural photo awards</span>
-                                            <span class="awards-col">2018</span>
-
-
-
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-                                            <span class="awards-col">Beach Brown</span>
-                                            <span class="awards-col">Agency of the Year.</span>
-                                            <span class="awards-col">2020</span>
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-
-                                            <span class="awards-col">En – Vogue</span>
-                                            <span class="awards-col">Editorial photography awards</span>
-                                            <span class="awards-col">2016</span>
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-                                            <span class="awards-col">Immersive Realities</span>
-                                            <span class="awards-col">Design of the Month</span>
-                                            <span class="awards-col">2020</span>
-
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                    <!-- Awards Item -->
-                                    <li><a href="#">
-
-                                            <span class="awards-col">Los Coyotes</span>
-                                            <span class="awards-col">Design of the year</span>
-                                            <span class="awards-col">2019</span>
-
-                                        </a>
-                                    </li>
-                                    <!--/ Awards Item -->
-
-                                </ul>
-                                <!--/ Awards List -->
+                                <img src="img/app_7.jpg">
 
                             </div>
 
                         </div>
-                        <!--/ Nayla Awards -->
-
-                    </div>
-
-                </div>
-
-                <div class="section" style="padding-top: 0">
-
-                    <div class="wrapper">
 
                         <div class="c-col-4 sm-12">
 
-                            <!-- Nayla Heading -->
-                            <div class="nayla-heading icon-left icon-fill" data-icon="fiber_manual_record">
+                            <div class="single-image">
 
-                                <p>Talented people</p>
+                                <img src="img/app_8.jpg">
 
                             </div>
-                            <!--/ Nayla Heading -->
 
-                        </div>
-
-                        <div class="c-col-8 sm-12 col-center">
-
-                            <!-- Text -->
                             <div class="text-wrapper">
 
-                                <p class="text-h3">Partner with us and experience the transformative power of our solutions as we collaborate to unlock new opportunities.</p>
+                                <p class="text-h6">AppXcel seamlessly integrates with your existing apps, ensuring a smooth and uninterrupted transition into this new and enhanced app experience.</p>
 
                             </div>
-                            <!--/ Text -->
 
-                            <!-- Text -->
-                            <div class="text-wrapper" style="--width: 60%">
+                            <span class="empty-space hide-mobile" style="height: 150px"></span>
 
-                                <p class="text-h6">Explore our team to meet the individuals who embody our shared values and discover how our collective efforts pave the way for success. Join us on this journey, where collaboration is the catalyst for unlocking remarkable achievements and shaping a brighter future.</p>
+                            <div class="single-image">
+
+                                <img src="img/app_9.jpg">
 
                             </div>
-                            <!--/ Text -->
+
+                            <div class="text-wrapper">
+
+                                <p class="text-h6">No more hassles or steep learning curves – AppXcel is designed with user-friendliness in mind, so you can start optimizing your mobile life right away.</p>
+
+                            </div>
 
                         </div>
 
                     </div>
+
+                </div>
+
+
+                <div class="section no-margin light" style="background: #000">
+
+                    <div class="section-background fixed-bg">
+
+                        <!-- Video -->
+                        <div class="nayla-video no-interactions" data-controls="false">
+
+                            <video autoplay playsinline muted loop class="n-video" style="height: 100vh">
+                                <source src="img/app_vid_2.mp4">
+                            </video>
+
+                        </div>
+                        <!--/ Video -->
+
+                    </div>
+
+                    <div class="wrapper no-margin">
+
+                        <div class="c-col-4 sm-12">
+
+                            <!-- Info Box -->
+                            <div class="nayla-info-box">
+
+                                <!-- Top Section -->
+                                <div class="info-box-top">
+
+                                    <div class="nayla-icon animate" style="--fontSize: 70px;--wgt: 100;">
+
+                                        <span class="material-icons">
+                                            download_for_offline
+                                        </span>
+                                    </div>
+
+                                </div>
+                                <!-- /Top Section -->
+
+                                <!-- Content -->
+                                <div class="info-box-content">
+
+                                    <!-- Text -->
+                                    <div class="text-wrapper">
+
+                                        <p class="text-h4 has-anim-text charsUp">Download and Install</p>
+
+                                        <p class="text-h6 has-anim-text wordsUp">Get AppXcel from the App Store or Google Play Store. It's compatible with all major smartphones and tablets.</p>
+
+                                    </div>
+                                    <!--/ Text -->
+
+                                </div>
+                                <!--/ Content -->
+
+                            </div>
+                            <!--/ Info Box -->
+
+                            <span class="empty-space" style="height: 75px"></span>
+
+                            <!-- Info Box -->
+                            <div class="nayla-info-box">
+
+                                <!-- Top Section -->
+                                <div class="info-box-top">
+
+                                    <div class="nayla-icon animate" style="--fontSize: 70px;--wgt: 100;">
+
+                                        <span class="material-icons">
+                                            account_circle
+                                        </span>
+                                    </div>
+
+
+                                </div>
+                                <!-- /Top Section -->
+
+                                <!-- Content -->
+                                <div class="info-box-content">
+
+                                    <!-- Text -->
+                                    <div class="text-wrapper">
+
+                                        <p class="text-h4 has-anim-text charsUp">Setup Your Profile</p>
+
+                                        <p class="text-h6 has-anim-text wordsUp">Create your AppXcel profile and customize it to suit your preferences. The more you use the app, the better it becomes at understanding your needs.</p>
+
+                                    </div>
+                                    <!--/ Text -->
+
+                                </div>
+                                <!--/ Content -->
+
+                            </div>
+                            <!--/ Info Box -->
+
+                            <span class="empty-space" style="height: 75px"></span>
+
+                            <!-- Info Box -->
+                            <div class="nayla-info-box">
+
+                                <!-- Top Section -->
+                                <div class="info-box-top">
+
+                                    <div class="nayla-icon animate" style="--fontSize: 70px;--wgt: 100;">
+
+                                        <span class="material-icons">
+                                            explore
+                                        </span>
+
+                                    </div>
+
+
+                                </div>
+                                <!-- /Top Section -->
+
+                                <!-- Content -->
+                                <div class="info-box-content">
+
+                                    <!-- Text -->
+                                    <div class="text-wrapper">
+
+                                        <p class="text-h4 has-anim-text charsUp">Explore and Engage</p>
+
+                                        <p class="text-h6 has-anim-text wordsUp">start exploring your apps through AppXcel's streamlined interface. Engage with your apps in new and exciting ways, whether it's social networking, </p>
+
+                                    </div>
+                                    <!--/ Text -->
+
+
+                                </div>
+                                <!--/ Content -->
+
+                            </div>
+                            <!--/ Info Box -->
+
+                            <span class="empty-space" style="height: 75px"></span>
+
+                            <!-- Info Box -->
+                            <div class="nayla-info-box">
+
+                                <!-- Top Section -->
+                                <div class="info-box-top">
+
+                                    <div class="nayla-icon animate" style="--fontSize: 70px;--wgt: 100;">
+
+                                        <span class="material-icons">
+                                            wifi_find
+                                        </span>
+                                    </div>
+
+
+                                </div>
+                                <!-- /Top Section -->
+
+                                <!-- Content -->
+                                <div class="info-box-content">
+
+                                    <!-- Text -->
+                                    <div class="text-wrapper">
+
+                                        <p class="text-h4 has-anim-text charsUp">Discover New Apps</p>
+
+                                        <p class="text-h6 has-anim-text wordsUp">Let AppXcel recommend apps tailored to your interests, expanding your app horizon beyond your expectations.</p>
+
+                                    </div>
+                                    <!--/ Text -->
+
+                                </div>
+                                <!--/ Content -->
+
+                            </div>
+                            <!--/ Info Box -->
+
+                            <span class="empty-space" style="height: 75px"></span>
+
+                            <!-- Info Box -->
+                            <div class="nayla-info-box">
+
+                                <!-- Top Section -->
+                                <div class="info-box-top">
+
+                                    <div class="nayla-icon animate" style="--fontSize: 70px;--wgt: 100;">
+
+                                        <span class="material-icons">
+                                            work_update
+                                        </span>
+                                    </div>
+
+
+                                </div>
+                                <!-- /Top Section -->
+
+                                <!-- Content -->
+                                <div class="info-box-content">
+
+                                    <!-- Text -->
+                                    <div class="text-wrapper">
+
+                                        <p class="text-h4 has-anim-text charsUp">Stay Updated</p>
+
+                                        <p class="text-h6 has-anim-text wordsUp">As you use AppXcel regularly, it keeps itself up to date with the latest app trends, ensuring you're always ahead in the app game.</p>
+
+                                    </div>
+                                    <!--/ Text -->
+
+                                </div>
+                                <!--/ Content -->
+
+                            </div>
+                            <!--/ Info Box -->
+
+                            <span class="empty-space" style="height: 75px"></span>
+
+                        </div>
+
+                        <div class="c-col-8 hide-mobile"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="section">
+
+                    <div class="wrapper">
+
+                        <div class="c-col-12">
+
+
+                            <div class="text-wrapper">
+
+                                <p class="text-h1 no-margin">Join AppXcel Today!</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="c-col-6 sm-12">
+
+
+                            <div class="text-wrapper">
+
+                                <p class="text-h6">Experience the future of mobile app management with AppXcel. Join our ever-growing community of delighted users and unlock a world of possibilities right at your fingertips. Say goodbye to app clutter and inefficiency, and say hello to a new era of mobile app excellence.</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="c-col-6 hide-mobile"></div>
+
+                        <div class="c-col-8 sm-12">
+
+                            <div class="single-image">
+
+                                <img src="img/app_5.jpg">
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="c-col-4 sm-12">
+
+                            <div class="single-image">
+
+                                <img src="img/app_6.jpg">
+
+                            </div>
+
+                            <div class="text-wrapper">
+
+                                <p class="text-h6">AppXcel seamlessly integrates with your existing apps, ensuring a smooth and uninterrupted transition into this new and enhanced app experience.</p>
+
+
+                                <p class="text-h6">No more hassles or steep learning curves – AppXcel is designed with user-friendliness in mind, so you can start optimizing your mobile life right away.</p>
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+
 
                 </div>
 
@@ -1456,7 +736,7 @@
         <!--/ Main -->
 
         <!-- Footer -->
-        <div id="footer" class="site-footer" style="background: #d7d7d7">
+        <div id="footer" class="site-footer">
 
             <div class="footer-wrapper">
 
@@ -1581,7 +861,6 @@
 
         </div>
         <!--/ Footer -->
-
 
     </div>
     <!--/ Page -->
