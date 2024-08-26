@@ -8,10 +8,11 @@ import { useTranslation } from "react-i18next";
 import Error from "@/components/form/others/Error";
 import LabelArea from "@/components/form/selectOption/LabelArea";
 import InputArea from "@/components/form/input/InputArea";
-import ImageLight from "@/assets/img/login-office.jpeg";
-import ImageDark from "@/assets/img/login-office-dark.jpeg";
+import ImageLight from "@/assets/img/login-office.jpg";
+import ImageDark from "@/assets/img/login-office-dark.jpg";
 import useLoginSubmit from "@/hooks/useLoginSubmit";
 import CMButton from "@/components/form/button/CMButton";
+import Logo from "@/assets/img/logo/logo-light.png";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -39,6 +40,11 @@ const Login = () => {
             </div>
             <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
               <div className="w-full">
+                <div className="login-logo">
+                  <img
+                  src={Logo}
+                  />
+                </div>
                 <h1 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                   Login
                 </h1>

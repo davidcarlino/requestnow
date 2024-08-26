@@ -1,5 +1,13 @@
 {
   "dependencies": {
     "mongoose": "^8.5.3"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "scripts": {
+    "start": "concurrently \"cd dashtar && npm run dev\" \"cd backend && npm run dev\"",
+    "start:frontend": "cd dashtar && npm run dev",
+    "start:backend": "cd backend && npm run dev"
   }
 }
