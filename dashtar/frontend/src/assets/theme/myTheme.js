@@ -114,7 +114,7 @@ const myTheme = {
   select: {
     base: "block w-full h-12 border bg-gray-100 px-2 py-1 text-sm dark:text-gray-300 focus:outline-none rounded-md form-select focus:bg-white dark:focus:bg-gray-700",
     active:
-      "focus:border-gray-200 border-gray-200 dark:border-gray-600 focus:shadow-none dark:focus:border-gray-500 dark:bg-gray-700",
+      "focus:border-gray-200 border-gray-200 dark:border-gray-100 focus:shadow-none dark:focus:border-gray-500 dark:bg-gray-700",
     select: "leading-5",
     disabled: "cursor-not-allowed opacity-50 bg-gray-300 dark:bg-gray-800",
     valid:

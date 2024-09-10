@@ -192,7 +192,7 @@ const updateStaff = async (req, res) => {
       const token = signInToken(updatedAdmin);
       res.send({
         token,
-        message: "Staff Updated Successfully!",
+        message: "Profile Updated Successfully!",
         _id: updatedAdmin._id,
         name: updatedAdmin.name,
         email: updatedAdmin.email,

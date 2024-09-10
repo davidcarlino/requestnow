@@ -881,7 +881,7 @@ const setting = [
       },
       seo: {
         favicon:
-          "https://res.cloudinary.com/ahossain/image/upload/v1700903173/undefined/favicon.png",
+          "/favicon.png",
         meta_description:
           "React Grocery & Organic Food Store e-commerce Template",
         meta_img:
