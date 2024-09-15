@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Our Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+        }
+        .sidebar {
+            width: 25%;
+            background-color: #f4f4f4;
+            padding: 20px;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        body > div > div.content > iframe {
+            width: 100%;
+            height: 100%;
+            min-width: 90%;
+        }
+
+
+        .sidebar a.active {
+            background-color: blue;
+            color: white;
+            padding-left: 10px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 100%;
+            height: auto;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px 0;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .sidebar a:hover {
+            background-color: #ddd;
+            padding-left: 10px;
+        }
+        .content {
+            width: 75%;
+            padding: 20px;
+        }
+        .content h1 {
+            font-size: 28px;
+        }
+        .content p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="sidebar">
+        <div class="logo">
+            <img src="https://i.ibb.co/VSbYhMV/logo.png" alt="Website Logo">
+        </div>
+        <h3>Navigation</h3>
+        <a href="about.html">About</a>
+        <a href="business-case.html"  >Business Case</a>
+        <a href="project-charter.html" >Project Charter</a>
+        <a href="requirements-document.html" >Requirements Document</a>
+        <a href="wireframes-mockups.html" >Wireframes or Mockups</a>
+        <a href="erd.html" >Entity-Relationship Diagram (ERD)</a>
+        <a href="userjourneymaps.html" class="active" >User Journey Maps</a>
+        <a href="developers.html">Technical Specifications </a>
+    </div>
+    
+    <div class="content">
+        <h1>User Journey Maps</h1>
+        <iframe src="https://docs.google.com/document/d/1_9TePW20cBq11nod78KZ01y5hgIx91VNgr0P0a1C4nY/pub?embedded=true"></iframe>
+    </div>
+</div>
+
+</body>
+</html>
