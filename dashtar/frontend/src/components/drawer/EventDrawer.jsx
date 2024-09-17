@@ -104,7 +104,7 @@ const EventDrawer = ({ id }) => {
                                   {/* <Error errorName={errors.endTime} /> */}
                                 </div>
                             </div>
-                            {/* <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                               <LabelArea label={"Location"} />
                                 <div className="col-span-8 sm:col-span-4">
                                   <div style={{ height: '50vh', width: '100%' }}>
@@ -116,7 +116,7 @@ const EventDrawer = ({ id }) => {
                                     </GoogleMapReact>
                                   </div>
                                 </div>
-                            </div>   */}
+                            </div>  
                         </div>
                         <DrawerButton id={id} title="Event" />
                     </form>
