@@ -961,5 +961,10 @@
   "ShippingOneCost": "Shipping One Cost",
   "ShippingNameTwo": "Shipping Two Name",
   "ShippingTwoDes": "Shipping Two Description",
-  "ShippingTwoCost": "Shipping Two Cost"
+  "ShippingTwoCost": "Shipping Two Cost",
+  "evntName": "Name",
+  "evntDescription": "Description",
+  "evntStartTime": "Start Time",
+  "evntEndTime": "End Time",
+  "evntAction": "Action"
 }

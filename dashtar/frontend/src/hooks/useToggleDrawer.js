@@ -9,6 +9,7 @@ const useToggleDrawer = () => {
     useContext(SidebarContext);
 
   const handleUpdate = (id) => {
+    console.log('serv id', id)
     setServiceId(id);
     toggleDrawer();
   };

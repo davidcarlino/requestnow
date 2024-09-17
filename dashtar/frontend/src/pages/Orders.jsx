@@ -68,7 +68,7 @@ const Orders = () => {
       customerName: searchText,
     })
   );
-
+  console.log(data)
   const { currency, getNumber, getNumberTwo } = useUtilsFunction();
 
   const { dataTable, serviceData } = useFilter(data?.orders);
