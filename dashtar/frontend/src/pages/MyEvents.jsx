@@ -50,6 +50,7 @@ const Events = () => {
     handleChangePage,
     handleSubmitForAll,
     resultsPerPage,
+    toggleDrawer
   } = useContext(SidebarContext);
 
   const { t } = useTranslation();
@@ -197,7 +198,7 @@ const Events = () => {
                 </div>
                 <div>
                   <Button
-                    // onClick={toggleDrawer}
+                    onClick={toggleDrawer}
                     className="w-full rounded-md h-12"
                   >
                     <span className="mr-2">

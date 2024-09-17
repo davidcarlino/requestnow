@@ -24,10 +24,10 @@ const EventTable = ({ isCheck, events, setIsCheck }) => {
       setIsCheck(isCheck.filter((item) => item !== id));
     }
   };
-
+  console.log("isCheck", isCheck, isCheck.length )
   return (
     <>
-      {isCheck.length < 1 && <DeleteModal id={serviceId} title={title} />}
+      <DeleteModal id={serviceId} title={title} />
 
       {isCheck.length < 2 && (
         <MainDrawer>

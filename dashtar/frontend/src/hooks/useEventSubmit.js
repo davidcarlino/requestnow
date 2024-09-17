@@ -11,12 +11,14 @@ const useEventSubmit = (id) => {
   const { isDrawerOpen, closeDrawer, setIsUpdate, lang } =
     useContext(SidebarContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [language, setLanguage] = useState(lang || "en");
+  const [resData, setResData] = useState({});
   const {
       register,
       handleSubmit,
-      // setValue,
-      // clearErrors,
-      // formState: { errors },
+      setValue,
+      clearErrors,
+      formState: { errors },
     } = useForm();
 
   const handleRemoveEmptyKey = (obj) => {
@@ -44,15 +46,16 @@ const useEventSubmit = (id) => {
           endTime: data.endTime
 
         }
-        console.log("eventdata", eventData)
+        // console.log("eventdata", eventData)
         
       if (id) {
         const res = await EventServices.updateEvents(id, eventData);
+        console.log("res", res)
         setIsUpdate(true);
         setIsSubmitting(false);
         notifySuccess(res.message);
         closeDrawer();
-        reset();
+        // reset();
       } else {
         const res = await EventServices.addEvent(eventData);
         setIsUpdate(true);
@@ -66,11 +69,60 @@ const useEventSubmit = (id) => {
         // closeDrawer();
       }
   }
+
+  const getEventData = async () => {
+    try {
+      const res = await EventServices.getEventById(id);
+      if (res) {
+        setResData(res);
+        setValue("name", res.name);
+        setValue("description", res.description);
+        setValue("startTime", res.startTime);
+        setValue("endTime", res.endTime);
+        // setValue("location", res.role);
+      }
+    } catch (err) {
+      notifyError(err ? err?.response?.data?.message : err?.message);
+    }
+  };
+  const handleSelectLanguage = (lang) => {
+    setLanguage(lang);
+
+    if (Object.keys(resData).length > 0) {
+      setValue("name", resData.name[lang ? lang : "en"]);
+    }
+  };
+  useEffect(() => {
+    if (!isDrawerOpen) {
+      setResData({});
+      setValue("name");
+      setValue("description");
+      setValue("startTime");
+      setValue("endTime");
+      setValue("location");
+      clearErrors("name");
+      clearErrors("description");
+      clearErrors("startTime");
+      clearErrors("endTime");
+      clearErrors("location");
+      setLanguage(lang);
+      setValue("language", language);
+      return;
+    }
+    if (id) {
+      getEventData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, setValue, isDrawerOpen, clearErrors]);
   
   return {
       register,
       handleSubmit,
-      onSubmit
+      errors,
+      language,
+      isSubmitting,
+      onSubmit,
+      handleSelectLanguage
   }
 
 }

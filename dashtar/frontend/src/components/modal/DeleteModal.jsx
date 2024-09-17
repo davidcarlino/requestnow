@@ -17,6 +17,7 @@ import ProductServices from "@/services/ProductServices";
 import useToggleDrawer from "@/hooks/useToggleDrawer";
 import AttributeServices from "@/services/AttributeServices";
 import CurrencyServices from "@/services/CurrencyServices";
+import EventServices from "@/services/EventServices";
 import { notifyError, notifySuccess } from "@/utils/toast";
 
 const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
@@ -71,7 +72,14 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
           setIsSubmitting(false);
         }
       }
-
+      if (location.pathname === "/MyEvents") {
+        const res = await EventServices.deleteEvent(id);
+        setIsUpdate(true);
+        notifySuccess(res.message);
+        setServiceId();
+        closeModal();
+        setIsSubmitting(false);
+      }
       if (location.pathname === "/categories" || category) {
         if (ids) {
           //  console.log('delete modal categorices',ids)

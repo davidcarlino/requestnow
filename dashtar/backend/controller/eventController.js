@@ -75,8 +75,59 @@ const getAllEvents = async (req, res) => {
     });
   }
 };
+// event update
+const updateEvents = async (req, res) => {
+  // console.log("update event",  req)
+  try {
+    const event = await Event.findById(req.params.id);
+    if (event) {
+      // console.log(req.body)
+      event.name = req.body.name;
+      event.description = req.body.description
+      event.startTime = req.body.startTime;
+      event.endTime = req.body.endTime ;
+      event.location = req.body.location;
+  
+      await event.save();
+      res.send({ message: "Event Updated Successfully!" });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const getEventById = async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    res.send(event);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const deleteEvent = (req, res) => {
+  Event.deleteOne({ _id: req.params.id }, (err) => {
+    if (err) {
+      res.status(500).send({
+        message: err.message,
+      });
+    } else {
+      res.status(200).send({
+        message: "Event Deleted Successfully!",
+      });
+    }
+  });
+};
+
 
 module.exports = {
     addEvent,
-    getAllEvents
+    getAllEvents,
+    updateEvents,
+    getEventById,
+    deleteEvent
 };

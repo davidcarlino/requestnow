@@ -30,6 +30,15 @@ const EventServices = {
   updateEvents: async (id, body) => {
     return requests.put(`/event/${id}`, body);
   },
+
+  getEventById: async (id) => {
+    return requests.get(`/event/${id}`);
+  },
+
+  deleteEvent: async (id) => {
+    return requests.delete(`/event/${id}`);
+  },
+
 };
 
 export default EventServices;
