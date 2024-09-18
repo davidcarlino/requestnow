@@ -14,7 +14,7 @@ import ImageLight from "@/assets/img/create-account-office.jpeg";
 import ImageDark from "@/assets/img/create-account-office-dark.jpeg";
 import Logo from "@/assets/img/logo/logo-light.png";
 
-const SignUp = () => {
+const Twofactor = () => {
   const { t } = useTranslation();
   const { onSubmit, register, handleSubmit, errors, loading } =
     useLoginSubmit();
@@ -139,4 +139,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Twofactor;
