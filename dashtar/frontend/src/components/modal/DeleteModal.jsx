@@ -72,7 +72,7 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
           setIsSubmitting(false);
         }
       }
-      if (location.pathname === "/MyEvents") {
+      if (location.pathname === "/event") {
         const res = await EventServices.deleteEvent(id);
         setIsUpdate(true);
         notifySuccess(res.message);

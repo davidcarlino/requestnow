@@ -27,7 +27,6 @@ const useEventSubmit = (id) => {
         delete obj[key];
       }
     }
-    // console.log("obj", obj);
     return obj;
   };
   
@@ -36,33 +35,27 @@ const useEventSubmit = (id) => {
       try {
         setIsSubmitting(true);
         const eventData = {
-          // name: handleRemoveEmptyKey({
-          //   [language]: data.name,
-          //   // ...nameTranslates,
-          // }),
           name: data.name,
           description: data.description,
           startTime: data.startTime,
           endTime: data.endTime
-
         }
-        // console.log("eventdata", eventData)
         
-      if (id) {
-        const res = await EventServices.updateEvents(id, eventData);
-        console.log("res", res)
-        setIsUpdate(true);
-        setIsSubmitting(false);
-        notifySuccess(res.message);
-        closeDrawer();
-        // reset();
-      } else {
-        const res = await EventServices.addEvent(eventData);
-        setIsUpdate(true);
-        setIsSubmitting(false);
-        notifySuccess(res.message);
-        closeDrawer();
-      }
+        if (id) {
+          const res = await EventServices.updateEvents(id, eventData);
+          setIsUpdate(true);
+          setIsSubmitting(false);
+          notifySuccess(res.message);
+          closeDrawer();
+          // reset();
+        } else {
+          const res = await EventServices.addEvent(eventData);
+          setIsUpdate(true);
+          setIsSubmitting(false);
+          notifySuccess(res.message);
+          closeDrawer();
+          window.location.href = `/event/${res.event._id}/dashboard`
+        }
       } catch (err) {
         notifyError(err ? err?.response?.data?.message : err?.message);
         setIsSubmitting(false);

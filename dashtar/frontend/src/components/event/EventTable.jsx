@@ -1,5 +1,7 @@
 import { TableBody, TableCell, TableRow } from "@windmill/react-ui";
 import { useTranslation } from "react-i18next";
+import { FiZoomIn } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 //internal import
 
@@ -10,6 +12,7 @@ import CheckBox from "@/components/form/others/CheckBox";
 import DeleteModal from "@/components/modal/DeleteModal";
 import MainDrawer from "@/components/drawer/MainDrawer";
 import EventDrawer from "@/components/drawer/EventDrawer";
+import Tooltip from "@/components/tooltip/Tooltip";
 
 const EventTable = ({ isCheck, events, setIsCheck }) => {
   const { t } = useTranslation();
@@ -24,7 +27,7 @@ const EventTable = ({ isCheck, events, setIsCheck }) => {
       setIsCheck(isCheck.filter((item) => item !== id));
     }
   };
-  console.log("isCheck", isCheck, isCheck.length )
+  console.log("isCheck", isCheck, serviceId)
   return (
     <>
       <DeleteModal id={serviceId} title={title} />
@@ -65,6 +68,20 @@ const EventTable = ({ isCheck, events, setIsCheck }) => {
 
             <TableCell>
               {showDateTimeFormat(event?.endTime)}
+            </TableCell>
+
+            <TableCell>
+              <Link
+                to={`/event/${event._id}/dashboard`}
+                className="flex justify-center text-gray-400 hover:text-emerald-600"
+              >
+                <Tooltip
+                  id="view"
+                  Icon={FiZoomIn}
+                  title={t("DetailsTbl")}
+                  bgColor="#10B981"
+                />
+              </Link>
             </TableCell>
 
             <TableCell className="text-right flex justify-end">

@@ -4,9 +4,7 @@ const EventServices = {
   addEvent: async (body) => {
     return requests.post("/event/add", body);
   },
-  // getAllEvents: async () => {
-  //   return requests.get("/event/all");
-  // },
+  
   getAllEvents: async ({
     body,
     headers,

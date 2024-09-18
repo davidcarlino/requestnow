@@ -281,6 +281,7 @@ const Events = () => {
                 <TableCell>{t("evntDescription")}</TableCell>
                 <TableCell>{t("evntStartTime")}</TableCell>
                 <TableCell>{t("evntEndTime")}</TableCell>
+                <TableCell className="text-center">{t("DetailsTbl")}</TableCell>
                 <TableCell className="text-right">{t("evntAction")}</TableCell>
               </tr>
             </TableHeader>

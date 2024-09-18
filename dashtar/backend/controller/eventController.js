@@ -6,6 +6,7 @@ const addEvent = async (req, res) => {
     await newEvent.save();
     res.status(200).send({
       message: "Event Added Successfully!",
+      event: newEvent
     });
   } catch (err) {
     res.status(500).send({
@@ -30,8 +31,6 @@ const getAllEvents = async (req, res) => {
   const endDateData = new Date(endDate);
   endDateData.setDate(endDateData.getDate());
   const end_date = endDateData.toString();
-
-  // console.log(" start_date", start_date, endDate);
 
   const queryObject = {};
 
@@ -77,11 +76,9 @@ const getAllEvents = async (req, res) => {
 };
 // event update
 const updateEvents = async (req, res) => {
-  // console.log("update event",  req)
   try {
     const event = await Event.findById(req.params.id);
     if (event) {
-      // console.log(req.body)
       event.name = req.body.name;
       event.description = req.body.description
       event.startTime = req.body.startTime;
@@ -123,11 +120,10 @@ const deleteEvent = (req, res) => {
   });
 };
 
-
 module.exports = {
     addEvent,
     getAllEvents,
     updateEvents,
     getEventById,
-    deleteEvent
+    deleteEvent,
 };

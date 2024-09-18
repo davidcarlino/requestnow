@@ -52,7 +52,7 @@ const sidebar = [
     name: "Customers",
   },
   {
-    path: "/MyEvents",
+    path: "/event",
     icon: FiCompass,
     name: "My Events",
   },
