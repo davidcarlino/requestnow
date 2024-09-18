@@ -202,9 +202,10 @@ const Events = () => {
                     className="w-full rounded-md h-12"
                   >
                     <span className="mr-2">
-                      <FiPlus />
+                     
                     </span>
-                    {t("CreateEvent")}
+                    {t("Create Event")}
+                    <FiPlus />
                   </Button>
                 </div>
               </div>
