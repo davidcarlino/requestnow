@@ -34,7 +34,7 @@ const EventDrawer = ({ id }) => {
             <Title
               register={register}
               handleSelectLanguage={handleSelectLanguage}
-              title={t("UpdateEvent")}
+              title={t("Update Your Event")}
               description={t("UpdateEventdescription")}
             />
           ) : (
