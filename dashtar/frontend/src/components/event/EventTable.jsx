@@ -53,7 +53,11 @@ const EventTable = ({ isCheck, events, setIsCheck }) => {
             </TableCell>
 
             <TableCell className="text-xs">
-              <span className="text-sm font-semibold">{event?.name}</span>{" "}
+            <Link
+                to={`/event/${event._id}/dashboard`}
+              >
+              <span className="text-sm font-semibold">{event?.name}</span>
+            </Link>
             </TableCell>
 
             <TableCell>
