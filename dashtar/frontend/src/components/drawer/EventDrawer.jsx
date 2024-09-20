@@ -118,17 +118,18 @@ const EventDrawer = ({ id }) => {
                               <LabelArea label={"Location"} />
                                 <div className="col-span-8 sm:col-span-4">
                                   <div style={{ height: '50vh', width: '100%' }}>
-                                    <GoogleMapReact
-                                            bootstrapURLKeys={{ key: "AIzaSyDCAjw9Fb5F1gt6cvLy7vwH2_qpsaLLPB0" }}
-                                            yesIWantToUseGoogleMapApiInternals={true}
-                                            defaultCenter={{ lat: -33.8688, lng: 151.2093 }}
-                                            defaultZoom={defaultProps.zoom}
-                                            options={{
-                                              zoomControl: false,
-                                              fullscreenControl: false
-                                            }}
-                                          >
-                                    </GoogleMapReact>
+                                  <GoogleMapReact
+                                bootstrapURLKeys={{ key: "AIzaSyDCAjw9Fb5F1gt6cvLy7vwH2_qpsaLLPB0" }}
+                                yesIWantToUseGoogleMapApiInternals={true}
+                                defaultCenter={{ lat: -33.8688, lng: 151.2093 }}
+                                defaultZoom={defaultProps.zoom}
+                                options={{
+                                  zoomControl: false,
+                                  fullscreenControl: false
+                                }}
+                              >
+                              </GoogleMapReact>
+                              
                                   </div>
                                 </div>
                             </div>  
