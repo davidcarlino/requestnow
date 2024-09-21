@@ -4,7 +4,6 @@ import {
   CardBody,
 } from "@windmill/react-ui";
 import { useParams } from "react-router";
-import GoogleMapReact from 'google-map-react';
 
 //internal import
 import useAsync from "@/hooks/useAsync";
@@ -12,18 +11,12 @@ import PageTitle from "@/components/Typography/PageTitle";
 import AnimatedContent from "@/components/common/AnimatedContent";
 import EventServices from "@/services/EventServices";
 import useUtilsFunction from "@/hooks/useUtilsFunction";
+// import GoogleMapApi from "@/components/googleMap/googleMap"
 
 const EventDetails = () => {
   const { id } = useParams();
   const { data, loading } = useAsync(() => EventServices.getEventById(id));
   const {showTimeFormat,showDateFormat, showingTranslateValue } = useUtilsFunction();
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627
-    },
-    zoom: 11
-  };
   return(
     <>
       <PageTitle>{"Event Dashboard"}</PageTitle>
@@ -88,19 +81,9 @@ const EventDetails = () => {
             <CardBody>
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                 <div className="col-span-8 sm:col-span-4">
-                  <div style={{ height: '50vh', width: '100%' }}>
-                    <GoogleMapReact
-                      bootstrapURLKeys={{ key: "" }}
-                      yesIWantToUseGoogleMapApiInternals = {true}
-                      defaultCenter={defaultProps.center}
-                      defaultZoom={defaultProps.zoom}
-                      options={{
-                        zoomControl: false,
-                        fullscreenControl: false
-                      }}
-                    >
-                    </GoogleMapReact>
-                  </div>
+                  {/* <div style={{ height: '50vh', width: '100%' }}>
+                    <GoogleMapApi/>
+                  </div> */}
                 </div>
               </div> 
               <div className="font-serif font-bold dark:text-gray-400">
