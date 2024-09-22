@@ -74,20 +74,6 @@ const EventTable = ({ isCheck, events, setIsCheck }) => {
               {showDateTimeFormat(event?.endTime)}
             </TableCell>
 
-            <TableCell>
-              <Link
-                to={`/event/${event._id}/dashboard`}
-                className="flex justify-center text-gray-400 hover:text-emerald-600"
-              >
-                <Tooltip
-                  id="view"
-                  Icon={FiZoomIn}
-                  title={t("DetailsTbl")}
-                  bgColor="#10B981"
-                />
-              </Link>
-            </TableCell>
-
             <TableCell className="text-right flex justify-end">
               <EditDeleteButton
                 id={event?._id}
