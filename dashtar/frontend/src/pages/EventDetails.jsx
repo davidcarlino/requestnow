@@ -34,17 +34,17 @@ const EventDetails = () => {
     <>
       <PageTitle>{"Event Dashboard"}</PageTitle>
       <AnimatedContent>
-      <div className="inline-flex"> 
-            <Button className="inline-flex">
+      <div className="flex justify-end"> 
+            <Button className="h-12 w-full">
               {t("Edit Event")}
             </Button>
-            <Button className="inline-flex">
+            <Button className="h-12 w-full">
               {t("Print Event Details")}
             </Button>
-            <Button className="inline-flex">
+            <Button className="h-12 w-full">
               {t("Print Song Request QR Code")}
             </Button>
-            <Button className="inline-flex">
+            <Button className="h-12 w-full">
               {t("Print Invoice")}
             </Button>
           </div>
