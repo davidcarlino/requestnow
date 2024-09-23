@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { Input } from '@windmill/react-ui';
-
+import './googlemapstyle.css';
 const libraries = ['places'];
 const mapContainerStyle = {
   height: "300px",
@@ -119,7 +119,7 @@ const MapComponent = ({register, resData, label}) => {
 					{suggestions.map((suggestion) => (
 						<li
 							key={suggestion.place_id}
-							className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+							className="px-4 py-2 hover:bg-gray-100 cursor-pointer black-text"
 							onClick={() => handleSelect(suggestion.place_id)}
 						>
 							{suggestion.description}
