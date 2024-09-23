@@ -74,6 +74,12 @@ const EventTable = ({ isCheck, events, setIsCheck }) => {
               {showDateTimeFormat(event?.endTime)}
             </TableCell>
 
+            <TableCell>
+              <span className="text-sm">
+                {event?.location}
+              </span>
+            </TableCell>
+
             <TableCell className="text-right flex justify-end">
               <EditDeleteButton
                 id={event?._id}

@@ -56,7 +56,7 @@ const getAllEvents = async (req, res) => {
     const totalDoc = await Event.countDocuments(queryObject);
     const events = await Event.find(queryObject)
       .select(
-        "_id name description startTime endTime createdAt updatedAt"
+        "_id name location description startTime endTime createdAt updatedAt"
       )
       .sort({ updatedAt: -1 })
       .skip(skip)

@@ -72,7 +72,7 @@ const Events = () => {
   const { allId, serviceId } = useToggleDrawer();
   
   const { dataTable, serviceData } = useFilter(data?.events);
-
+  console.log("datatable", dataTable)
   const handleSelectAll = () => {
     setIsCheckAll(!isCheckAll);
     setIsCheck(data?.events?.map((li) => li._id));
@@ -281,6 +281,7 @@ const Events = () => {
                 <TableCell>{t("evntDescription")}</TableCell>
                 <TableCell>{t("evntStartTime")}</TableCell>
                 <TableCell>{t("evntEndTime")}</TableCell>
+                <TableCell>{t("evntAddress")}</TableCell>
                 <TableCell className="text-right">{t("evntAction")}</TableCell>
               </tr>
             </TableHeader>

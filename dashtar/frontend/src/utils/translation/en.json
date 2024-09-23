@@ -970,5 +970,6 @@
   "evntDescription": "Description",
   "evntStartTime": "Start Time",
   "evntEndTime": "End Time",
-  "evntAction": "Action"
+  "evntAction": "Action",
+  "evntAddress": "Address"
 }

@@ -4,8 +4,7 @@ import {
   CardBody,
   Button
 } from "@windmill/react-ui";
-import { useParams } from "react-router";
-import GoogleMapReact from 'google-map-react';
+import { useParams } from "react-router";;
 import { useTranslation } from 'react-i18next'; // Add this line
 
 //internal import
@@ -15,6 +14,7 @@ import AnimatedContent from "@/components/common/AnimatedContent";
 import EventServices from "@/services/EventServices";
 import useUtilsFunction from "@/hooks/useUtilsFunction";
 import { SidebarContext } from "@/context/SidebarContext";
+import MapComponent from "@/components/googleMap/googleMap"
 
 const EventDetails = () => {
   const { t } = useTranslation(); // Add this line
@@ -71,6 +71,14 @@ const EventDetails = () => {
                     </div>
                     <div className="font-serif font-bold dark:text-gray-400">
                       <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
+                        {"Address"} :{" "}
+                        <span className="font-bold text-gray-500 dark:text-gray-500">
+                          {data?.location}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="font-serif font-bold dark:text-gray-400">
+                      <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
                         {"Description"} :{" "}
                         <span className="font-bold text-gray-500 dark:text-gray-500">
                           {data?.description}
@@ -119,7 +127,8 @@ const EventDetails = () => {
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                 <div className="col-span-8 sm:col-span-4">
                   <div style={{ height: '50vh', width: '100%' }}>
-                    <GoogleMapReact
+                    <MapComponent register={() => {}} resData={data} label ="eventDashboard"/>
+                    {/* <GoogleMapReact
                       bootstrapURLKeys={{ key: "AIzaSyDCAjw9Fb5F1gt6cvLy7vwH2_qpsaLLPB0" }}
                       yesIWantToUseGoogleMapApiInternals={true}
                       defaultCenter={{ lat: -33.8688, lng: 151.2093 }}
@@ -129,17 +138,14 @@ const EventDetails = () => {
                         fullscreenControl: false
                       }}
                     >
-                    </GoogleMapReact>
+                    </GoogleMapReact> */}
                   </div>
                 </div>
               </div>
               <div className="font-serif font-bold dark:text-gray-400">
-                <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                  {"Location"} :{" "}
-                  <span className="font-bold text-gray-500 dark:text-gray-500">
-                    {data?.location}
-                  </span>
-                </p>
+                <span className="font-bold text-gray-500 dark:text-gray-500">
+                  {data?.location}
+                </span> 
               </div>
             </CardBody>
           </Card>

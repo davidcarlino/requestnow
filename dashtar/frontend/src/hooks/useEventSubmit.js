@@ -38,7 +38,8 @@ const useEventSubmit = (id) => {
           name: data.name,
           description: data.description,
           startTime: data.startTime,
-          endTime: data.endTime
+          endTime: data.endTime,
+          location: data.location
         }
         
         if (id) {
@@ -72,7 +73,7 @@ const useEventSubmit = (id) => {
         setValue("description", res.description);
         setValue("startTime", res.startTime);
         setValue("endTime", res.endTime);
-        // setValue("location", res.role);
+        setValue("location", res.location);
       }
     } catch (err) {
       notifyError(err ? err?.response?.data?.message : err?.message);
@@ -115,6 +116,7 @@ const useEventSubmit = (id) => {
       language,
       isSubmitting,
       onSubmit,
+      resData,
       handleSelectLanguage
   }
 
