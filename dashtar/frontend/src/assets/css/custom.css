@@ -10,6 +10,16 @@ body
   margin: auto;
 }
 
+/* HIDE THE LANGUAGE SELECTOR */
+#root > div.flex.h-screen.bg-gray-50.dark\:bg-gray-900.false > div > header > div > ul > li.changeLanguage {
+  display: none;
+}
+ 
+/* HIDE THE LANGUAGE SELECTOR IN DRAWER */
+body > div:nth-child(6) > div > div.drawer-content-wrapper > div.drawer-content > div > div.w-full.relative.p-6.border-b.border-gray-100.bg-gray-50.dark\:border-gray-700.dark\:bg-gray-800.dark\:text-gray-300 > div > select {
+  display: none;
+}
+
 .drawer {
   position: fixed;
   z-index: 9999;
