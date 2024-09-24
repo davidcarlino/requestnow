@@ -8,6 +8,7 @@
   "scripts": {
     "start": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
     "start:frontend": "cd dashtar && npm run dev",
-    "start:backend": "cd backend && npm run dev"
+    "start:backend": "cd backend && npm run dev",
+    "install": "concurrently \"cd frontend && npm install\" \"cd backend && npm install\""
   }
 }
