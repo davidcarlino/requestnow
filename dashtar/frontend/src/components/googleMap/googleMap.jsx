@@ -21,12 +21,11 @@ const MapComponent = ({register, resData, label}) => {
     googleMapsApiKey: 'AIzaSyDCAjw9Fb5F1gt6cvLy7vwH2_qpsaLLPB0',
     libraries,
   });
-  
   useEffect(() => {
-    if (resData.location) {
-      setQuery(resData.location)
+    if (resData.venue?.address) {
+      setQuery(resData.venue?.address)
     }
-  },[resData.location])
+  },[resData.venue?.address])
 
   useEffect(() => {
     if (query != "") {

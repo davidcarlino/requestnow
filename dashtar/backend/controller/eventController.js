@@ -1,8 +1,11 @@
 const Event = require("../models/Event");
+const Venue = require("../models/Venue");
 
 const addEvent = async (req, res) => {
   try {
-    const newEvent = new Event(req.body);
+    const newVenue = new Venue({name: req.body.location, address: req.body.location});
+    await newVenue.save();
+    const newEvent = new Event({...req.body, venue: newVenue._id});
     await newEvent.save();
     res.status(200).send({
       message: "Event Added Successfully!",
@@ -56,8 +59,8 @@ const getAllEvents = async (req, res) => {
     const totalDoc = await Event.countDocuments(queryObject);
     const events = await Event.find(queryObject)
       .select(
-        "_id name location description startTime endTime createdAt updatedAt"
-      )
+        "_id name address description startTime endTime createdAt updatedAt"
+      ).populate('venue', 'address')   
       .sort({ updatedAt: -1 })
       .skip(skip)
       .limit(limits);
@@ -79,11 +82,13 @@ const updateEvents = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
     if (event) {
+      const newVenue = new Venue({name: req.body.location, address: req.body.location});
+      await newVenue.save();
       event.name = req.body.name;
       event.description = req.body.description
       event.startTime = req.body.startTime;
       event.endTime = req.body.endTime ;
-      event.location = req.body.location;
+      event.venue = newVenue._id
   
       await event.save();
       res.send({ message: "Event Updated Successfully!" });
@@ -97,7 +102,7 @@ const updateEvents = async (req, res) => {
 
 const getEventById = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id);
+    const event = await Event.findById(req.params.id).populate({ path: "venue", select: "_id, address" });
     res.send(event);
   } catch (err) {
     res.status(500).send({

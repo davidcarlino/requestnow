@@ -76,7 +76,7 @@ const EventTable = ({ isCheck, events, setIsCheck }) => {
 
             <TableCell>
               <span className="text-sm">
-                {event?.location}
+                {event.venue?.address}
               </span>
             </TableCell>
 

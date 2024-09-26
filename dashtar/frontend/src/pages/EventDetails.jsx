@@ -73,7 +73,7 @@ const EventDetails = () => {
                       <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
                         {"Address"} :{" "}
                         <span className="font-bold text-gray-500 dark:text-gray-500">
-                          {data?.location}
+                          {data.venue?.address}
                         </span>
                       </p>
                     </div>
@@ -144,7 +144,7 @@ const EventDetails = () => {
               </div>
               <div className="font-serif font-bold dark:text-gray-400">
                 <span className="font-bold text-gray-500 dark:text-gray-500">
-                  {data?.location}
+                  {data.venue?.address}
                 </span> 
               </div>
             </CardBody>
