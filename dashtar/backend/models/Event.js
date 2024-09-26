@@ -22,18 +22,20 @@ const eventSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    location: {
-      type: String,
-      required: false,
+    venue: {
+      type: mongoose.Schema.Types.ObjectId,  // Reference to the Venue model
+      ref: 'Venue',
+      required: true
     },
-    
+    status: { 
+      type: Boolean, 
+      default: false 
+    }
   },
   {
     timestamps: true,
   }
 );
-
-// module.exports = categorySchema;
 
 const Event = mongoose.model('Event', eventSchema);
 module.exports = Event;
