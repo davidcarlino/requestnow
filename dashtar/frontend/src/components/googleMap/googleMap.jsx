@@ -9,7 +9,7 @@ const mapContainerStyle = {
   width: "100%"
 };
 
-const MapComponent = ({ register, setValue, resData, label, isDrawerOpen, errors }) => {
+const MapComponent = ({ register, setValue, resData, label, errors }) => {
   const [map, setMap] = useState(null);
   const [center, setCenter] = useState({ lat: 40.7128, lng: -74.0060 });
   const [marker, setMarker] = useState(null);
@@ -24,13 +24,12 @@ const MapComponent = ({ register, setValue, resData, label, isDrawerOpen, errors
     libraries,
   });
   useEffect(() => {
-    if (resData.venue?.address) {
-      setQuery(resData.venue.address ? resData.venue.address: "")
+    if (resData.venue) {
+      setQuery(resData.venue.address)
     }
-    if(!isDrawerOpen){
+    else{
       setQuery("")
       setMarker(null)
-      setMap(null)
     }
   }, [resData.venue?.address]);
   useEffect(() => {
@@ -38,7 +37,7 @@ const MapComponent = ({ register, setValue, resData, label, isDrawerOpen, errors
       getCoordinates(query);
     }
   }, [query, map]);
-
+  console.log("resdata", resData)
   useEffect(() => {
     // Using setValue to update the 'location' field
     setValue('location', query);
@@ -147,21 +146,18 @@ const MapComponent = ({ register, setValue, resData, label, isDrawerOpen, errors
           ))}
         </ul>
       )}
-
-     
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={center}
-          zoom={10}
-          onLoad={onMapLoad}
-          options={{
-            zoomControl: false,
-            fullscreenControl: false
-          }}
-        >
-           {marker &&<Marker position={marker.position} title={marker.title} />}
-        </GoogleMap>
-      
+      <GoogleMap
+        mapContainerStyle={mapContainerStyle}
+        center={center}
+        zoom={10}
+        onLoad={onMapLoad}
+        options={{
+          zoomControl: false,
+          fullscreenControl: false
+        }}
+      >
+          {marker &&<Marker position={marker.position} title={marker.title} />}
+      </GoogleMap>
     </div>
   );
 };

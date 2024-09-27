@@ -15,6 +15,8 @@ import EventServices from "@/services/EventServices";
 import useUtilsFunction from "@/hooks/useUtilsFunction";
 import { SidebarContext } from "@/context/SidebarContext";
 import MapComponent from "@/components/googleMap/googleMap"
+import MainDrawer from "@/components/drawer/MainDrawer";
+import EventDrawer from "@/components/drawer/EventDrawer";
 
 const EventDetails = () => {
   const { t } = useTranslation(); // Add this line
@@ -41,10 +43,13 @@ const EventDetails = () => {
 
   return (
     <>
+      <MainDrawer>
+        <EventDrawer id={id} />
+      </MainDrawer>
       <PageTitle>{"Event Dashboard"}</PageTitle>
       <AnimatedContent>
       <div className="flex justify-end"> 
-            <Button className="h-12 w-full">
+            <Button className="h-12 w-full" onClick={toggleDrawer}>
               {t("Edit Event")}
             </Button>
             <Button className="h-12 w-full">
@@ -128,17 +133,6 @@ const EventDetails = () => {
                 <div className="col-span-8 sm:col-span-4">
                   <div style={{ height: '50vh', width: '100%' }}>
                     <MapComponent register={() => {}} setValue={() => {}} resData={data} label ="eventDashboard"/>
-                    {/* <GoogleMapReact
-                      bootstrapURLKeys={{ key: "AIzaSyDCAjw9Fb5F1gt6cvLy7vwH2_qpsaLLPB0" }}
-                      yesIWantToUseGoogleMapApiInternals={true}
-                      defaultCenter={{ lat: -33.8688, lng: 151.2093 }}
-                      defaultZoom={defaultProps.zoom}
-                      options={{
-                        zoomControl: false,
-                        fullscreenControl: false
-                      }}
-                    >
-                    </GoogleMapReact> */}
                   </div>
                 </div>
               </div>
