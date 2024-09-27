@@ -18,6 +18,8 @@ const EventDrawer = ({ id }) => {
     handleSubmit,
     resData,
     errors,
+    setValue,
+    isDrawerOpen,
     onSubmit,
     handleSelectLanguage,
     } = useEventSubmit(id);
@@ -110,7 +112,7 @@ const EventDrawer = ({ id }) => {
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <LabelArea label={"Location"} />
                     <div className="col-span-8 sm:col-span-4">
-                      <MapComponent register={register} resData={resData} label ="eventDrawer"/>
+                      <MapComponent register={register} setValue={setValue} resData={resData} errors={errors} isDrawerOpen={isDrawerOpen} label ="eventDrawer"/>
                     </div>
                 </div>  
               </div>

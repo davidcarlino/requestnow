@@ -117,6 +117,8 @@ const useEventSubmit = (id) => {
       isSubmitting,
       onSubmit,
       resData,
+      setValue,
+      isDrawerOpen,
       handleSelectLanguage
   }
 

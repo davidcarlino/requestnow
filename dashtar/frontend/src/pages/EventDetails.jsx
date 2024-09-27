@@ -127,7 +127,7 @@ const EventDetails = () => {
               <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                 <div className="col-span-8 sm:col-span-4">
                   <div style={{ height: '50vh', width: '100%' }}>
-                    <MapComponent register={() => {}} resData={data} label ="eventDashboard"/>
+                    <MapComponent register={() => {}} setValue={() => {}} resData={data} label ="eventDashboard"/>
                     {/* <GoogleMapReact
                       bootstrapURLKeys={{ key: "AIzaSyDCAjw9Fb5F1gt6cvLy7vwH2_qpsaLLPB0" }}
                       yesIWantToUseGoogleMapApiInternals={true}
