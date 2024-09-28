@@ -20,6 +20,7 @@ const currencyRoutes = require("../routes/currencyRoutes");
 const languageRoutes = require("../routes/languageRoutes");
 const notificationRoutes = require("../routes/notificationRoutes");
 const eventRoutes = require("../routes/eventRoutes")
+const venueRoutes = require("../routes/venueRoutes")
 const { isAuth, isAdmin } = require("../config/auth");
 // const {
 //   getGlobalSetting,
@@ -56,6 +57,7 @@ app.use("/api/currency/", isAuth, currencyRoutes);
 app.use("/api/language/", languageRoutes);
 app.use("/api/notification/", isAuth, notificationRoutes);
 app.use("/api/event/", eventRoutes);
+app.use("/api/venue/", venueRoutes);
 
 //if you not use admin dashboard then these two route will not needed.
 app.use("/api/admin/", adminRoutes);

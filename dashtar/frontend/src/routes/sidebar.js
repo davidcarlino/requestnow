@@ -7,6 +7,7 @@ import {
   FiSlack,
   FiGlobe,
   FiTarget,
+  FiMapPin
 } from "react-icons/fi";
 
 /**
@@ -55,6 +56,12 @@ const sidebar = [
     path: "/event",
     icon: FiCompass,
     name: "My Events",
+  },
+
+  {
+    path: "/venue",
+    icon: FiMapPin,
+    name: "Venues",
   },
 
   {

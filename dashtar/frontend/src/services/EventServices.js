@@ -25,8 +25,10 @@ const EventServices = {
     );
   },
 
-  updateEvents: async (id, body) => {
-    return requests.put(`/event/${id}`, body);
+  updateEvents: async (id, body, venueId) => {
+    console.log("venueId", venueId)
+    const updatedBody = { ...body, venueId };
+    return requests.put(`/event/${id}`, updatedBody);
   },
 
   getEventById: async (id) => {

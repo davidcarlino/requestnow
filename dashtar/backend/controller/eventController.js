@@ -81,14 +81,19 @@ const getAllEvents = async (req, res) => {
 const updateEvents = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
+    const venue = await Venue.findById(req.body.venueId)
+    if (venue) {
+      venue.name = req.body.location;
+      venue.address = req.body.location
+  
+      await venue.save();
+    }
     if (event) {
-      const newVenue = new Venue({name: req.body.location, address: req.body.location});
-      await newVenue.save();
       event.name = req.body.name;
       event.description = req.body.description
       event.startTime = req.body.startTime;
       event.endTime = req.body.endTime ;
-      event.venue = newVenue._id
+      event.venue = venue._id
   
       await event.save();
       res.send({ message: "Event Updated Successfully!" });

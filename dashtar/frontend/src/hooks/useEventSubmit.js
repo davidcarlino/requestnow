@@ -13,6 +13,7 @@ const useEventSubmit = (id) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [language, setLanguage] = useState(lang || "en");
   const [resData, setResData] = useState({});
+  const [venueId, setVenueId] = useState(null);
   const {
       register,
       handleSubmit,
@@ -43,7 +44,7 @@ const useEventSubmit = (id) => {
         }
         
         if (id) {
-          const res = await EventServices.updateEvents(id, eventData);
+          const res = await EventServices.updateEvents(id, eventData, venueId);
           setIsUpdate(true);
           setIsSubmitting(false);
           notifySuccess(res.message);
@@ -69,6 +70,7 @@ const useEventSubmit = (id) => {
       const res = await EventServices.getEventById(id);
       if (res) {
         setResData(res);
+        setVenueId(res.venue?._id)
         setValue("name", res.name);
         setValue("description", res.description);
         setValue("startTime", res.startTime);

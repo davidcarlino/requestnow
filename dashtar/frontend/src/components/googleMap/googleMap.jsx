@@ -24,7 +24,7 @@ const MapComponent = ({ register, setValue, resData, label, errors }) => {
     libraries,
   });
   useEffect(() => {
-    if (resData.venue) {
+    if (resData.venue || resData.venue != null) {
       setQuery(resData.venue.address)
     }
     else{

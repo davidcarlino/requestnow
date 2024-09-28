@@ -19,6 +19,7 @@ import AttributeServices from "@/services/AttributeServices";
 import CurrencyServices from "@/services/CurrencyServices";
 import EventServices from "@/services/EventServices";
 import { notifyError, notifySuccess } from "@/utils/toast";
+import VenueServices from "@/services/VenueServices";
 
 const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
   const { isModalOpen, closeModal, setIsUpdate } = useContext(SidebarContext);
@@ -74,6 +75,14 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
       }
       if (location.pathname === "/event") {
         const res = await EventServices.deleteEvent(id);
+        setIsUpdate(true);
+        notifySuccess(res.message);
+        setServiceId();
+        closeModal();
+        setIsSubmitting(false);
+      }
+      if (location.pathname === "/venue") {
+        const res = await VenueServices.deleteVenue(id);
         setIsUpdate(true);
         notifySuccess(res.message);
         setServiceId();
