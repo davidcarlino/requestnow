@@ -16,6 +16,7 @@ const Orders = lazy(() => import("@/pages/Orders"));
 const MyEvents = lazy(() => import("@/pages/MyEvents"));
 const Venues = lazy(() => import("@/pages/Venue"));
 const EventDetails = lazy(() => import("@/pages/EventDetails"));
+const SongRequest = lazy(() => import("@/pages/SongRequest"))
 const OrderInvoice = lazy(() => import("@/pages/OrderInvoice"));
 const Coupons = lazy(() => import("@/pages/Coupons"));
 // const Setting = lazy(() => import("@/pages/Setting"));
@@ -104,6 +105,10 @@ const routes = [
   {
     path: "/event/:id/dashboard",
     component: EventDetails,
+  },
+  {
+    path: "/scan/:id",
+    component: SongRequest,
   },
   {
     path: "/twofactor",

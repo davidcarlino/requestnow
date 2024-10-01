@@ -17,6 +17,7 @@ import { SidebarContext } from "@/context/SidebarContext";
 import MapComponent from "@/components/googleMap/googleMap"
 import MainDrawer from "@/components/drawer/MainDrawer";
 import EventDrawer from "@/components/drawer/EventDrawer";
+import EventQrCode from "@/components/qr-code/qrCode"; 
 
 const EventDetails = () => {
   const { t } = useTranslation(); // Add this line
@@ -40,7 +41,6 @@ const EventDetails = () => {
     },
     zoom: 11
   };
-
   return (
     <>
       <MainDrawer>
@@ -122,7 +122,39 @@ const EventDetails = () => {
                         </span>
                       </p>
                     </div>
+                    {/* <div className="font-serif font-bold dark:text-gray-400">
+                      <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
+                        {"Event Code"} :{" "}
+                        <span className="font-bold text-gray-500 dark:text-gray-500">
+                          {data.eventCode !== "false"? data.eventCode: ""}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="font-serif font-bold dark:text-gray-400">
+                      <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
+                        {"Event QrCode"} :{" "}
+                          <EventQrCode event={data}/>
+                      </p>
+                    </div> */}
                   </div>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2 my-8">
+                  <div className="font-serif font-bold dark:text-gray-400">
+                    <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
+                      {"Event Code"} :{" "}
+                      <div>
+                        <h1 className="font-bold text-gray-500 dark:text-gray-500">
+                        {data.eventCode !== "false"? data.eventCode: ""}
+                      </h1>
+                      </div>
+                    </p>
+                  </div>
+                  <div className="font-serif font-bold dark:text-gray-400">
+                    <EventQrCode event={data}/> 
+                    <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
+                      {"For Guest To Scan"}
+                    </p>
+                  </div> 
                 </div>
               </div>
             </CardBody>

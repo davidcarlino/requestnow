@@ -30,6 +30,10 @@ const eventSchema = new mongoose.Schema(
     status: { 
       type: Boolean, 
       default: false 
+    },
+    eventCode: { 
+      type: String, 
+      default: false 
     }
   },
   {

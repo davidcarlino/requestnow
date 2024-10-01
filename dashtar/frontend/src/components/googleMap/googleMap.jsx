@@ -37,7 +37,7 @@ const MapComponent = ({ register, setValue, resData, label, errors }) => {
       getCoordinates(query);
     }
   }, [query, map]);
-  console.log("resdata", resData)
+  // console.log("resdata", resData)
   useEffect(() => {
     // Using setValue to update the 'location' field
     setValue('location', query);

@@ -30,6 +30,31 @@ const useEventSubmit = (id) => {
     }
     return obj;
   };
+
+  const generateId = (length = 6) => {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const numbers = '0123456789';
+    
+    // Ensure exactly 2 letters and 4 numbers
+    let result = '';
+    
+    // Generate 2 random letters
+    for (let i = 0; i < 2; i++) {
+        const randomIndex = Math.floor(Math.random() * letters.length);
+        result += letters[randomIndex];
+    }
+    
+    // Generate 4 random numbers
+    for (let i = 0; i < 4; i++) {
+        const randomIndex = Math.floor(Math.random() * numbers.length);
+        result += numbers[randomIndex];
+    }
+    
+    // Shuffle the result to mix letters and numbers
+    result = result.split('').sort(() => 0.5 - Math.random()).join('');
+    
+    return result;
+}
   
   const onSubmit = async (data) => {
     console.log("data", data)
@@ -40,7 +65,8 @@ const useEventSubmit = (id) => {
           description: data.description,
           startTime: data.startTime,
           endTime: data.endTime,
-          location: data.location
+          location: data.location,
+          eventCode: generateId()
         }
         
         if (id) {
