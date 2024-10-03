@@ -107,7 +107,9 @@ const updateEvents = async (req, res) => {
 
 const getEventById = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id).populate({ path: "venue", select: "_id, address" });
+    const event = await Event.findById(req.params.id)
+    .populate({ path: "venue", select: "_id, address" })
+    .populate({ path: 'songRequest', select: 'name artist album year' });
     res.send(event);
   } catch (err) {
     res.status(500).send({

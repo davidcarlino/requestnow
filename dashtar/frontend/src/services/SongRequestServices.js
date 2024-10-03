@@ -1,12 +1,16 @@
 import requests from "./httpService";
 
 const SongServices = {
-  // addSong: async (body) => {
-  //   return requests.post("/venue/add", body);
-  // },
+  // add a song
+  addSong: async (body, eventCode) => {
+    const updatedBody = { ...body, eventCode };
+    return requests.post("/song/add", updatedBody);
+  },
+
+  // search a song through spotify api
   searchSong: async (body) => {
     return requests.get(`/song/search?q=${body}`);
-  }
+  },
 
 }
 export default SongServices;

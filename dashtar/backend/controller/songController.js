@@ -1,9 +1,16 @@
 const Song = require("../models/SongRequest");
+const Event = require("../models/Event");
 
 const addSong = async (req, res) => {
   try {
+    const event = await Event.findOne({ eventCode: req.body.eventCode });
+    const song = new Song({...req.body, event: event._id});
+    event.songRequest.push(song);
+    await event.save();
+    await song.save();
     res.status(200).send({
       message: "Song Added Successfully!",
+      songs: song
     });
   } catch (err) {
     res.status(500).send({
@@ -72,6 +79,7 @@ const searchSong = async (req, res) => {
       artist: track.artists[0].name,
       album: track.album.name,
       albumImage: track.album.images[0]?.url,
+      year: track.album.release_date ? track.album.release_date.split('-')[0] : 'Unknown', // Extract year or 'Unknown' if not available
     }));
   
     res.json(tracks);
@@ -83,5 +91,5 @@ const searchSong = async (req, res) => {
 
 module.exports = {
   addSong,
-  searchSong
+  searchSong,
 };

@@ -27,6 +27,11 @@ const eventSchema = new mongoose.Schema(
       ref: 'Venue',
       required: true
     },
+    songRequest: [{
+      type: mongoose.Schema.Types.ObjectId,  // Reference to the song model
+      ref: 'SongRequest',
+      required: false
+    }],
     status: { 
       type: Boolean, 
       default: false 

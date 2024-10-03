@@ -2,11 +2,19 @@ const mongoose = require('mongoose');
 
 const songSchema = new mongoose.Schema(
   {
-    songName: {
+    name: {
       type: String,
       required: true,
     },
-    artistName: {
+    artist: {
+      type: String,
+      required: true,
+    },
+    album: {
+      type: String,
+      required: true,
+    },
+    year: {
       type: String,
       required: true,
     },
@@ -21,22 +29,22 @@ const songSchema = new mongoose.Schema(
     event: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Event',  // Refers to the 'Event' model
-      required: true,
+      required: false,
     },
     performer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Performer',  // Refers to the 'Performer' model
-      required: true,
+      required: false,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',  // Refers to the 'User' model
-      required: true,
+      required: false,
     },
   },
   {
     timestamps: true,
   }
 )
-const SongRequest = mongoose.model('Performer', songSchema);
+const SongRequest = mongoose.model('SongRequest', songSchema);
 module.exports = SongRequest;

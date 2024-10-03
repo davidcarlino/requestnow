@@ -141,13 +141,13 @@ const EventDetails = () => {
                 <div className="grid gap-4 md:grid-cols-2 my-8">
                   <div className="font-serif font-bold dark:text-gray-400">
                     <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                      {"Event Code"} :{" "}
-                      <div>
-                        <h1 className="font-bold text-gray-500 dark:text-gray-500">
-                        {data.eventCode !== "false"? data.eventCode: ""}
-                      </h1>
-                      </div>
+                      {"Event Code"} :{" "} 
                     </p>
+                    <div>
+                      <span className="font-bold text-gray-500 dark:text-gray-500">
+                        {data.eventCode !== "false"? data.eventCode: ""}
+                      </span>
+                    </div>
                   </div>
                   <div className="font-serif font-bold dark:text-gray-400">
                     <EventQrCode event={data}/> 

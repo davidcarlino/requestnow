@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from "react";
 import { Button } from "@windmill/react-ui";
 import { Card, CardBody, Input, Dropdown, DropdownItem } from "@windmill/react-ui";
-// import axios from 'axios';
+import { useParams } from 'react-router-dom';
 //internal import
 import AnimatedContent from "@/components/common/AnimatedContent";
 import PageTitle from "@/components/Typography/PageTitle";
@@ -10,14 +10,17 @@ import InputArea from "@/components/form/input/InputArea";
 import SongServices from "@/services/SongRequestServices";
 
 const SongRequest = () => {
+  const { id } = useParams();
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedSongs, setSelectedSongs] = useState([]); 
-  const [SongRequest, setSongRequest] = useState(false);
+  const [songRequest, setSongRequest] = useState(false);
+  const [sendRequest, setSendRequest] = useState(false);
   const {
     register,
     handleSubmit,
+    setValue,
     onSubmit,
   } = useSongRequestSubmit();
   const debounce = (func, delay) => {
@@ -49,15 +52,16 @@ const SongRequest = () => {
     setQuery(value);
     fetchSongs(value);
   }
-
   const handleSelectSong = (song) => {
-    if (selectedSongs.find((s) => s.id === song.id)) {
-      // If the song is already selected, remove it
-      setSelectedSongs((prevSongs) => prevSongs.filter((s) => s.id !== song.id));
-    } else {
-      // If the song is not selected, add it
-      setSelectedSongs((prevSongs) => [...prevSongs, song]);
-    }
+    setQuery(song.name)
+    setSendRequest(true)
+    const updatedSongs = selectedSongs.find((s) => s.id === song.id)
+      ? selectedSongs.filter((s) => s.id !== song.id) // Remove if already selected
+      : [...selectedSongs, song]; // Add if not selected
+    
+    setSelectedSongs(updatedSongs);
+    setValue('song', updatedSongs.map((s) => s)); // Update the registered form value with song
+    setValue('eventCode', id);
     setSuggestions([]); // Clear suggestions after selection
   };
   return (
@@ -74,13 +78,15 @@ const SongRequest = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="px-6 pt-8 flex-grow scrollbar-hide w-full max-h-full pb-40">
               <div className="w-full">
-                {SongRequest &&
+                {songRequest &&
                   <Input
+                    {...register(`song`, {
+                      required: true,
+                    })}
                     name="search"
-                    // register={register}
                     className="mb-2"
                     placeholder="Search a Song"
-                    // value={query}
+                    value={query}
                     onChange={(event) => handleInputChange(event.target.value)}
                   />
                 }
@@ -124,6 +130,12 @@ const SongRequest = () => {
                   </div>
                 )}
               </div>
+            </div>
+            <div>
+              {selectedSongs.length > 0 && sendRequest ?
+                <Button type="submit">{"Send Request"}</Button>
+                :""
+              }
             </div>
           </form>
         </CardBody>

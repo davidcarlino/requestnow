@@ -18,16 +18,33 @@ const useSongRequestSubmit = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("song Request", data)
-    try{
-      const searchSongs = await SongServices.searchSong(data)
+    console.log("data", data)
+    try {
+      setIsSubmitting(true);
+      let songData = {}
+      data.song.map((song) => {
+        Object.keys(song).map((value) =>{
+          if (value !== "id" && value !== "albumImage"){
+            songData[value] = song[value]
+          }
+          
+        })
+      })
+      console.log("songss", songData)
+      const res = await SongServices.addSong(songData, data.eventCode);
+        setIsUpdate(true);
+        setIsSubmitting(false);
+        notifySuccess(res.message);
     } catch (err) {
-
+      notifyError(err ? err?.response?.data?.message : err?.message);
+      setIsSubmitting(false);
+      // closeDrawer();
     }
   }
   return {
     register,
     handleSubmit,
+    setValue,
     onSubmit,
   }
 }
