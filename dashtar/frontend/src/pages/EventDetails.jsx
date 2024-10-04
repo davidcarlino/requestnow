@@ -22,26 +22,11 @@ import EventDahboardTable from "@/components/event-dashboard/EventDashboardTable
 
 const EventDetails = () => {
   const { t } = useTranslation(); // Add this line
-  const { endDate, setEndDate, startDate, setStartDate,
-    searchText,
-    setSearchText,
-    searchRef,
-    currentPage,
-    handleChangePage,
-    handleSubmitForAll,
-    resultsPerPage,
-    toggleDrawer
-  } = useContext(SidebarContext);
+  const {  toggleDrawer } = useContext(SidebarContext);
   const { id } = useParams();
   const { data, loading } = useAsync(() => EventServices.getEventById(id));
   const { showTimeFormat, showDateFormat, showingTranslateValue } = useUtilsFunction();
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627
-    },
-    zoom: 11
-  };
+  
   return (
     <>
       <MainDrawer>
@@ -49,20 +34,23 @@ const EventDetails = () => {
       </MainDrawer>
       <PageTitle>{"Event Dashboard"}</PageTitle>
       <AnimatedContent>
-        <div className="flex justify-end"> 
-          <Button className="h-12 w-full" onClick={toggleDrawer}>
-            {t("Edit Event")}
-          </Button>
-          <Button className="h-12 w-full">
-            {t("Print Event Details")}
-          </Button>
-          <Button className="h-12 w-full">
-            {t("Print Song Request QR Code")}
-          </Button>
-          <Button className="h-12 w-full">
-            {t("Print Invoice")}
-          </Button>
-        </div>
+        <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
+          <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-4 py-2"> 
+            <Button className="h-12 w-full" onClick={toggleDrawer}>
+              {t("Edit Event")}
+            </Button>
+            <Button className="h-12 w-full">
+              {t("Print Event Details")}
+            </Button>
+            <Button className="h-12 w-full">
+              {t("Print Song Request QR Code")}
+            </Button>
+            <Button className="h-12 w-full">
+              {t("Print Invoice")}
+            </Button>
+          </div>
+        </Card>
+        
         <div className="grid gap-4 md:grid-cols-2 my-8">
           <Card>
             <CardBody>
@@ -160,7 +148,7 @@ const EventDetails = () => {
             </CardBody>
           </Card>
         </div>
-        <EventDahboardTable songs={data.songRequest}/>
+        <EventDahboardTable songs={data.songRequest} eventCode ={data.eventCode}/>
       </AnimatedContent>
     </>
   );

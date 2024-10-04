@@ -3,15 +3,29 @@ const Event = require("../models/Event");
 
 const addSong = async (req, res) => {
   try {
-    const event = await Event.findOne({ eventCode: req.body.eventCode });
-    const song = new Song({...req.body, event: event._id});
-    event.songRequest.push(song);
-    await event.save();
-    await song.save();
-    res.status(200).send({
-      message: "Song Added Successfully!",
-      songs: song
-    });
+    const {songs, eventCode} = req.body
+    if (!Array.isArray(songs)) {
+      return res.status(400).json({ message: "Songs data must be an array." });
+    }
+    const event = await Event.findOne({eventCode});
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    const songIds = [];
+    for (const songData of songs) {
+      const newSong = new Song({
+        name: songData.name,
+        album: songData.album,
+        artist: songData.artist,
+        year: songData.year,
+        event: event._id,
+      });
+      const savedSong = await newSong.save(); // Save the song
+      songIds.push(savedSong._id); // Push the saved song's ID to the array
+    }
+    event.songRequest.push(...songIds);
+    await event.save(); // Save the updated event
+    res.status(200).json({ message: 'Songs added and linked to the event successfully!' });
   } catch (err) {
     res.status(500).send({
       message: err.message,

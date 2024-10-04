@@ -18,22 +18,20 @@ const useSongRequestSubmit = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const songData = []
     try {
+      console.log("datat", data)
       setIsSubmitting(true);
-      data.song.map((song) => {
-        const songData ={
-          name : song.name,
-          album : song.album,
-          artist : song.artist,
-          year : song.year
-        }
-        const res = SongServices.addSong(songData, data.eventCode);
-        setIsUpdate(true);
-        setIsSubmitting(false);
-        notifySuccess(res.message);
-      })
-      console.log("songss", songData)
+      const songData = data.song.map((song) => ({
+        name: song.name,
+        album: song.album,
+        artist: song.artist,
+        year: song.year
+      }));
+      const res = await SongServices.addSong(songData, data.eventCode);
+      console.log("res", res)
+      notifySuccess(res.message);
+      setIsUpdate(true);
+      setIsSubmitting(false);
       
     } catch (err) {
       notifyError(err ? err?.response?.data?.message : err?.message);

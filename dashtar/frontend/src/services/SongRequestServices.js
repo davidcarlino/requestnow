@@ -3,8 +3,9 @@ import requests from "./httpService";
 const SongServices = {
   // add a song
   addSong: async (body, eventCode) => {
-    const updatedBody = { ...body, eventCode };
-    return requests.post("/song/add", updatedBody);
+    const songs = body
+    const payload = {songs, eventCode};
+    return requests.post("/song/add", payload);
   },
 
   // search a song through spotify api

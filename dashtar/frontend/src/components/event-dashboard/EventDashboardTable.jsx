@@ -9,12 +9,8 @@ import {
   TableBody,
   TableRow
 } from "@windmill/react-ui";
+import { Link } from "react-router-dom";
 
-const dashboardStyle = {
-  padding: '20px',
-  fontFamily: 'Arial, sans-serif',
-  color: 'white',
-};
 const buttonStyle = {
   backgroundColor: '#f5f5f5',
   color: 'black',
@@ -28,15 +24,11 @@ const buttonStyle = {
 const activeButtonStyle = {
   ...buttonStyle,
   backgroundColor: '#3b82f6',
-};
-
-const cardStyle = {
-  padding: '20px',
-  borderRadius: '8px',
+  color: "white"
 };
 
 const EventDahboardTable = (props) => {
-  const {songs} = props
+  const {songs, eventCode} = props
   const [activeSection, setActiveSection] = useState('songRequests');
     
   const renderSongRequests = () => (
@@ -113,34 +105,44 @@ const EventDahboardTable = (props) => {
       return renderInvoices();
     }
   };
-
+  
   return (
     <>
-    <div style={dashboardStyle}>
+    <div className="p-5 font-sans text-black">
       {/* Button group to switch between sections */}
-      <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-3 py-2">
-        <Button
-          style={activeSection === 'songRequests' ? activeButtonStyle : buttonStyle}
-          onClick={() => setActiveSection('songRequests')}
-        >
-          {"Song Requests"}
-        </Button>
-        <Button
-          style={activeSection === 'playlists' ? activeButtonStyle : buttonStyle}
-          onClick={() => setActiveSection('playlists')}
-        >
-          {"Playlists"}
-        </Button>
-        <Button
-          style={activeSection === 'invoices' ? activeButtonStyle : buttonStyle}
-          onClick={() => setActiveSection('invoices')}
-        >
-          {"Invoices"}
-        </Button>
-      </div>
-
+      <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
+        <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-3 py-2">
+          <Button
+            style={activeSection === 'songRequests' ? activeButtonStyle : buttonStyle}
+            onClick={() => setActiveSection('songRequests')}
+          >
+            {"Song Requests"}
+          </Button>
+          <Button
+            style={activeSection === 'playlists' ? activeButtonStyle : buttonStyle}
+            onClick={() => setActiveSection('playlists')}
+          >
+            {"Playlists"}
+          </Button>
+          <Button
+            style={activeSection === 'invoices' ? activeButtonStyle : buttonStyle}
+            onClick={() => setActiveSection('invoices')}
+          >
+            {"Invoices"}
+          </Button>
+        </div>
+      </Card>
+      {activeSection === 'songRequests' &&
+        <div className="flex justify-center items-center">
+          <Link to={`/scan/${eventCode}`}>
+            <Button>
+              {"Create Song Requests+"}
+            </Button>
+          </Link>
+        </div>
+      }
       {/* Card that displays the active table */}
-      <Card style={cardStyle}>
+      <Card className="p-5 rounded-lg">
         {renderActiveSection()}
       </Card>
     </div>
