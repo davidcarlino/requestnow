@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 import AnimatedContent from "@/components/common/AnimatedContent";
 import PageTitle from "@/components/Typography/PageTitle";
 import useSongRequestSubmit from "@/hooks/useSongRequestSubmit";
-import InputArea from "@/components/form/input/InputArea";
 import SongServices from "@/services/SongRequestServices";
 
 const SongRequest = () => {
@@ -58,7 +57,9 @@ const SongRequest = () => {
     const updatedSongs = selectedSongs.find((s) => s.id === song.id)
       ? selectedSongs.filter((s) => s.id !== song.id) // Remove if already selected
       : [...selectedSongs, song]; // Add if not selected
-    
+    if (updatedSongs.length == 0){
+      setQuery("")
+    }
     setSelectedSongs(updatedSongs);
     setValue('song', updatedSongs.map((s) => s)); // Update the registered form value with song
     setValue('eventCode', id);

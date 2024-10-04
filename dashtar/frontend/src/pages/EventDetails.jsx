@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import {
   Card,
   CardBody,
-  Button
+  Button,
 } from "@windmill/react-ui";
 import { useParams } from "react-router";;
 import { useTranslation } from 'react-i18next'; // Add this line
@@ -18,6 +18,7 @@ import MapComponent from "@/components/googleMap/googleMap"
 import MainDrawer from "@/components/drawer/MainDrawer";
 import EventDrawer from "@/components/drawer/EventDrawer";
 import EventQrCode from "@/components/qr-code/qrCode"; 
+import EventDahboardTable from "@/components/event-dashboard/EventDashboardTable";
 
 const EventDetails = () => {
   const { t } = useTranslation(); // Add this line
@@ -48,22 +49,21 @@ const EventDetails = () => {
       </MainDrawer>
       <PageTitle>{"Event Dashboard"}</PageTitle>
       <AnimatedContent>
-      <div className="flex justify-end"> 
-            <Button className="h-12 w-full" onClick={toggleDrawer}>
-              {t("Edit Event")}
-            </Button>
-            <Button className="h-12 w-full">
-              {t("Print Event Details")}
-            </Button>
-            <Button className="h-12 w-full">
-              {t("Print Song Request QR Code")}
-            </Button>
-            <Button className="h-12 w-full">
-              {t("Print Invoice")}
-            </Button>
-          </div>
+        <div className="flex justify-end"> 
+          <Button className="h-12 w-full" onClick={toggleDrawer}>
+            {t("Edit Event")}
+          </Button>
+          <Button className="h-12 w-full">
+            {t("Print Event Details")}
+          </Button>
+          <Button className="h-12 w-full">
+            {t("Print Song Request QR Code")}
+          </Button>
+          <Button className="h-12 w-full">
+            {t("Print Invoice")}
+          </Button>
+        </div>
         <div className="grid gap-4 md:grid-cols-2 my-8">
-          
           <Card>
             <CardBody>
               <div className="inline-block overflow-y-auto h-full align-middle transition-all transform">
@@ -122,39 +122,23 @@ const EventDetails = () => {
                         </span>
                       </p>
                     </div>
-                    {/* <div className="font-serif font-bold dark:text-gray-400">
-                      <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                        {"Event Code"} :{" "}
-                        <span className="font-bold text-gray-500 dark:text-gray-500">
-                          {data.eventCode !== "false"? data.eventCode: ""}
-                        </span>
-                      </p>
-                    </div>
-                    <div className="font-serif font-bold dark:text-gray-400">
-                      <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                        {"Event QrCode"} :{" "}
-                          <EventQrCode event={data}/>
-                      </p>
-                    </div> */}
                   </div>
                 </div>
-                <div className="grid gap-4 md:grid-cols-2 my-8">
-                  <div className="font-serif font-bold dark:text-gray-400">
-                    <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                      {"Event Code"} :{" "} 
-                    </p>
-                    <div>
-                      <span className="font-bold text-gray-500 dark:text-gray-500">
-                        {data.eventCode !== "false"? data.eventCode: ""}
-                      </span>
-                    </div>
+              </div>
+              <div className="flex justify-center items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-4">
+                  {/* <!-- Event Code Section --> */}
+                  <div className="text-left dark:text-gray-400">
+                    <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">Your Event Code:</p>
+                    <h1 className="text-lg md:text-xl lg:text-2xl uppercase font-serif font-semibold font-serif dark:text-gray-400">
+                      {data.eventCode !== "false"? data.eventCode: ""}
+                    </h1>
                   </div>
-                  <div className="font-serif font-bold dark:text-gray-400">
+                  {/* <!-- QR Code Section --> */}
+                  <div className="flex flex-col items-center md:items-end text-gray-300">
                     <EventQrCode event={data}/> 
-                    <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                      {"For Guest To Scan"}
-                    </p>
-                  </div> 
+                    <p className="text-xs uppercase font-semibold font-serif dark:text-gray-400">For Guests to Scan</p>
+                  </div>
                 </div>
               </div>
             </CardBody>
@@ -176,6 +160,7 @@ const EventDetails = () => {
             </CardBody>
           </Card>
         </div>
+        <EventDahboardTable songs={data.songRequest}/>
       </AnimatedContent>
     </>
   );
