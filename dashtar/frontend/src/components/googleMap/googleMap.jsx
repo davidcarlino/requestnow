@@ -5,7 +5,7 @@ import Error from "@/components/form/others/Error";
 import './googlemapstyle.css';
 const libraries = ['places'];
 const mapContainerStyle = {
-  height: "300px",
+  height: "calc(100vh - 360px)",
   width: "100%"
 };
 

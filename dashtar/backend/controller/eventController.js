@@ -109,7 +109,7 @@ const getEventById = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id)
     .populate({ path: "venue", select: "_id, address" })
-    .populate({ path: 'songRequest', select: 'name artist album year' });
+    .populate({ path: 'songRequest', select: 'name artist album releaseDate' });
     res.send(event);
   } catch (err) {
     res.status(500).send({

@@ -6,6 +6,7 @@ import {
 } from "@windmill/react-ui";
 import { useParams } from "react-router";;
 import { useTranslation } from 'react-i18next'; // Add this line
+import { FiCheck, FiRefreshCw, FiShoppingCart, FiTruck } from "react-icons/fi";
 
 //internal import
 import useAsync from "@/hooks/useAsync";
@@ -26,7 +27,7 @@ const EventDetails = () => {
   const { id } = useParams();
   const { data, loading } = useAsync(() => EventServices.getEventById(id));
   const { showTimeFormat, showDateFormat, showingTranslateValue } = useUtilsFunction();
-  
+  console.log(data, "data")
   return (
     <>
       <MainDrawer>
@@ -34,22 +35,20 @@ const EventDetails = () => {
       </MainDrawer>
       <PageTitle>{"Event Dashboard"}</PageTitle>
       <AnimatedContent>
-        <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
-          <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-4 py-2"> 
-            <Button className="h-12 w-full" onClick={toggleDrawer}>
-              {t("Edit Event")}
-            </Button>
-            <Button className="h-12 w-full">
-              {t("Print Event Details")}
-            </Button>
-            <Button className="h-12 w-full">
-              {t("Print Song Request QR Code")}
-            </Button>
-            <Button className="h-12 w-full">
-              {t("Print Invoice")}
-            </Button>
-          </div>
-        </Card>
+        <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-4 py-2"> 
+          <Button className="h-12 w-full" onClick={toggleDrawer}>
+            {t("Edit Event")}
+          </Button>
+          <Button className="h-12 w-full">
+            {t("Print Event Details")}
+          </Button>
+          <Button className="h-12 w-full">
+            {t("Print Song Request QR Code")}
+          </Button>
+          <Button className="h-12 w-full">
+            {t("Print Invoice")}
+          </Button>
+        </div>
         
         <div className="grid gap-4 md:grid-cols-2 my-8">
           <Card>
@@ -113,34 +112,37 @@ const EventDetails = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-center items-center">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center p-4">
-                  {/* <!-- Event Code Section --> */}
-                  <div className="text-left dark:text-gray-400">
-                    <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">Your Event Code:</p>
-                    <h1 className="text-lg md:text-xl lg:text-2xl uppercase font-serif font-semibold font-serif dark:text-gray-400">
-                      {data.eventCode !== "false"? data.eventCode: ""}
-                    </h1>
-                  </div>
-                  {/* <!-- QR Code Section --> */}
-                  <div className="flex flex-col items-center md:items-end text-gray-300">
-                    <EventQrCode event={data}/> 
-                    <p className="text-xs uppercase font-semibold font-serif dark:text-gray-400">For Guests to Scan</p>
-                  </div>
-                </div>
+              <div className="grid gap-1 md:grid-cols-1 xl:grid-cols-1">
+                <Card className="flex h-full">
+                  <CardBody className="border border-gray-200 dark:border-gray-800 w-full rounded-lg">
+                    <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-2 py-2">
+                      <div className="flex flex-col items-center justify-center mb-5">
+                        <div className="flex flex-col items-center">
+                          <h2 className="leading-none font-medium text-gray-600 dark:text-gray-200 uppercase mb-4">
+                            Event Code:
+                          </h2>
+                          <p className="text-2xl text-heading text-lg md:text-xl lg:text-2xl uppercase font-serif font-semibold dark:text-gray-400">
+                            {data.eventCode !== "false" ? data.eventCode : ""}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <EventQrCode event={data}/> 
+                      </div>
+                    </div>
+                  </CardBody>
+                </Card>
               </div>
             </CardBody>
           </Card>
           <Card>
             <CardBody>
-              <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                <div className="col-span-8 sm:col-span-4">
-                  <div style={{ height: '50vh', width: '100%' }}>
-                    <MapComponent register={() => {}} setValue={() => {}} resData={data} label ="eventDashboard"/>
-                  </div>
+              <div>
+                <div>
+                  <MapComponent register={() => {}} setValue={() => {}} resData={data} label ="eventDashboard"/>
                 </div>
               </div>
-              <div className="font-serif font-bold dark:text-gray-400">
+              <div className="font-serif font-bold dark:text-gray-400 mt-4">
                 <span className="font-bold text-gray-500 dark:text-gray-500">
                   {data.venue?.address}
                 </span> 

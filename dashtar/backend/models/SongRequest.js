@@ -14,9 +14,13 @@ const songSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    year: {
+    releaseDate: {
       type: String,
       required: true,
+    },
+    image: {
+      type: String,
+      required: false,
     },
     requestedBy: {
       type: String,

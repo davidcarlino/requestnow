@@ -4,7 +4,7 @@ import QRCode from "react-qr-code";
 const EventQrCode = ({event}) =>{
   console.log("event", event)
   return (
-    <div style={{ height: "auto", margin: "0 auto", maxWidth: 64, width: "100%" }}>
+    // <div style={{ height: "auto", margin: "0 auto", maxWidth: 125, width: "100%" }}>
       <QRCode
         size={300}
         style={{ height: "auto", maxWidth: "100%", width: "100%" }}
@@ -19,7 +19,7 @@ const EventQrCode = ({event}) =>{
         value={`http://localhost:4100/scan/${event.eventCode}`}
         viewBox={`0 0 256 256`}
       />
-    </div>
+    // </div>
   )
 }
 export default EventQrCode

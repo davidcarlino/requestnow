@@ -11,26 +11,10 @@ import {
 } from "@windmill/react-ui";
 import { Link } from "react-router-dom";
 
-const buttonStyle = {
-  backgroundColor: '#f5f5f5',
-  color: 'black',
-  border: 'none',
-  padding: '10px 15px',
-  cursor: 'pointer',
-  borderRadius: '5px',
-  marginRight: '10px',
-};
-
-const activeButtonStyle = {
-  ...buttonStyle,
-  backgroundColor: '#3b82f6',
-  color: "white"
-};
-
 const EventDahboardTable = (props) => {
   const {songs, eventCode} = props
   const [activeSection, setActiveSection] = useState('songRequests');
-    
+  console.log(songs)
   const renderSongRequests = () => (
     <TableContainer className="mb-8 dark:bg-gray-900">
       <Table>
@@ -65,7 +49,7 @@ const EventDahboardTable = (props) => {
 
               <TableCell>
                 <span className="text-sm">
-                  {song?.year}
+                  {song?.releaseDate}
                 </span>
               </TableCell>
             </TableRow>
@@ -108,32 +92,27 @@ const EventDahboardTable = (props) => {
   
   return (
     <>
-    <div className="p-5 font-sans text-black">
-      {/* Button group to switch between sections */}
-      <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
-        <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-3 py-2">
-          <Button
-            style={activeSection === 'songRequests' ? activeButtonStyle : buttonStyle}
-            onClick={() => setActiveSection('songRequests')}
-          >
-            {"Song Requests"}
-          </Button>
-          <Button
-            style={activeSection === 'playlists' ? activeButtonStyle : buttonStyle}
-            onClick={() => setActiveSection('playlists')}
-          >
-            {"Playlists"}
-          </Button>
-          <Button
-            style={activeSection === 'invoices' ? activeButtonStyle : buttonStyle}
-            onClick={() => setActiveSection('invoices')}
-          >
-            {"Invoices"}
-          </Button>
-        </div>
-      </Card>
+      <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-3 py-2">
+        <Button
+          onClick={() => setActiveSection('songRequests')}
+        >
+          {"Song Requests"}
+        </Button>
+        <Button
+          layout="outline"
+          onClick={() => setActiveSection('playlists')}
+        >
+          {"Playlists"}
+        </Button>
+        <Button
+          layout="outline"
+          onClick={() => setActiveSection('invoices')}
+        >
+          {"Invoices"}
+        </Button>
+      </div>
       {activeSection === 'songRequests' &&
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center mt-2 mb-4">
           <Link to={`/scan/${eventCode}`}>
             <Button>
               {"Create Song Requests+"}
@@ -141,11 +120,8 @@ const EventDahboardTable = (props) => {
           </Link>
         </div>
       }
-      {/* Card that displays the active table */}
-      <Card className="p-5 rounded-lg">
-        {renderActiveSection()}
-      </Card>
-    </div>
+      
+      {renderActiveSection()}
     </>
   )
 
