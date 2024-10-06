@@ -11,10 +11,10 @@ const productRoutes = require("../routes/productRoutes");
 const customerRoutes = require("../routes/customerRoutes");
 const adminRoutes = require("../routes/adminRoutes");
 const orderRoutes = require("../routes/orderRoutes");
-const customerOrderRoutes = require("../routes/customerOrderRoutes");
+// const customerOrderRoutes = require("../routes/customerOrderRoutes");
 const categoryRoutes = require("../routes/categoryRoutes");
 const couponRoutes = require("../routes/couponRoutes");
-const attributeRoutes = require("../routes/attributeRoutes");
+// const attributeRoutes = require("../routes/attributeRoutes");
 const settingRoutes = require("../routes/settingRoutes");
 const currencyRoutes = require("../routes/currencyRoutes");
 const languageRoutes = require("../routes/languageRoutes");
@@ -23,10 +23,10 @@ const eventRoutes = require("../routes/eventRoutes")
 const venueRoutes = require("../routes/venueRoutes")
 const songRoutes = require("../routes/songRoutes")
 const { isAuth, isAdmin } = require("../config/auth");
-// const {
-//   getGlobalSetting,
-//   getStoreCustomizationSetting,
-// } = require("../lib/notification/setting");
+const {
+  getGlobalSetting,
+  getStoreCustomizationSetting,
+} = require("../lib/notification/setting");
 
 connectDB();
 const app = express();
@@ -51,8 +51,8 @@ app.use("/api/products/", productRoutes);
 app.use("/api/category/", categoryRoutes);
 app.use("/api/coupon/", couponRoutes);
 app.use("/api/customer/", customerRoutes);
-app.use("/api/order/", isAuth, customerOrderRoutes);
-app.use("/api/attributes/", attributeRoutes);
+// app.use("/api/order/", isAuth, customerOrderRoutes);
+// app.use("/api/attributes/", attributeRoutes);
 app.use("/api/setting/", settingRoutes);
 app.use("/api/currency/", isAuth, currencyRoutes);
 app.use("/api/language/", languageRoutes);

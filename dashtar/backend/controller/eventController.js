@@ -107,10 +107,22 @@ const updateEvents = async (req, res) => {
 
 const getEventById = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id)
-    .populate({ path: "venue", select: "_id, address" })
-    .populate({ path: 'songRequest', select: 'name artist album releaseDate' });
-    res.send(event);
+
+    const eventWithSongRequests = await Event.findById(req.params.id)
+      .populate('songRequests')
+
+    if (!eventWithSongRequests) {
+      console.log('Event not found');
+      return null;
+    }
+
+    res.send(eventWithSongRequests);
+    // return eventWithSongRequests;
+
+    // const event = await Event.findById(req.params.id)
+    // .populate({ path: "venue", select: "_id, address" })
+    // .populate({ path: 'songRequest', select: 'name artist album releaseDate' });
+    // res.send(event);
   } catch (err) {
     res.status(500).send({
       message: err.message,

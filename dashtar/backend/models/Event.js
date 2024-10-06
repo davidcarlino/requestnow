@@ -11,11 +11,11 @@ const eventSchema = new mongoose.Schema(
       required: false,
     },
     startTime: {
-      type: String,
+      type: Date,  // Changed to Date for better date handling
       required: false,
     },
     endTime: {
-      type: String,
+      type: Date,  // Changed to Date for better date handling
       required: false,
     },
     slug: {
@@ -27,8 +27,8 @@ const eventSchema = new mongoose.Schema(
       ref: 'Venue',
       required: true
     },
-    songRequest: [{
-      type: mongoose.Schema.Types.ObjectId,  // Reference to the song model
+    songRequests: [{  // Changed to plural for clarity
+      type: mongoose.Schema.Types.ObjectId,  // Reference to the SongRequest model
       ref: 'SongRequest',
       required: false
     }],
