@@ -26,6 +26,7 @@ const MapComponent = ({ register, setValue, resData, label, errors }) => {
   useEffect(() => {
     if (resData.venue || resData.venue != null) {
       setQuery(resData.venue.address)
+      setIsValidAddress(true)
     }
     else{
       setQuery("")

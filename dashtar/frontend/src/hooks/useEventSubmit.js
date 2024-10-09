@@ -5,11 +5,12 @@ import { useContext, useEffect, useState } from "react";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import EventServices from "@/services/EventServices";
 import { SidebarContext } from "@/context/SidebarContext";
-
+import useUtilsFunction from "./useUtilsFunction";
 
 const useEventSubmit = (id) => {
   const { isDrawerOpen, closeDrawer, setIsUpdate, lang } =
     useContext(SidebarContext);
+  const {showDateTimeFormat} = useUtilsFunction
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [language, setLanguage] = useState(lang || "en");
   const [resData, setResData] = useState({});
@@ -99,8 +100,8 @@ const useEventSubmit = (id) => {
         setVenueId(res.venue?._id)
         setValue("name", res.name);
         setValue("description", res.description);
-        setValue("startTime", res.startTime);
-        setValue("endTime", res.endTime);
+        setValue("startTime", new Date(res.startTime).toString().slice(0, 16));
+        setValue("endTime", new Date(res.endTime).toISOString().slice(0, 16));
         setValue("location", res.location);
       }
     } catch (err) {

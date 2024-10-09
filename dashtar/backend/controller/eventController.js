@@ -110,6 +110,7 @@ const getEventById = async (req, res) => {
 
     const eventWithSongRequests = await Event.findById(req.params.id)
       .populate('songRequests')
+      .populate('venue')
 
     if (!eventWithSongRequests) {
       console.log('Event not found');
