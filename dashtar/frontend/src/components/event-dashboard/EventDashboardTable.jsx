@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  Card,
   Table,
   TableCell,
   TableContainer,
@@ -11,15 +10,18 @@ import {
 } from "@windmill/react-ui";
 import { Link } from "react-router-dom";
 
+import useUtilsFunction from "@/hooks/useUtilsFunction";
+
 const EventDahboardTable = (props) => {
   const {songs, eventCode} = props
   const [activeSection, setActiveSection] = useState('songRequests');
-  console.log(songs)
+  const { showDateFormat } = useUtilsFunction();
   const renderSongRequests = () => (
     <TableContainer className="mb-8 dark:bg-gray-900">
       <Table>
         <TableHeader>
           <tr>
+            <TableCell>{"Image"}</TableCell>
             <TableCell>{"Song Title"}</TableCell>
             <TableCell>{"Artist"}</TableCell>
             <TableCell>{"Album"}</TableCell>
@@ -29,6 +31,13 @@ const EventDahboardTable = (props) => {
         <TableBody className="dark:bg-gray-900">
           {songs?.map((song, i) => (
             <TableRow key={i + 1}>
+              <TableCell>
+                <img
+                  src={song.image}
+                  alt={song.name}
+                  className="w-10 h-10 mr-2"
+                />
+              </TableCell>
               <TableCell>
                 <span className="text-sm">
                   {song?.name}
@@ -49,7 +58,7 @@ const EventDahboardTable = (props) => {
 
               <TableCell>
                 <span className="text-sm">
-                  {song?.releaseDate}
+                  {showDateFormat(song?.releaseDate)}
                 </span>
               </TableCell>
             </TableRow>

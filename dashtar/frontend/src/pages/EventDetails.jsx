@@ -150,7 +150,7 @@ const EventDetails = () => {
             </CardBody>
           </Card>
         </div>
-        <EventDahboardTable songs={data.songRequest} eventCode ={data.eventCode}/>
+        <EventDahboardTable songs={data.songRequests} eventCode ={data.eventCode}/>
       </AnimatedContent>
     </>
   );
