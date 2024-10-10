@@ -16,7 +16,7 @@ const EventQrCode = ({event}) =>{
         //   endTime: event.endTime,
         //   venue: event.venue ? event.venue.address : 'Not specified',
         // })}
-        value={`http://localhost:4100/scan/${event.eventCode}`}
+        value={`https://gigmaster.co/request/index.php?code=${event.eventCode}`}
         viewBox={`0 0 256 256`}
       />
     // </div>
