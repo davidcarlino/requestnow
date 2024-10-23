@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@windmill/react-ui";
-import { ImFacebook, ImGoogle } from "react-icons/im";
+import { ImFacebook, ImAppleinc, ImGoogle } from "react-icons/im";
 import { useTranslation } from "react-i18next";
 
 //internal import
@@ -97,8 +97,8 @@ const Login = () => {
                     disabled
                     className="text-sm inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center rounded-md focus:outline-none text-gray-700 bg-gray-100 shadow-sm my-2 md:px-2 lg:px-3 py-4 md:py-3.5 lg:py-4 hover:text-white hover:bg-blue-600 h-11 md:h-12 w-full mr-2"
                   >
-                    <ImFacebook className="w-4 h-4 mr-2" />{" "}
-                    <span className="ml-2"> {t("LoginWithFacebook")} </span>
+                    <ImAppleinc className="w-4 h-4 mr-2" />{" "}
+                    <span className="ml-2"> {t("LoginWithApple")} </span>
                   </button>
                   <button
                     disabled
