@@ -9,6 +9,19 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: false, // Not required for Google sign-in
+    },
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+    picture: {
+      type: String,
     },
     songRequest: {
       type: Array,
@@ -16,13 +29,13 @@ const userSchema = new mongoose.Schema(
     },
     admin: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Admin',  // Refers to the 'Admin' model
-      required: true,
+      ref: 'Admin',
+      required: false,
     },
     auth: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Auth',  // Refers to the 'Performer' model
-      required: true,
+      ref: 'Auth',
+      required: false,
     },
   },
   {

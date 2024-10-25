@@ -1,9 +1,8 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect}from "react";
+import { Link , useLocation, useHistory } from "react-router-dom";
 import { Button } from "@windmill/react-ui";
-import { ImFacebook, ImGoogle } from "react-icons/im";
+import { ImFacebook, ImAppleinc, ImGoogle } from "react-icons/im";
 import { useTranslation } from "react-i18next";
-
 //internal import
 import Error from "@/components/form/others/Error";
 import LabelArea from "@/components/form/selectOption/LabelArea";
@@ -13,11 +12,32 @@ import ImageDark from "@/assets/img/login-office-dark.jpg";
 import useLoginSubmit from "@/hooks/useLoginSubmit";
 import CMButton from "@/components/form/button/CMButton";
 import Logo from "@/assets/img/logo/logo-light.png";
+import useGoogleAuth from "@/hooks/useGoogleAuth";
 
 const Login = () => {
   const { t } = useTranslation();
   const { onSubmit, register, handleSubmit, errors, loading } =
     useLoginSubmit();
+    const { handleGoogleLogin } = useGoogleAuth();
+  const location = useLocation();
+  const history = useHistory();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const token = searchParams.get('token');
+    const error = searchParams.get('error');
+    if (token) {
+      // Store the token in localStorage
+      localStorage.setItem('adminInfo', JSON.stringify({ token }));
+      // Redirect to dashboard
+      history.push('/dashboard');
+    }
+    if (error === 'google_auth_failed') {
+      // Show an error message to the user
+      console.error('Google authentication failed');
+      // You can set an error state here and display it in the UI
+    }
+  }, [location, history]);
 
   return (
     <>
@@ -97,17 +117,17 @@ const Login = () => {
                     disabled
                     className="text-sm inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center rounded-md focus:outline-none text-gray-700 bg-gray-100 shadow-sm my-2 md:px-2 lg:px-3 py-4 md:py-3.5 lg:py-4 hover:text-white hover:bg-blue-600 h-11 md:h-12 w-full mr-2"
                   >
-                    <ImFacebook className="w-4 h-4 mr-2" />{" "}
-                    <span className="ml-2"> {t("LoginWithFacebook")} </span>
-                  </button>
-                  <button
-                    disabled
-                    className="text-sm inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center rounded-md focus:outline-none text-gray-700 bg-gray-100 shadow-sm my-2  md:px-2 lg:px-3 py-4 md:py-3.5 lg:py-4 hover:text-white hover:bg-red-500 h-11 md:h-12 w-full"
-                  >
-                    <ImGoogle className="w-4 h-4 mr-2" />{" "}
-                    <span className="ml-2">{t("LoginWithGoogle")}</span>
+                    <ImAppleinc className="w-4 h-4 mr-2" />{" "}
+                    <span className="ml-2"> {t("LoginWithApple")} </span>
                   </button>
                 </form>
+                <button
+                  onClick={handleGoogleLogin}
+                  className="text-sm inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center rounded-md focus:outline-none text-gray-700 bg-gray-100 shadow-sm my-2  md:px-2 lg:px-3 py-4 md:py-3.5 lg:py-4 hover:text-white hover:bg-red-500 h-11 md:h-12 w-full"
+                >
+                  <ImGoogle className="w-4 h-4 mr-2" />{" "}
+                  <span className="ml-2">{t("LoginWithGoogle")}</span>
+                </button>
 
                 <p className="mt-4">
                   <Link

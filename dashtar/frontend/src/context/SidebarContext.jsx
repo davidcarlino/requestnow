@@ -39,6 +39,7 @@ export const SidebarProvider = ({ children }) => {
   const [navBar, setNavBar] = useState(true);
   const { i18n } = useTranslation();
   const [tabIndex, setTabIndex] = useState(0);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const closeSidebar = () => setIsSidebarOpen(false);
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -179,6 +180,8 @@ export const SidebarProvider = ({ children }) => {
         navBar,
         tabIndex,
         setTabIndex,
+        isAuthenticated,
+        setIsAuthenticated,
       }}
     >
       {children}
