@@ -8,15 +8,7 @@ const EventQrCode = ({event}) =>{
       <QRCode
         size={300}
         style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-        // value={JSON.stringify({
-        //   url: "http://localhost:4100/event/66fa4e747d3aa11d3dec8a40/dashboard",
-        //   name: event.name,
-        //   description: event.description,
-        //   startTime: event.startTime,
-        //   endTime: event.endTime,
-        //   venue: event.venue ? event.venue.address : 'Not specified',
-        // })}
-        value={`https://gigmaster.co/request/index.php?code=${event.eventCode}`}
+        value={`https://request.gigmaster.co/songs?code=${event.eventCode}`}
         viewBox={`0 0 256 256`}
       />
     // </div>

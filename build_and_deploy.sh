@@ -27,15 +27,21 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Check if lftp is installed
+if ! command -v lftp &> /dev/null; then
+    echo "lftp is not installed. Please install it and try again."
+    exit 1
+fi
+
 # Find the path to lftp
-LFTP_PATH=$(which lftp)
+LFTP_PATH=$(command -v lftp)
 
 echo "Starting FTP process..."
 echo "FTP Host: $FTP_HOST"
 echo "Remote Directory: $REMOTE_DIR"
 
-# Use the full path to lftp
-"$LFTP_PATH" -d -c "
+# Use lftp
+lftp -d -c "
   set ftp:ssl-allow no;
   set ssl:verify-certificate no;
   set net:max-retries 3;
@@ -57,7 +63,12 @@ echo "Remote Directory: $REMOTE_DIR"
   
   # Upload new build
   echo 'Uploading new build...';
-  mirror -R -v --parallel=10 dist/ $REMOTE_DIR;
+  mirror -R -v --parallel=10 --exclude-glob .DS_Store --exclude-glob Thumbs.db dist/ $REMOTE_DIR;
+  
+  # Ensure correct permissions for uploaded files
+  echo 'Setting correct permissions...';
+  chmod -R 644 $REMOTE_DIR/*;
+  find $REMOTE_DIR -type d -exec chmod 755 {} +;
   
   # List contents after upload
   echo 'Contents of remote directory after upload:';
