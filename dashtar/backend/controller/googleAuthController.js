@@ -1,6 +1,7 @@
 const { OAuth2Client } = require('google-auth-library');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 const client = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID,
@@ -27,17 +28,30 @@ exports.googleCallback = async (req, res) => {
       audience: process.env.GOOGLE_CLIENT_ID,
     });
 
-    const { name, email, picture } = ticket.getPayload();
-
+    const payload = ticket.getPayload();
+    const { name, email, picture } = payload;
+    const googleId = payload.sub;
     let user = await User.findOne({ email });
 
     if (!user) {
+      const randomPassword = crypto.randomBytes(10).toString('hex');
+      
       user = new User({
         name,
         email,
-        image: picture,
+        picture: picture || '',
+        googleId,
         provider: 'google',
+        password: randomPassword,
+        isVerified: true
       });
+      await user.save();
+    } else if (!user.googleId) {
+      user.googleId = googleId;
+      user.provider = 'google';
+      if (picture && user.picture !== picture) {
+        user.picture = picture;
+      }
       await user.save();
     }
 
@@ -45,8 +59,6 @@ exports.googleCallback = async (req, res) => {
       expiresIn: '1d',
     });
 
-    // Instead of trying to set localStorage here, we'll send the token to the frontend
-    console.log("Redirecting to:", `${process.env.FRONTEND_URL}/auth/google/callback?token=${jwtToken}`);
     res.redirect(`${process.env.FRONTEND_URL}/auth/google/callback?token=${jwtToken}`);
   } catch (error) {
     console.error('Error in Google callback:', error);
