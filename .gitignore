@@ -6,11 +6,6 @@ node_modules/
 # Production build
 /dashtar/frontend/dist
 
-# Environment variables
-.env
-.env.*
-*.env
-
 # Logs
 logs
 *.log
