@@ -61,3 +61,12 @@ Thumbs.db
 # Misc
 *.bak
 *.tmp
+
+# Unignore specific .env files
+!dashtar/frontend/.env.production
+!dashtar/frontend/.env.development
+
+# Keep ignoring all other .env files
+.env
+.env.local
+.env.*
