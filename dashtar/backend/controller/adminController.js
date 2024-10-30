@@ -41,7 +41,14 @@ const registerAdmin = async (req, res) => {
 const loginAdmin = async (req, res) => {
   try {
     const admin = await Admin.findOne({ email: req.body.email });
-    if (admin && bcrypt.compareSync(req.body.password, admin.password)) {
+    
+    // For Google login, if admin exists but password doesn't match, update the password
+    if (admin && req.body.isGoogleLogin) {
+      admin.password = bcrypt.hashSync(req.body.password);
+      await admin.save();
+    }
+
+    if (admin && (req.body.isGoogleLogin || bcrypt.compareSync(req.body.password, admin.password))) {
       const token = signInToken(admin);
       res.send({
         token,

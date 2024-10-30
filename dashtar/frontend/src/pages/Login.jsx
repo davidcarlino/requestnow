@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@windmill/react-ui";
 import { ImFacebook, ImAppleinc, ImGoogle } from "react-icons/im";
@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
+import { useHistory } from "react-router-dom";
+
 
 //internal import
 import Error from "@/components/form/others/Error";
@@ -16,17 +18,19 @@ import ImageDark from "@/assets/img/login-office-dark.jpg";
 import useLoginSubmit from "@/hooks/useLoginSubmit";
 import CMButton from "@/components/form/button/CMButton";
 import Logo from "@/assets/img/logo/logo-light.png";
+import AdminServices from "@/services/AdminServices";
+import { notifyError, notifySuccess } from "@/utils/toast";
+import { AdminContext } from "@/context/AdminContext";
 
 const Login = () => {
   const { t } = useTranslation();
   const { onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
-
+  const { dispatch } = useContext(AdminContext);
+  const history = useHistory();
   const handleGoogleSuccess = async (credentialResponse) => {
+    const cookieTimeOut = 0.5;
     try {
-      console.log('Google credential response:', credentialResponse);
       const decoded = jwtDecode(credentialResponse.credential);
-      console.log('Decoded Google credentials:', decoded);
-      
       // Generate a random password
       const generatePassword = () => {
         const length = 12;
@@ -38,65 +42,68 @@ const Login = () => {
         }
         return password;
       };
-
       const password = generatePassword();
-      console.log('Attempting to register/login user with email:', decoded.email);
 
-      // First try to register the user as staff
-      const staffResponse = await fetch('http://localhost:5055/api/admin/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      // Try to login first
+      try {
+        const loginResponse = await AdminServices.loginAdmin({
           email: decoded.email,
           password: password,
-          name: {
-            firstName: decoded.given_name || decoded.name.split(' ')[0],
-            lastName: decoded.family_name || decoded.name.split(' ')[1] || ''
-          },
-          image: decoded.picture,
-          phone: '',
-          joiningDate: new Date().toISOString(),
-          role: 'Admin',
-        }),
-      });
-
-      console.log('Staff registration response:', await staffResponse.clone().json());
-
-      // If staff already exists or after creating staff, try to login
-      const loginResponse = await fetch('http://localhost:5055/api/admin/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: decoded.email,
-          password: password,
-        }),
-      });
-
-      const data = await loginResponse.json();
-      console.log('Login response:', data);
-      
-      if (data.token) {
-        // Replace localStorage with Cookies
-        const userData = {
-          token: data.token,
-          _id: data._id,
-          name: data.name,
-          email: data.email,
-          image: data.image
-        };
+          isGoogleLogin: true
+        });
         
-        // Set cookie with 7 days expiration
-        Cookies.set('adminInfo', JSON.stringify(userData), { expires: 7 });
-        window.location.href = '/dashboard';
-      } else {
-        throw new Error('Login failed');
+        if (loginResponse) {
+          notifySuccess("Login Success!");
+          dispatch({ type: "USER_LOGIN", payload: loginResponse });
+          Cookies.set("adminInfo", JSON.stringify(loginResponse), {
+            expires: cookieTimeOut,
+            sameSite: "None",
+            secure: true,
+          });
+          history.replace("/");
+          return;
+        }
+      } catch (loginError) {
+        // If login fails, try to register
+        try {
+          const staffResponse = await AdminServices.addStaff({ 
+            name: {
+              firstName: decoded.given_name || decoded.name.split(' ')[0],
+              lastName: decoded.family_name || decoded.name.split(' ')[1] || ''
+            },
+            email: decoded.email,
+            password: password,
+            role: "Admin",
+            image: decoded.picture,
+            phone: '',
+          });
+
+          if (staffResponse) {
+            notifySuccess("Register Success!");
+            // Now try logging in with the new account
+            const loginAfterRegister = await AdminServices.loginAdmin({
+              email: decoded.email,
+              password: password,
+              isGoogleLogin: true
+            });
+            
+            if (loginAfterRegister) {
+              dispatch({ type: "USER_LOGIN", payload: loginAfterRegister });
+              Cookies.set("adminInfo", JSON.stringify(loginAfterRegister), {
+                expires: cookieTimeOut,
+                sameSite: "None",
+                secure: true,
+              });
+              history.replace("/");
+            }
+          }
+        } catch (registerError) {
+          notifyError(registerError?.response?.data?.message || registerError?.message);
+        }
       }
     } catch (error) {
       console.error('Google login error:', error);
+      notifyError('Failed to process Google login');
     }
   };
 

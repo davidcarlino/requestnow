@@ -27,7 +27,6 @@ const {
   getGlobalSetting,
   getStoreCustomizationSetting,
 } = require("../lib/notification/setting");
-const googleAuthRoutes = require('../routes/googleauthRoutes');
 
 connectDB();
 const app = express();
@@ -61,7 +60,6 @@ app.use("/api/notification/", isAuth, notificationRoutes);
 app.use("/api/event/", eventRoutes);
 app.use("/api/venue/", venueRoutes);
 app.use("/api/song/", songRoutes);
-app.use('/api/auth', googleAuthRoutes);
 
 //if you not use admin dashboard then these two route will not needed.
 app.use("/api/admin/", adminRoutes);
