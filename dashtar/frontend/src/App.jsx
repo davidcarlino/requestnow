@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import AccessibleNavigationAnnouncer from "@/components/AccessibleNavigationAnnouncer";
 import PrivateRoute from "@/components/login/PrivateRoute";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 const Layout = lazy(() => import("@/layout/Layout"));
 const Login = lazy(() => import("@/pages/Login"));
 const SignUp = lazy(() => import("@/pages/SignUp"));
@@ -16,7 +17,7 @@ const ResetPassword = lazy(() => import("@/pages/ResetPassword"));
 
 const App = () => {
   return (
-    <>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_APP_GOOGLE_CLIENT_ID}>
       <ToastContainer />
       <Router>
         <AccessibleNavigationAnnouncer />
@@ -32,7 +33,7 @@ const App = () => {
           <Redirect exact from="/" to="/login" />
         </Switch>
       </Router>
-    </>
+    </GoogleOAuthProvider>
   );
 };
 

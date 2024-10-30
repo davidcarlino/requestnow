@@ -1,8 +1,12 @@
-import React, {useEffect}from "react";
-import { Link , useLocation, useHistory } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@windmill/react-ui";
 import { ImFacebook, ImAppleinc, ImGoogle } from "react-icons/im";
 import { useTranslation } from "react-i18next";
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie';
+
 //internal import
 import Error from "@/components/form/others/Error";
 import LabelArea from "@/components/form/selectOption/LabelArea";
@@ -12,32 +16,93 @@ import ImageDark from "@/assets/img/login-office-dark.jpg";
 import useLoginSubmit from "@/hooks/useLoginSubmit";
 import CMButton from "@/components/form/button/CMButton";
 import Logo from "@/assets/img/logo/logo-light.png";
-import useGoogleAuth from "@/hooks/useGoogleAuth";
 
 const Login = () => {
   const { t } = useTranslation();
-  const { onSubmit, register, handleSubmit, errors, loading } =
-    useLoginSubmit();
-    const { handleGoogleLogin } = useGoogleAuth();
-  const location = useLocation();
-  const history = useHistory();
+  const { onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const token = searchParams.get('token');
-    const error = searchParams.get('error');
-    if (token) {
-      // Store the token in localStorage
-      localStorage.setItem('adminInfo', JSON.stringify({ token }));
-      // Redirect to dashboard
-      history.push('/dashboard');
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      console.log('Google credential response:', credentialResponse);
+      const decoded = jwtDecode(credentialResponse.credential);
+      console.log('Decoded Google credentials:', decoded);
+      
+      // Generate a random password
+      const generatePassword = () => {
+        const length = 12;
+        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+        let password = "";
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * charset.length);
+          password += charset[randomIndex];
+        }
+        return password;
+      };
+
+      const password = generatePassword();
+      console.log('Attempting to register/login user with email:', decoded.email);
+
+      // First try to register the user as staff
+      const staffResponse = await fetch('http://localhost:5055/api/admin/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: decoded.email,
+          password: password,
+          name: {
+            firstName: decoded.given_name || decoded.name.split(' ')[0],
+            lastName: decoded.family_name || decoded.name.split(' ')[1] || ''
+          },
+          image: decoded.picture,
+          phone: '',
+          joiningDate: new Date().toISOString(),
+          role: 'Admin',
+        }),
+      });
+
+      console.log('Staff registration response:', await staffResponse.clone().json());
+
+      // If staff already exists or after creating staff, try to login
+      const loginResponse = await fetch('http://localhost:5055/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: decoded.email,
+          password: password,
+        }),
+      });
+
+      const data = await loginResponse.json();
+      console.log('Login response:', data);
+      
+      if (data.token) {
+        // Replace localStorage with Cookies
+        const userData = {
+          token: data.token,
+          _id: data._id,
+          name: data.name,
+          email: data.email,
+          image: data.image
+        };
+        
+        // Set cookie with 7 days expiration
+        Cookies.set('adminInfo', JSON.stringify(userData), { expires: 7 });
+        window.location.href = '/dashboard';
+      } else {
+        throw new Error('Login failed');
+      }
+    } catch (error) {
+      console.error('Google login error:', error);
     }
-    if (error === 'google_auth_failed') {
-      // Show an error message to the user
-      console.error('Google authentication failed');
-      // You can set an error state here and display it in the UI
-    }
-  }, [location, history]);
+  };
+
+  const handleGoogleError = () => {
+    console.error('Google login failed');
+  };
 
   return (
     <>
@@ -113,6 +178,16 @@ const Login = () => {
                     </Button>
                   )}
                   <hr className="my-10" />
+                  
+                  <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={handleGoogleError}
+                    theme="outline"
+                    size="large"
+                    width="100%"
+                    text="signin_with"
+                  />
+                  
                   <button
                     disabled
                     className="text-sm inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center rounded-md focus:outline-none text-gray-700 bg-gray-100 shadow-sm my-2 md:px-2 lg:px-3 py-4 md:py-3.5 lg:py-4 hover:text-white hover:bg-blue-600 h-11 md:h-12 w-full mr-2"
@@ -120,31 +195,24 @@ const Login = () => {
                     <ImAppleinc className="w-4 h-4 mr-2" />{" "}
                     <span className="ml-2"> {t("LoginWithApple")} </span>
                   </button>
-                </form>
-                <button
-                  onClick={handleGoogleLogin}
-                  className="text-sm inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center rounded-md focus:outline-none text-gray-700 bg-gray-100 shadow-sm my-2  md:px-2 lg:px-3 py-4 md:py-3.5 lg:py-4 hover:text-white hover:bg-red-500 h-11 md:h-12 w-full"
-                >
-                  <ImGoogle className="w-4 h-4 mr-2" />{" "}
-                  <span className="ml-2">{t("LoginWithGoogle")}</span>
-                </button>
 
-                <p className="mt-4">
-                  <Link
-                    className="text-sm font-medium text-emerald-500 dark:text-emerald-400 hover:underline"
-                    to="/forgot-password"
-                  >
-                    {t("ForgotPassword")}
-                  </Link>
-                </p>
-                <p className="mt-1">
-                  <Link
-                    className="text-sm font-medium text-emerald-500 dark:text-emerald-400 hover:underline"
-                    to="/signup"
-                  >
-                    {t("CreateAccountTitle")}
-                  </Link>
-                </p>
+                  <p className="mt-4">
+                    <Link
+                      className="text-sm font-medium text-emerald-500 dark:text-emerald-400 hover:underline"
+                      to="/forgot-password"
+                    >
+                      {t("ForgotPassword")}
+                    </Link>
+                  </p>
+                  <p className="mt-1">
+                    <Link
+                      className="text-sm font-medium text-emerald-500 dark:text-emerald-400 hover:underline"
+                      to="/signup"
+                    >
+                      {t("CreateAccountTitle")}
+                    </Link>
+                  </p>
+                </form>
               </div>
             </main>
           </div>

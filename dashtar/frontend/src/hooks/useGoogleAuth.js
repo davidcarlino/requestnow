@@ -10,8 +10,8 @@ const useGoogleAuth = () => {
   const handleGoogleLogin = async () => {
     try {
       const response = await GoogleServices.initiateGoogleLogin();
-      console.log("response", response)
       if (response.url) {
+        sessionStorage.setItem('redirectAfterLogin', window.location.pathname);
         window.location.href = response.url;
       } else {
         console.error('Google login failed: No URL returned');
@@ -21,11 +21,26 @@ const useGoogleAuth = () => {
     }
   };
 
-  const handleGoogleCallback = (token) => {
-    if (token) {
-      localStorage.setItem('adminInfo', JSON.stringify({ token }));
-      setIsAuthenticated(true);
-      history.push('/dashboard', { replace: true });
+  const handleGoogleCallback = async (code) => {
+    try {
+      const response = await GoogleServices.handleGoogleCallback(code);
+      
+      if (response.success && response.token) {
+        localStorage.setItem('adminInfo', JSON.stringify({
+          token: response.token,
+          ...response.admin
+        }));
+        
+        setIsAuthenticated(true);
+        
+        const redirectPath = sessionStorage.getItem('redirectAfterLogin') || '/dashboard';
+        sessionStorage.removeItem('redirectAfterLogin');
+        
+        history.push(redirectPath, { replace: true });
+      }
+    } catch (error) {
+      console.error('Error handling Google callback:', error);
+      history.push('/login', { replace: true });
     }
   };
 

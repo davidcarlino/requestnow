@@ -1,7 +1,10 @@
 const { OAuth2Client } = require('google-auth-library');
-const User = require('../models/User');
+const Admin = require('../models/Admin');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
+const axios = require('axios');
+const { signInToken } = require("../config/auth");
 
 const client = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID,
@@ -10,15 +13,19 @@ const client = new OAuth2Client(
 );
 
 exports.getGoogleAuthURL = (req, res) => {
+  console.log('Generating Google Auth URL...');
   const url = client.generateAuthUrl({
     access_type: 'offline',
     scope: ['profile', 'email'],
   });
+  console.log('Generated Auth URL:', url);
   res.json({ url });
 };
 
 exports.googleCallback = async (req, res) => {
+  console.log('Google callback initiated');
   const { code } = req.query;
+  
   try {
     const { tokens } = await client.getToken(code);
     client.setCredentials(tokens);
@@ -31,37 +38,68 @@ exports.googleCallback = async (req, res) => {
     const payload = ticket.getPayload();
     const { name, email, picture } = payload;
     const googleId = payload.sub;
-    let user = await User.findOne({ email });
+    
+    let admin = await Admin.findOne({ email });
+    let randomPassword = crypto.randomBytes(10).toString('hex');
+    let plainPassword = randomPassword;
 
-    if (!user) {
-      const randomPassword = crypto.randomBytes(10).toString('hex');
-      
-      user = new User({
-        name,
+    if (!admin) {
+      admin = new Admin({
+        name: { firstName: name.split(' ')[0], lastName: name.split(' ')[1] || '' },
         email,
-        picture: picture || '',
+        image: picture || '',
         googleId,
         provider: 'google',
-        password: randomPassword,
-        isVerified: true
+        password: bcrypt.hashSync(randomPassword),
+        role: 'Admin',
+        joiningDate: new Date(),
+        status: 'Active'
       });
-      await user.save();
-    } else if (!user.googleId) {
-      user.googleId = googleId;
-      user.provider = 'google';
-      if (picture && user.picture !== picture) {
-        user.picture = picture;
+      await admin.save();
+    } else {
+      admin.googleId = googleId;
+      admin.provider = 'google';
+      if (picture && admin.image !== picture) {
+        admin.image = picture;
       }
-      await user.save();
+      admin.password = bcrypt.hashSync(randomPassword);
+      await admin.save();
     }
 
-    const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: '1d',
-    });
+    try {
+      const admin = await Admin.findOne({ email: email });
+      if (admin && bcrypt.compareSync(plainPassword, admin.password)) {
+        const token = signInToken(admin);
+        
+        res.json({
+          success: true,
+          token,
+          admin: {
+            name: admin.name,
+            email: admin.email,
+            image: admin.image,
+            role: admin.role
+          }
+        });
+      } else {
+        res.status(401).json({
+          success: false,
+          message: 'Authentication failed'
+        });
+      }
+    } catch (loginError) {
+      res.status(401).json({
+        success: false,
+        message: 'Login failed',
+        error: loginError.message
+      });
+    }
 
-    res.redirect(`${process.env.FRONTEND_URL}/auth/google/callback?token=${jwtToken}`);
   } catch (error) {
-    console.error('Error in Google callback:', error);
-    res.redirect(`${process.env.FRONTEND_URL}/login?error=google_auth_failed`);
+    res.status(500).json({
+      success: false,
+      message: 'Google authentication failed',
+      error: error.message
+    });
   }
 };
