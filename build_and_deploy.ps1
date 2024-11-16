@@ -13,7 +13,7 @@ if (Test-Path "./dashtar/frontend/.env.production") {
 $FTP_HOST = $env:VITE_APP_FTP_HOST
 $FTP_USER = $env:VITE_APP_FTP_USER
 $FTP_PASS = $env:VITE_APP_FTP_PASS
-$REMOTE_DIR = $env:VITE_APP_FTP_REMOTE_DIR
+$REMOTE_DIR = $env:VITE_APP_FTP_REMOTE_DIR.TrimEnd('/')  # Remove trailing slash
 $LOCAL_DIR = $env:VITE_APP_FTP_LOCAL_DIR
 
 # Check if WinSCP is installed
@@ -64,32 +64,48 @@ Write-Host "Starting FTP process..."
 Write-Host "FTP Host: $FTP_HOST"
 Write-Host "Remote Directory: $REMOTE_DIR"
 
-# Create WinSCP script
+# Ensure remote directory exists
+$checkDirScript = @"
+option batch abort
+option confirm off
+open ftp://${FTP_USER}:${FTP_PASS}@${FTP_HOST}:21 -rawsettings ProxyPort=0 FtpSecure=0
+
+# Check if the remote directory exists
+ls $REMOTE_DIR
+
+# If directory doesn't exist, create it
+if (not $? -eq 0) {
+    mkdir $REMOTE_DIR
+    echo "Directory $REMOTE_DIR created"
+}
+
+exit
+"@
+
+# Save the check directory script to a temporary file
+$checkDirScriptPath = [System.IO.Path]::GetTempFileName()
+$checkDirScript | Out-File -FilePath $checkDirScriptPath -Encoding ASCII
+
+# Execute the check script
+& $winscpPath /script="$checkDirScriptPath"
+
+# Create WinSCP upload script
 $winscpScript = @"
 option batch abort
 option confirm off
 open ftp://${FTP_USER}:${FTP_PASS}@${FTP_HOST}:21 -rawsettings ProxyPort=0 FtpSecure=0
 
-# List contents before deletion
-ls $REMOTE_DIR
-
-# Delete existing files
-rm $REMOTE_DIR/*
-
-# List contents after deletion
-ls $REMOTE_DIR
-
-# Upload new build
-lcd ./dist
+# Ensure we're in the correct remote directory
 cd $REMOTE_DIR
-put -resume -transfer=binary *
 
-# Set permissions (if FTP server supports SITE command)
-chmod 644 $REMOTE_DIR/*
-chmod 755 $REMOTE_DIR/
+# First, remove all existing files in the remote directory
+rm *
 
-# List contents after upload
-ls $REMOTE_DIR
+# Upload all files from the dist directory, preserving directory structure
+synchronize remote -mirror ./dist $REMOTE_DIR
+
+# Verify the upload by listing contents
+ls
 
 exit
 "@
@@ -116,4 +132,4 @@ else {
 Write-Host "Check ftp_log.txt for full transfer details."
 
 # Clean up temporary script file
-Remove-Item $scriptPath 
+Remove-Item $scriptPath
