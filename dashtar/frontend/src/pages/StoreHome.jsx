@@ -19,7 +19,7 @@ import SinglePage from "@/components/store-home/SinglePage";
 import Checkout from "@/components/store-home/Checkout";
 import SeoSetting from "@/components/settings/SeoSetting";
 import DashboardSetting from "@/components/store-home/DashboardSetting";
-import SelectLanguageTwo from "@/components/form/selectOption/SelectLanguageTwo";
+
 import AnimatedContent from "@/components/common/AnimatedContent";
 
 const StoreHome = () => {
