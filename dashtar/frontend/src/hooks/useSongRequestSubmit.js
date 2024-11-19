@@ -19,26 +19,27 @@ const useSongRequestSubmit = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log("datat", data)
       setIsSubmitting(true);
       const songData = data.song.map((song) => ({
         name: song.name,
         album: song.album,
         artist: song.artist,
-        year: song.year
+        year: song.year,
+        releaseDate: song.releaseDate || song.year,
+        image: song.albumImage
       }));
+      
       const res = await SongServices.addSong(songData, data.eventCode);
-      console.log("res", res)
       notifySuccess(res.message);
-      setIsUpdate(true);
+      // setIsUpdate(true);
       setIsSubmitting(false);
       
     } catch (err) {
-      notifyError(err ? err?.response?.data?.message : err?.message);
+      notifyError(err ? err.message : 'Something went wrong!');
       setIsSubmitting(false);
-      // closeDrawer();
     }
   }
+
   return {
     register,
     handleSubmit,
@@ -46,4 +47,5 @@ const useSongRequestSubmit = () => {
     onSubmit,
   }
 }
+
 export default useSongRequestSubmit;

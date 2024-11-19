@@ -13,17 +13,23 @@ const addSong = async (req, res) => {
     }
     const songIds = [];
     for (const songData of songs) {
+      const releaseDate = songData.releaseDate || songData.year;
+      if (!releaseDate) {
+        return res.status(400).json({ message: 'Release date is required for all songs' });
+      }
       const newSong = new Song({
         name: songData.name,
         album: songData.album,
         artist: songData.artist,
         year: songData.year,
+        releaseDate: releaseDate,
+        image: songData.image,
         event: event._id,
       });
       const savedSong = await newSong.save(); // Save the song
       songIds.push(savedSong._id); // Push the saved song's ID to the array
     }
-    event.songRequest.push(...songIds);
+    event.songRequests.push(...songIds);
     await event.save(); // Save the updated event
     res.status(200).json({ message: 'Songs added and linked to the event successfully!' });
   } catch (err) {
@@ -94,6 +100,7 @@ const searchSong = async (req, res) => {
       album: track.album.name,
       albumImage: track.album.images[0]?.url,
       year: track.album.release_date ? track.album.release_date.split('-')[0] : 'Unknown', // Extract year or 'Unknown' if not available
+      releaseDate: track.album.release_date,
     }));
   
     res.json(tracks);

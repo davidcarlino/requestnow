@@ -28,6 +28,24 @@ const EventDetails = () => {
   const { data, loading } = useAsync(() => EventServices.getEventById(id));
   const { showTimeFormat, showDateFormat, showingTranslateValue } = useUtilsFunction();
   console.log(data, "data")
+
+  const [songRequests, setSongRequests] = useState([]);
+
+  useEffect(() => {
+    if (data?.songRequests) {
+      setSongRequests(data.songRequests);
+    }
+  }, [data]);
+
+  const refreshSongs = async () => {
+    try {
+      const updatedEvent = await EventServices.getEventById(id);
+      setSongRequests(updatedEvent.songRequests);
+    } catch (error) {
+      console.error('Error refreshing songs:', error);
+    }
+  };
+
   return (
     <>
       <MainDrawer>
@@ -150,7 +168,11 @@ const EventDetails = () => {
             </CardBody>
           </Card>
         </div>
-        <EventDahboardTable songs={data.songRequests} eventCode ={data.eventCode}/>
+        <EventDahboardTable 
+          songs={songRequests} 
+          eventCode={data?.eventCode}
+          refreshSongs={refreshSongs}
+        />
       </AnimatedContent>
     </>
   );
