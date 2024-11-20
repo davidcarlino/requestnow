@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { Card, CardBody, Input, Textarea } from "@windmill/react-ui";
 import { useTranslation } from "react-i18next";
@@ -19,10 +19,28 @@ const EventDrawer = ({ id }) => {
     resData,
     errors,
     setValue,
+    watch,
     onSubmit,
     handleSelectLanguage,
     } = useEventSubmit(id);
   const { t } = useTranslation();
+
+  const startTime = watch("startTime");
+
+  useEffect(() => {
+    if (resData) {
+      const formatDateTime = (dateString) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toISOString().slice(0, 16);
+      };
+
+      setValue('startTime', formatDateTime(resData.startTime));
+      setValue('endTime', formatDateTime(resData.endTime));
+    }
+  }, [resData, setValue]);
+
+
   return (
     <>
       <div className="w-full relative p-6 border-b border-gray-100 bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
@@ -90,7 +108,7 @@ const EventDrawer = ({ id }) => {
                         type="datetime-local"
                         placeholder={"EventStartTime"}
                       />
-                      <Error errorName={errors.endTime} />
+                      <Error errorName={errors.startTime} />
                     </div>
                 </div>
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
@@ -99,11 +117,23 @@ const EventDrawer = ({ id }) => {
                       <Input
                         {...register(`endTime`, {
                           required: "Event End Time",
+                          validate: (value) => {
+                            if (!startTime) return true;
+                            const start = new Date(startTime);
+                            const end = new Date(value);
+                            return end > start || "End time must be after to start time";
+                          }
                         })}
                         label="event end Time"
                         name="endTime"
                         type="datetime-local"
-                        placeholder={"EventEndTime"}
+                        min={startTime}
+                        disabled={!startTime}
+                        className={`${
+                          !startTime 
+                            ? 'opacity-50 cursor-not-allowed bg-gray-100 dark:bg-gray-700' 
+                            : 'bg-gray-50 dark:bg-gray-700'
+                        } border text-sm focus:ring-2 focus:ring-blue-500 block w-full`}
                       />
                       <Error errorName={errors.endTime} />
                     </div>

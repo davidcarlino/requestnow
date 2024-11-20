@@ -18,6 +18,7 @@ const useEventSubmit = (id) => {
   const {
       register,
       handleSubmit,
+      watch,
       setValue,
       clearErrors,
       formState: { errors },
@@ -139,15 +140,16 @@ const useEventSubmit = (id) => {
   }, [id, setValue, isDrawerOpen, clearErrors]);
   
   return {
-      register,
-      handleSubmit,
-      errors,
-      language,
-      isSubmitting,
-      onSubmit,
-      resData,
-      setValue,
-      handleSelectLanguage
+    register,
+    handleSubmit,
+    watch,
+    errors,
+    language,
+    isSubmitting,
+    onSubmit,
+    resData,
+    setValue,
+    handleSelectLanguage
   }
 
 }
