@@ -79,7 +79,7 @@ echo "Current directory: $(pwd)"
 
 # Install dependencies
 echo "Installing dependencies..."
-npm install
+npm install --force
 
 # Build the project
 echo "Building the project..."
@@ -98,13 +98,19 @@ echo "Starting FTP process..."
 echo "FTP Host: $FTP_HOST"
 echo "Remote Directory: $REMOTE_DIR"
 
-# Use lftp
+# Use lftp with improved connection settings
 lftp -d -c "
+  # Connection settings
   set ftp:ssl-allow no;
   set ssl:verify-certificate no;
   set net:max-retries 3;
   set net:reconnect-interval-base 5;
   set net:reconnect-interval-multiplier 1;
+  set net:connection-limit 5;
+  set net:connection-takeover yes;
+  set ftp:use-feat no;
+  
+  # Open connection
   open -u $FTP_USER,$FTP_PASS ftp://$FTP_HOST:21;
   
   # List contents before deletion
@@ -113,20 +119,22 @@ lftp -d -c "
   
   # Delete all files and directories in the remote directory
   echo 'Deleting contents of remote directory...';
-  mrm $REMOTE_DIR/*;
+  rm -rf $REMOTE_DIR/*;
   
   # List contents after deletion
   echo 'Contents of remote directory after deletion:';
   ls $REMOTE_DIR;
   
-  # Upload new build
+  # Upload new build with reduced parallelism
   echo 'Uploading new build...';
-  mirror -R -v --parallel=10 --exclude-glob .DS_Store --exclude-glob Thumbs.db dist/ $REMOTE_DIR;
+  mirror -R -v --parallel=3 --use-cache --no-empty-dirs \
+    --exclude-glob .DS_Store --exclude-glob Thumbs.db \
+    dist/ $REMOTE_DIR;
   
   # Ensure correct permissions for uploaded files
   echo 'Setting correct permissions...';
-  chmod -R 644 $REMOTE_DIR/*;
-  find $REMOTE_DIR -type d -exec chmod 755 {} +;
+  find $REMOTE_DIR -type f -exec chmod 644 {} \;;
+  find $REMOTE_DIR -type d -exec chmod 755 {} \;;
   
   # List contents after upload
   echo 'Contents of remote directory after upload:';
