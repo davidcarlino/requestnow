@@ -59,14 +59,35 @@ const loginAdmin = async (req, res) => {
         image: admin.image,
       });
     } else {
-      res.status(401).send({
-        message: "Invalid Email or password!",
-      });
+      // Ensure all fields are explicitly defined for production
+      const errorResponse = {
+        message: "Invalid Email or password",
+        isGoogleLogin: Boolean(req.body.isGoogleLogin),
+        adminExists: Boolean(admin),
+        status: 'error',
+        code: admin ? 'INVALID_CREDENTIALS' : 'USER_NOT_FOUND',
+        passwordAttempted: Boolean(req.body.password),
+        timestamp: new Date().toISOString()
+      };
+
+      // Set explicit headers
+      res.setHeader('Content-Type', 'application/json');
+      return res.status(401).json(errorResponse);
     }
   } catch (err) {
-    res.status(500).send({
-      message: err.message,
-    });
+    // Ensure error response is also explicitly formatted
+    const errorResponse = {
+      message: "An error occurred during login",
+      status: 'error',
+      code: 'SERVER_ERROR',
+      isGoogleLogin: Boolean(req.body.isGoogleLogin),
+      timestamp: new Date().toISOString(),
+      errorType: err.name || 'UnknownError'
+    };
+
+    // Set explicit headers
+    res.setHeader('Content-Type', 'application/json');
+    return res.status(500).json(errorResponse);
   }
 };
 
