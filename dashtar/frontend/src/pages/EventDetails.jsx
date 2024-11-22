@@ -75,7 +75,7 @@ const EventDetails = () => {
                 <div className="flex flex-col lg:flex-row md:flex-row w-full overflow-hidden">
                   <div className="w-full flex flex-col p-5 md:p-8 text-left">
                     <div className="mb-5 block">
-                      <h2 className="text-heading text-lg md:text-xl lg:text-2xl uppercase font-serif font-semibold font-serif dark:text-gray-400">
+                      <h2 className="text-heading text-lg md:text-xl lg:text-2xl uppercase font-serif font-semibold font-serif dark:text-[aliceblue]">
                         {data?.name}
                       </h2>
                     </div>
