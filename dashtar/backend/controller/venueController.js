@@ -24,7 +24,7 @@ const getAllVenues = async (req, res) => {
   } = req.query;
   
   try {
-    // First get all events for this user
+    // First get all events for this user using the ID from decoded token
     const userEvents = await Event.find({ createdBy: req.user._id });
     const userVenueIds = userEvents.map(event => event.venue);
     

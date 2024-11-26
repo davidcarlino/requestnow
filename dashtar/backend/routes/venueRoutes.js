@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
+const { isAuth } = require('../config/auth');
 const {
   addVenue,
   getAllVenues,
@@ -9,8 +9,8 @@ const {
   updateVenues
 } = require('../controller/venueController');
 
-// Apply auth middleware to all venue routes
-router.use(auth);
+// Apply isAuth middleware to all venue routes
+router.use(isAuth);
 
 //add a venue
 router.post('/add', addVenue);

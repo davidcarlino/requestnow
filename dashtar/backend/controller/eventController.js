@@ -9,7 +9,7 @@ const addEvent = async (req, res) => {
     const newEvent = new Event({
       ...req.body, 
       venue: newVenue._id,
-      createdBy: req.user._id  // Add the logged-in user's ID
+      createdBy: req.user._id  // This will now use the ID from the decoded token
     });
     
     await newEvent.save();

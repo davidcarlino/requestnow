@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
+const { isAuth } = require('../config/auth');
 const {
   addEvent,
   getAllEvents,
@@ -9,8 +9,8 @@ const {
   deleteEvent
 } = require('../controller/eventController');
 
-// Protect all routes with auth middleware
-router.use(auth);
+// Protect all routes with isAuth middleware
+router.use(isAuth);
 
 //add a event
 router.post('/add', addEvent);
