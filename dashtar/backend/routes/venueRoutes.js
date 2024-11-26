@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
 const {
   addVenue,
   getAllVenues,
@@ -8,19 +9,22 @@ const {
   updateVenues
 } = require('../controller/venueController');
 
+// Apply auth middleware to all venue routes
+router.use(auth);
+
 //add a venue
 router.post('/add', addVenue);
 
 //get all venue
 router.get('/', getAllVenues);
 
-//delete a event
-router.delete('/:id', deleteVenue)
+//delete a venue
+router.delete('/:id', deleteVenue);
 
 //get a venue by id
 router.get('/:id', getVenueById);
 
-//update a event
+//update a venue
 router.put('/:id', updateVenues);
 
 module.exports = router;

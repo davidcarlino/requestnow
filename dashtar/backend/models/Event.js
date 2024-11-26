@@ -4,18 +4,23 @@ const eventSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: false,
+      required: true,
     },
     description: {
       type: String,
       required: false,
     },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Admin',
+      required: true
+    },
     startTime: {
-      type: Date,  // Changed to Date for better date handling
+      type: Date,
       required: false,
     },
     endTime: {
-      type: Date,  // Changed to Date for better date handling
+      type: Date,
       required: false,
     },
     slug: {
@@ -23,12 +28,12 @@ const eventSchema = new mongoose.Schema(
       required: false,
     },
     venue: {
-      type: mongoose.Schema.Types.ObjectId,  // Reference to the Venue model
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Venue',
       required: true
     },
-    songRequests: [{  // Changed to plural for clarity
-      type: mongoose.Schema.Types.ObjectId,  // Reference to the SongRequest model
+    songRequests: [{
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'SongRequest',
       required: false
     }],
@@ -45,6 +50,10 @@ const eventSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+// Add indexes for better query performance
+eventSchema.index({ createdBy: 1 });
+eventSchema.index({ name: 1 });
 
 const Event = mongoose.model('Event', eventSchema);
 module.exports = Event;

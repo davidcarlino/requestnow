@@ -21,7 +21,7 @@ const venueSchema = new mongoose.Schema(
     type: {
       type: String,
       required: false,
-    },
+    }
   },
   {
     timestamps: true,
