@@ -48,9 +48,9 @@ const sidebar = [
   },
 
   {
-    path: "/customers",
+    path: "/leads",
     icon: FiUsers,
-    name: "Customers",
+    name: "My Leads",
   },
   {
     path: "/event",

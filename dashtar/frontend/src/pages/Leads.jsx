@@ -24,7 +24,7 @@ import useFilter from "@/hooks/useFilter";
 import CustomerServices from "@/services/CustomerServices";
 import AnimatedContent from "@/components/common/AnimatedContent";
 
-const Customers = () => {
+const Leads = () => {
   const { data, loading, error } = useAsync(CustomerServices.getAllCustomers);
 
   // console.log('customer',data)
@@ -53,7 +53,7 @@ const Customers = () => {
 
   return (
     <>
-      <PageTitle>{t("CustomersPage")}</PageTitle>
+      <PageTitle>{t("My Leads")}</PageTitle>
 
       <AnimatedContent>
         <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
@@ -64,7 +64,7 @@ const Customers = () => {
             >
               <div className="items-center">
                 <UploadMany
-                  title="Customers"
+                  title="My Leads"
                   exportData={data}
                   filename={filename}
                   isDisabled={isDisabled}
@@ -156,4 +156,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default Leads;
