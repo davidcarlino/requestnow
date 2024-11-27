@@ -10,7 +10,7 @@ const ProductDetails = lazy(() => import("@/pages/ProductDetails"));
 const Category = lazy(() => import("@/pages/Category"));
 const ChildCategory = lazy(() => import("@/pages/ChildCategory"));
 const Staff = lazy(() => import("@/pages/Staff"));
-const Leads = lazy(() => import("@/pages/leads"));
+const Leads = lazy(() => import("@/pages/Leads"));
 const Twofactor = lazy(() => import("@/pages/twofactor"));
 const CustomerOrder = lazy(() => import("@/pages/CustomerOrder"));
 const Orders = lazy(() => import("@/pages/Orders"));

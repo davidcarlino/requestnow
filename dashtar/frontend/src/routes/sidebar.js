@@ -17,58 +17,63 @@ import {
  * If you're looking to actual Router routes, go to
  * `routes/index.js`
  */
-const sidebar = [
-  {
-    path: "/dashboard", // the url
-    icon: FiGrid, // icon
-    name: "Dashboard", // name that appear in Sidebar
-  },
+const sidebar = (adminInfo) => {
+  // List of admin emails that should see the admin menu
+  const adminEmails = [
+    'david.carlino20+admin@gmail.com',
+    'chetan_admin@gmail.com'
+  ];
 
-  
+  const isAdmin = adminEmails.includes(adminInfo?.email);
 
-  {
-    path: "/leads",
-    icon: FiUsers,
-    name: "My Leads",
-  },
-  {
-    path: "/event",
-    icon: FiCompass,
-    name: "My Events",
-  },
+  const sidebarItems = [
+    {
+      path: "/dashboard",
+      icon: FiGrid,
+      name: "Dashboard",
+    },
+    {
+      path: "/leads",
+      icon: FiUsers,
+      name: "My Leads",
+    },
+    {
+      path: "/event",
+      icon: FiCompass,
+      name: "My Events",
+    },
+    {
+      path: "/venue",
+      icon: FiMapPin,
+      name: "Venues",
+    },
+    {
+      path: "/our-staff",
+      icon: FiUser,
+      name: "Staff",
+    },
+    {
+      path: "/settings?settingTab=common-settings",
+      icon: FiSettings,
+      name: "Settings",
+    },
+  ];
 
-  {
-    path: "/venue",
-    icon: FiMapPin,
-    name: "Venues",
-  },
+  // Only add admin menu if user has admin email
+  if (isAdmin) {
+    sidebarItems.push({
+      icon: FiSlack,
+      name: "Tech Admin",
+      routes: [
+        {
+          path: "/admin/all-users",
+          name: "All Users",
+        },
+      ],
+    });
+  }
 
-  {
-    path: "/our-staff",
-    icon: FiUser,
-    name: "Staff",
-  },
-
-  {
-    path: "/settings?settingTab=common-settings",
-    icon: FiSettings,
-    name: "Settings",
-  },
-
-  {
-    icon: FiSlack,
-    name: "Tech Admin",
-    routes: [
-      {
-        path: "/admin/all-users",
-       
-        name: "All Users",
-      },
-    ],
-  },
-
-
-
-];
+  return sidebarItems;
+};
 
 export default sidebar;

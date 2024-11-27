@@ -16,13 +16,15 @@ import SidebarSubMenu from "@/components/sidebar/SidebarSubMenu";
 const SidebarContent = () => {
   const { t } = useTranslation();
   const { mode } = useContext(WindmillContext);
-  const { dispatch } = useContext(AdminContext);
+  const { dispatch, state } = useContext(AdminContext);
 
   const handleLogOut = () => {
     dispatch({ type: "USER_LOGOUT" });
     Cookies.remove("adminInfo");
   };
 
+  const routes = sidebar(state.adminInfo);
+  console.log("routes", routes);
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
       <a className=" text-gray-900 dark:text-gray-200" href="/dashboard">
@@ -33,7 +35,7 @@ const SidebarContent = () => {
         )}
       </a>
       <ul className="mt-8">
-        {sidebar.map((route) =>
+        {routes.map((route) =>
           route.routes ? (
             <SidebarSubMenu route={route} key={route.name} />
           ) : (
