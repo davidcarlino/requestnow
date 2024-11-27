@@ -2,6 +2,7 @@ import { lazy } from "react";
 
 // use lazy for better code splitting
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const AdminAllUsers = lazy(() => import("@/pages/AdminAllUsers"));
 const Attributes = lazy(() => import("@/pages/Attributes"));
 const ChildAttributes = lazy(() => import("@/pages/ChildAttributes"));
 const Products = lazy(() => import("@/pages/Products"));
@@ -147,6 +148,12 @@ const routes = [
     path: "/notifications",
     component: Notifications,
   },
+
+  {
+    path: "/admin/all-users",
+    component: AdminAllUsers,
+  },
+
 ];
 
 export default routes;

@@ -1,13 +1,14 @@
 {
   "dependencies": {
-    "mongoose": "^8.5.3"
+    "mongoose": "^8.5.3",
+    "react-icons": "^5.3.0"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
   },
   "scripts": {
     "start": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
-    "build": "concurrently \"cd frontend && npm run build\" \"cd backend && npm run build\"",
+    "build1": "concurrently \"cd frontend && npm run build\" \"cd backend && npm run build\"",
     "start:frontend": "cd dashtar && npm run dev",
     "start:backend": "cd backend && npm run dev",
     "install": "echo \"\\033[1;33m📁 Installing Frontend Dependencies...\\033[0m\" && cd frontend && npm install --force && echo \"\\033[1;33m📁 Installing Backend Dependencies...\\033[0m\" && cd ../backend && npm install --force && echo \"\\033[1;32m✅ All dependencies installed successfully!\\033[0m\""

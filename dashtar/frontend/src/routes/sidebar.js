@@ -7,7 +7,7 @@ import {
   FiSlack,
   FiGlobe,
   FiTarget,
-  FiMapPin
+  FiMapPin,
 } from "react-icons/fi";
 
 /**
@@ -24,28 +24,7 @@ const sidebar = [
     name: "Dashboard", // name that appear in Sidebar
   },
 
-  {
-    icon: FiSlack,
-    name: "Catalog",
-    routes: [
-      {
-        path: "/products",
-        name: "Products",
-      },
-      {
-        path: "/categories",
-        name: "Categories",
-      },
-      {
-        path: "/attributes",
-        name: "Attributes",
-      },
-      {
-        path: "/coupons",
-        name: "Coupons",
-      },
-    ],
-  },
+  
 
   {
     path: "/leads",
@@ -67,13 +46,25 @@ const sidebar = [
   {
     path: "/our-staff",
     icon: FiUser,
-    name: "OurStaff",
+    name: "Staff",
   },
 
   {
     path: "/settings?settingTab=common-settings",
     icon: FiSettings,
     name: "Settings",
+  },
+
+  {
+    icon: FiSlack,
+    name: "Tech Admin",
+    routes: [
+      {
+        path: "/admin/all-users",
+       
+        name: "All Users",
+      },
+    ],
   },
 
 
