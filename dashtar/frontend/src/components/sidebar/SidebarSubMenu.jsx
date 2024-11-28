@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { NavLink, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, Route, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   IoChevronDownOutline,
@@ -9,19 +9,36 @@ import {
 
 const SidebarSubMenu = ({ route }) => {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  
+  // Check if child is active and set initial open state accordingly
+  const isChildActive = () => {
+    return route.routes.some((child) => location.pathname === child.path);
+  };
+  
+  const [open, setOpen] = useState(isChildActive());
+
+  // Use useEffect to update open state when location changes
+  useEffect(() => {
+    if (isChildActive()) {
+      setOpen(true);
+    }
+  }, [location.pathname]);
 
   return (
     <>
       <li className="relative px-6 py-3" key={route.name}>
         <button
-          className="inline-flex items-center justify-between focus:outline-none w-full text-sm font-semibold transition-colors duration-150 hover:text-emerald-600 dark:hover:text-gray-200"
+          className="inline-flex items-center justify-between focus:outline-none w-full text-sm font-semibold transition-colors duration-150 hover:text-blue-700 dark:hover:text-gray-200"
           onClick={() => setOpen(!open)}
+          style={{
+            color: isChildActive() && "#00FFFF",
+          }}
           aria-haspopup="true"
         >
           <span className="inline-flex items-center">
             <route.icon className="w-5 h-5" aria-hidden="true" />
-            <span className="ml-4 mt-1">{t(`${route.name}`)}</span>
+            <span className="ml-4 mt-1" >{t(`${route.name}`)}</span>
             <span className="pl-4 mt-1">
               {open ? <IoChevronDownOutline /> : <IoChevronForwardOutline />}
             </span>
@@ -34,7 +51,7 @@ const SidebarSubMenu = ({ route }) => {
             aria-label="submenu"
           >
             {route.routes.map((child, i) => (
-              <li key={i + 1}>
+              <li className="relative" key={i + 1}>
                 {child?.outside ? (
                   <a
                     href={import.meta.env.VITE_APP_STORE_DOMAIN}
@@ -62,24 +79,25 @@ const SidebarSubMenu = ({ route }) => {
                   </a>
                 ) : (
                   <NavLink
+                    exact
                     to={child.path}
-                    // target={`${child.name === 'Sell' ? '_blank' : '_self'}`}
-                    className="flex items-center font-serif py-1 text-sm text-gray-600 hover:text-emerald-600 cursor-pointer"
-                    // activeStyle={{
-                    //   color: "#0d9e6d",
-                    // }}
+                    target={`${child?.outside ? "_blank" : "_self"}`}
+                    className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-blue-700 dark:hover:text-gray-200"
+                    activeStyle={{
+                      color: "#00FFFF",
+                    }}
                     rel="noreferrer"
                   >
                     <Route path={child.path} exact={route.exact}>
                       <span
-                        className="absolute inset-y-0 left-0 w-1 bg-emerald-600 rounded-tr-lg rounded-br-lg"
+                        className="absolute inset-y-0 left-0 w-1 bg-[#00FFFF] rounded-tr-lg rounded-br-lg"
                         aria-hidden="true"
                       ></span>
                     </Route>
                     <span className="text-xs text-gray-500 pr-1">
                       <IoRemoveSharp />
                     </span>
-                    <span className="text-gray-500 hover:text-emerald-600 dark:hover:text-gray-200">
+                    <span className="ml-4">
                       {t(`${child.name}`)}
                     </span>
                   </NavLink>
