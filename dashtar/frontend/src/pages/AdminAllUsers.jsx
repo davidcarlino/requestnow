@@ -22,12 +22,12 @@ import useFilter from "@/hooks/useFilter";
 import MainDrawer from "@/components/drawer/MainDrawer";
 import StaffDrawer from "@/components/drawer/StaffDrawer";
 import TableLoading from "@/components/preloader/TableLoading";
-import StaffTable from "@/components/staff/StaffTable";
+import UserTable from "@/components/users/UserTable";
 import NotFound from "@/components/table/NotFound";
 import PageTitle from "@/components/Typography/PageTitle";
 import { AdminContext } from "@/context/AdminContext";
 import { SidebarContext } from "@/context/SidebarContext";
-import AdminServices from "@/services/AdminServices";
+import UserServices from "@/services/UserServices";
 import AnimatedContent from "@/components/common/AnimatedContent";
 
 const AdminAllUsers = () => {
@@ -36,7 +36,7 @@ const AdminAllUsers = () => {
   const { toggleDrawer, lang } = useContext(SidebarContext);
 
   const { data, loading, error } = useAsync(() =>
-    AdminServices.getAllStaff({ email: adminInfo.email })
+    UserServices.getAllUsers({ email: adminInfo.email })
   );
 
   const {
@@ -87,9 +87,9 @@ const AdminAllUsers = () => {
               <div className="flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
                 <Select onChange={(e) => setRole(e.target.value)}>
                   <option value="All" defaultValue hidden>
-                    {t("StaffRole")}
+                    {t("UserRole")}
                   </option>
-                  <option value="Admin">{t("StaffRoleAdmin")}</option>
+                  <option value="Admin">{t("UserRoleAdmin")}</option>
                   <option value="Cashier">{t("SelectCashiers")}</option>
                   <option value="Super Admin">{t("SelectSuperAdmin")}</option>
                 </Select>
@@ -101,9 +101,9 @@ const AdminAllUsers = () => {
                   className="w-full rounded-md h-12"
                 >
                   <span className="mr-3">
-                    <FiPlus />
+                    <FiPlus />  
                   </span>
-                  {t("AddStaff")}
+                  {t("AddUser")}
                 </Button>
               </div>
               <div className="mt-2 md:mt-0 flex items-center xl:gap-x-4 gap-x-1 flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
@@ -157,7 +157,7 @@ const AdminAllUsers = () => {
               </tr>
             </TableHeader>
 
-            <StaffTable staffs={dataTable} lang={lang} />
+            <UserTable users={dataTable} lang={lang} />
           </Table>
           <TableFooter>
             <Pagination
