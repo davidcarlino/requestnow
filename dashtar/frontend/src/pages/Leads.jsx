@@ -12,6 +12,7 @@ import {
 } from "@windmill/react-ui";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { FiPlus } from "react-icons/fi";
 
 //internal import
 import UploadMany from "@/components/common/UploadMany";
@@ -58,20 +59,30 @@ const Leads = () => {
       <AnimatedContent>
         <Card className="min-w-0 shadow-xs overflow-hidden bg-white dark:bg-gray-800 mb-5">
           <CardBody>
-            <form
-              onSubmit={handleSubmitUser}
-              className="py-3 grid gap-4 lg:gap-6 xl:gap-6 md:flex xl:flex"
-            >
-              <div className="items-center">
-                <UploadMany
-                  title="My Leads"
-                  exportData={data}
-                  filename={filename}
-                  isDisabled={isDisabled}
-                  handleSelectFile={handleSelectFile}
-                  handleUploadMultiple={handleUploadMultiple}
-                  handleRemoveSelectFile={handleRemoveSelectFile}
-                />
+            <form onSubmit={handleSubmitUser}>
+              <div className="flex justify-between items-center gap-4 py-2">
+                <div className="flex-1">
+                  <UploadMany
+                    title="My Leads"
+                    exportData={data}
+                    filename={filename}
+                    isDisabled={isDisabled}
+                    handleSelectFile={handleSelectFile}
+                    handleUploadMultiple={handleUploadMultiple}
+                    handleRemoveSelectFile={handleRemoveSelectFile}
+                  />
+                </div>
+                <div className="flex-shrink-0">
+                  <Button
+                    className="h-12 px-6 rounded-md bg-blue-50 hover:bg-blue-500 transition-colors duration-200"
+                    // onClick={toggleDrawer}
+                  >
+                    <span className="mr-2">
+                      <FiPlus />
+                    </span>
+                    {t("Add Lead")}
+                  </Button>
+                </div>
               </div>
             </form>
           </CardBody>
