@@ -47,7 +47,7 @@ const SidebarContent = () => {
                 className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-blue-700 dark:hover:text-gray-200"
                 // activeClassName="text-blue-500 dark:text-gray-100"
                 activeStyle={{
-                  color: "#00FFFF",
+                  color: "#009E9E",
                 }}
                 rel="noreferrer"
               >

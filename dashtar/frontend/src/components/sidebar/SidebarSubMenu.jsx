@@ -32,7 +32,7 @@ const SidebarSubMenu = ({ route }) => {
           className="inline-flex items-center justify-between focus:outline-none w-full text-sm font-semibold transition-colors duration-150 hover:text-blue-700 dark:hover:text-gray-200"
           onClick={() => setOpen(!open)}
           style={{
-            color: isChildActive() && "#00FFFF",
+            color: isChildActive() && "#009EFF",
           }}
           aria-haspopup="true"
         >
@@ -84,7 +84,7 @@ const SidebarSubMenu = ({ route }) => {
                     target={`${child?.outside ? "_blank" : "_self"}`}
                     className="px-6 py-4 inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-blue-700 dark:hover:text-gray-200"
                     activeStyle={{
-                      color: "#00FFFF",
+                      color: "#009EFF",
                     }}
                     rel="noreferrer"
                   >
