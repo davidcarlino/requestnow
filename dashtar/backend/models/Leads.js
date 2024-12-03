@@ -34,12 +34,17 @@ const leadSchema = new mongoose.Schema(
       type: String,
       default: 'new',
       enum: ['new', 'contacted', 'qualified', 'proposal', 'negotiation', 'closed_won', 'closed_lost'],
-    }
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Admin',
+      required: true
+    },
   },
   {
     timestamps: true,
   }
 );
-
+leadSchema.index({ createdBy: 1 });
 const Leads = mongoose.model('Leads', leadSchema);
 module.exports = Leads;

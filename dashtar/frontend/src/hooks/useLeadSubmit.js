@@ -80,12 +80,12 @@ const useLeadSubmit = (id) => {
   useEffect(() => {
     if (!isDrawerOpen) {
       setResData({});
-      setValue("firstName");
-      setValue("lastName");
-      setValue("email");
-      setValue("phone");
-      setValue("service");
-      setValue("rating");
+      setValue("firstName", "");
+      setValue("lastName", "");
+      setValue("email", "");
+      setValue("phone", "");
+      setValue("service", "");
+      setValue("rating", "");
       clearErrors("firstName");
       clearErrors("lastName");
       clearErrors("email");

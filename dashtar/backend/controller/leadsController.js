@@ -9,7 +9,10 @@ const addLead = async (req, res) => {
       });
     }
 
-    const lead = new Leads(req.body);
+    const lead = new Leads({
+      ...req.body,
+      createdBy: req.user._id
+    });
     const savedLead = await lead.save();
     
     res.status(201).json({
@@ -25,10 +28,14 @@ const addLead = async (req, res) => {
 
 const getLeadById = async (req, res) => {
   try {
-    const lead = await Leads.findById(req.params.id);
+    const lead = await Leads.findOne({
+      _id: req.params.id,
+      createdBy: req.user._id
+    });
+    
     if (!lead) {
       return res.status(404).json({
-        message: 'Lead not found',
+        message: 'Lead not found or access denied',
       });
     }
     res.status(200).json(lead);
@@ -41,12 +48,18 @@ const getLeadById = async (req, res) => {
 
 const deleteLead = async (req, res) => {
   try {
-    const lead = await Leads.findByIdAndDelete(req.params.id);
+    const lead = await Leads.findOne({
+      _id: req.params.id,
+      createdBy: req.user._id
+    });
+    
     if (!lead) {
       return res.status(404).json({
-        message: 'Lead not found',
+        message: 'Lead not found or access denied',
       });
     }
+    
+    await lead.deleteOne();
     res.status(200).json({
       message: 'Lead deleted successfully',
     });
@@ -59,8 +72,12 @@ const deleteLead = async (req, res) => {
 
 const getAllLeads = async (req, res) => {
   try {
-    const leads = await Leads.find({});
-    const totalDoc = await Leads.countDocuments();
+    const leads = await Leads.find({
+      createdBy: req.user._id
+    });
+    const totalDoc = await Leads.countDocuments({
+      createdBy: req.user._id
+    });
 
     res.status(200).json({
       leads,
