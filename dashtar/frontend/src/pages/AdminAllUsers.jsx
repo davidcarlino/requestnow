@@ -103,7 +103,7 @@ const AdminAllUsers = () => {
                   <span className="mr-3">
                     <FiPlus />  
                   </span>
-                  {t("AddUser")}
+                  {t("Add User")}
                 </Button>
               </div>
               <div className="mt-2 md:mt-0 flex items-center xl:gap-x-4 gap-x-1 flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
