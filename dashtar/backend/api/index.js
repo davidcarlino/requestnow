@@ -23,6 +23,7 @@ const eventRoutes = require("../routes/eventRoutes")
 const venueRoutes = require("../routes/venueRoutes")
 const songRoutes = require("../routes/songRoutes");
 const userRoutes = require("../routes/userRoutes");
+const leadsRoutes = require("../routes/leadsRoutes");
 const { isAuth, isAdmin } = require("../config/auth");
 const {
   getGlobalSetting,
@@ -62,6 +63,7 @@ app.use("/api/event/", eventRoutes);
 app.use("/api/venue/", venueRoutes);
 app.use("/api/song/", songRoutes);
 app.use("/api/user/", userRoutes);
+app.use("/api/lead/", leadsRoutes);
 //if you not use admin dashboard then these two route will not needed.
 app.use("/api/admin/", adminRoutes);
 app.use("/api/orders/", orderRoutes);
