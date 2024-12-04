@@ -53,6 +53,11 @@ const sidebar = (adminInfo) => {
       name: "Staff",
     },
     {
+      path: "/company-dashboard",
+      icon: FiUser,
+      name: "Company Dashboard",
+    },
+    {
       path: "/settings?settingTab=common-settings",
       icon: FiSettings,
       name: "Settings",
