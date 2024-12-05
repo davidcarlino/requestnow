@@ -971,5 +971,10 @@
   "evntStartTime": "Start Time",
   "evntEndTime": "End Time",
   "evntAction": "Action",
-  "evntAddress": "Address"
+  "evntAddress": "Address",
+  "CompanyLogo": "Company Logo",
+  "CompanyDashboard": "Company Dashboard",
+  "Companyname": "Company Name",
+  "CompanyEmail": "Email",
+  "CompanyContactNumber": "Contact Number"
 }
