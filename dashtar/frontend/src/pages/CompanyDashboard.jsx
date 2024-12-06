@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, CardBody } from "@windmill/react-ui";
 import { useTranslation } from "react-i18next";
 import { notifySuccess, notifyError } from '@/utils/toast';
+import { FiPlusCircle, FiXCircle } from 'react-icons/fi';
 
 //internal import
 import { AdminContext } from "@/context/AdminContext";
@@ -31,13 +32,34 @@ const CompanyDashboard = () => {
     getCompanyData,
     companyExists,
     companyId,
+    servicesList,
+    setServicesList,
   } = useCompanySubmit(adminInfo);
   console.log("adminInfo", adminInfo)
+
+  const [serviceInput, setServiceInput] = useState('');
+
   useEffect(() => {
     if (adminInfo?._id) {
       getCompanyData();
     }
   }, [adminInfo]);
+
+  const handleAddService = () => {
+    if (serviceInput.trim()) {
+      const formattedService = serviceInput.trim()
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+      setServicesList([...servicesList, formattedService]);
+      setServiceInput('');
+    }
+  };
+
+  const handleRemoveService = (index) => {
+    setServicesList(servicesList.filter((_, i) => i !== index));
+  };
 
   return (
     <>
@@ -110,16 +132,43 @@ const CompanyDashboard = () => {
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <LabelArea label={"Services"} />
                   <div className="col-span-8 sm:col-span-4">
-                  <select
-                    className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-gray-700 border-transparent focus:bg-white focus:border-gray-500 dark:focus:border-gray-500 focus:ring-0 rounded-md"
-                    name="services"
-                    {...register('services', {
-                      required: 'Services is required!',
-                    })}
-                  >
-                      <option value="">Select Services</option>
-                      <option value="DJ Service">DJ Service</option>
-                    </select>
+                    <div className="flex flex-col gap-4">
+                      <div className="flex gap-2">
+                        <input
+                          className="border h-12 text-sm focus:outline-none block w-full bg-gray-100 dark:bg-gray-700 border-transparent focus:bg-white focus:border-gray-500 dark:focus:border-gray-500 focus:ring-0 rounded-md"
+                          type="text"
+                          value={serviceInput}
+                          onChange={(e) => setServiceInput(e.target.value)}
+                          placeholder="Enter a service"
+                        />
+                        <Button 
+                          type="button"
+                          onClick={handleAddService}
+                          className="h-12 px-4 flex items-center whitespace-nowrap"
+                        >
+                          <FiPlusCircle className="w-5 h-5" />
+                          <span className="ml-2">Add Service</span>
+                        </Button>
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-2">
+                        {servicesList.map((service, index) => (
+                          <div 
+                            key={index}
+                            className="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-md"
+                          >
+                            <span className="normal-case">{service}</span>
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveService(index)}
+                              className="text-red-500 hover:text-red-700"
+                            >
+                              <FiXCircle className="w-5 h-5" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                     <Error errorName={errors.services} />
                   </div>
                 </div>

@@ -8,6 +8,7 @@ const useCompanySubmit = (adminInfo) => {
   const [isLoading, setIsLoading] = useState(false);
   const [companyExists, setCompanyExists] = useState(false);
   const [companyId, setCompanyId] = useState(null);
+  const [servicesList, setServicesList] = useState([]);
 
   const {
     register,
@@ -27,21 +28,23 @@ const useCompanySubmit = (adminInfo) => {
         setCompanyId(response._id);
         setCompanyExists(true);
         setImageUrl(response.logo);
+        setServicesList(response.services || []);
         
         // Pre-fill form data
         setValue('name', response.name);
         setValue('email', response.email);
         setValue('phone', response.phone);
-        setValue('services', response.services);
+        setValue('services', response.services || []);
       } else {
         // Clear form if no company exists
         setCompanyExists(false);
         setCompanyId(null);
         setImageUrl('');
+        setServicesList([]);
         setValue('name', '');
         setValue('email', '');
         setValue('phone', '');
-        setValue('services', '');
+        setValue('services', []);
       }
     } catch (error) {
       console.error('Error fetching company data:', error);
@@ -64,8 +67,9 @@ const useCompanySubmit = (adminInfo) => {
       setIsLoading(true);
       const companyData = {
         ...data,
+        services: servicesList,
         logo: imageUrl,
-        userId: adminInfo._id, // Include user ID in the request
+        userId: adminInfo._id,
       };
 
       if (id) {
@@ -74,7 +78,7 @@ const useCompanySubmit = (adminInfo) => {
       } else {
         await CompanyServices.createCompany(companyData);
         notifySuccess('Company Created Successfully!');
-        getCompanyData(); // Refresh data after creation
+        getCompanyData();
       }
     } catch (error) {
       notifyError(error.message || 'Something went wrong!');
@@ -94,6 +98,8 @@ const useCompanySubmit = (adminInfo) => {
     getCompanyData,
     companyExists,
     companyId,
+    servicesList,
+    setServicesList,
   };
 };
 

@@ -13,11 +13,14 @@ const createCompany = async (req, res) => {
       });
     }
 
+    // Ensure services is an array
+    const servicesArray = Array.isArray(services) ? services : [];
+
     const company = new Company({
       name,
       email,
       phone,
-      services,
+      services: servicesArray,
       logo: req.body.logo || '',
       user: userId,
     });
@@ -38,10 +41,18 @@ const updateCompany = async (req, res) => {
       return res.status(404).json({ message: 'Company not found' });
     }
 
+    // Ensure services is an array when updating
+    const updateData = { ...req.body };
+    if (updateData.services) {
+      updateData.services = Array.isArray(updateData.services) 
+        ? updateData.services 
+        : [];
+    }
+
     const updatedCompany = await Company.findByIdAndUpdate(
       company._id,
       {
-        $set: req.body,
+        $set: updateData,
       },
       { new: true }
     );
