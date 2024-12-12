@@ -6,6 +6,7 @@ const {
   getLeadById,
   deleteLead,
   getAllLeads,
+  updateLead,
 } = require('../controller/leadsController');
 
 // Protect all routes with isAuth middleware
@@ -19,6 +20,9 @@ router.get('/', getAllLeads);
 
 //get a lead by id
 router.get('/:id', getLeadById);
+
+//update a lead
+router.put('/:id', updateLead);
 
 //delete a lead
 router.delete('/:id', deleteLead);

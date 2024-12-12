@@ -12,6 +12,7 @@ const useLeadSubmit = (id) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [language, setLanguage] = useState(lang || "en");
   const [resData, setResData] = useState({});
+  const [companyServices, setCompanyServices] = useState([]);
   const {
     register,
     handleSubmit,
@@ -77,6 +78,23 @@ const useLeadSubmit = (id) => {
       setValue("lastName", resData.lastName[lang ? lang : "en"]);
     }
   };
+
+  const getCompanyServices = async () => {
+    try {
+      const res = await LeadsServices.getCompanyServices();
+      console.log("res", res);
+      if (res.exists && Array.isArray(res.services)) {
+        setCompanyServices(res.services);
+      }
+    } catch (err) {
+      notifyError(err ? err?.response?.data?.message : err?.message);
+    }
+  };
+
+  useEffect(() => {
+    getCompanyServices();
+  }, []);
+
   useEffect(() => {
     if (!isDrawerOpen) {
       setResData({});
@@ -112,7 +130,8 @@ const useLeadSubmit = (id) => {
     onSubmit,
     resData,
     setValue,
-    handleSelectLanguage
+    handleSelectLanguage,
+    companyServices,
   }
 
 }

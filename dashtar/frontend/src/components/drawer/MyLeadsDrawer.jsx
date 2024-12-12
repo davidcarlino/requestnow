@@ -20,6 +20,7 @@ const MyLeadsDrawer = ({ id }) => {
     setValue,
     onSubmit,
     handleSelectLanguage,
+    companyServices,
   } = useLeadSubmit(id);
   const { t } = useTranslation();
 
@@ -88,15 +89,29 @@ const MyLeadsDrawer = ({ id }) => {
                       {...register('service', {
                         required: 'Service selection is required!',
                       })}
+                      disabled={companyServices.length === 0}
                     >
-                      <option value="">Select a Service</option>
-                      <option value="wedding_dj">Wedding DJ</option>
-                      <option value="corporate_events">Corporate Events DJ</option>
-                      <option value="birthday_party">Birthday Party DJ</option>
-                      <option value="club_dj">Club DJ</option>
-                      <option value="private_events">Private Events DJ</option>
-                      <option value="concert_dj">Concert DJ</option>
+                      {companyServices.length > 0 ? (
+                        <>
+                          <option value="">Select a Service</option>
+                          {companyServices.map((service, index) => (
+                            <option 
+                              key={index} 
+                              value={service.toLowerCase().replace(/\s+/g, '_')}
+                            >
+                              {service}
+                            </option>
+                          ))}
+                        </>
+                      ) : (
+                        <option value="">No Services Available</option>
+                      )}
                     </select>
+                    {companyServices.length === 0 && (
+                      <p className="text-sm text-orange-500 mt-2">
+                        Please Add Services First
+                      </p>
+                    )}
                     <Error errorName={errors.service} />
                   </div>
                 </div>

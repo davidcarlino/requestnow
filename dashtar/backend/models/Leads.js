@@ -23,7 +23,6 @@ const leadSchema = new mongoose.Schema(
     service: {
       type: String,
       required: true,
-      enum: ['wedding_dj', 'corporate_events', 'birthday_party', 'club_dj', 'private_events', 'concert_dj'],
     },
     rating: {
       type: String,

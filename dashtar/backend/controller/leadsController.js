@@ -91,9 +91,57 @@ const getAllLeads = async (req, res) => {
   }
 };
 
+const updateLead = async (req, res) => {
+  try {
+    const lead = await Leads.findOne({
+      _id: req.params.id,
+      createdBy: req.user._id
+    });
+    
+    if (!lead) {
+      return res.status(404).send({
+        message: "Lead not found or access denied"
+      });
+    }
+
+    // If updating email, check if new email already exists
+    if (req.body.email && req.body.email !== lead.email) {
+      const emailExists = await Leads.findOne({ 
+        email: req.body.email,
+        _id: { $ne: req.params.id }, // exclude current lead
+        createdBy: req.user._id
+      });
+      if (emailExists) {
+        return res.status(400).send({
+          message: 'Lead with this email already exists',
+        });
+      }
+    }
+
+    // Update lead fields directly
+    lead.firstName = req.body.firstName;
+    lead.lastName = req.body.lastName;
+    lead.email = req.body.email;
+    lead.phone = req.body.phone;
+    lead.service = req.body.service;
+    lead.rating = req.body.rating;
+
+    await lead.save();
+    res.send({ 
+      message: "Lead Updated Successfully!",
+      lead: lead 
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
   addLead,
   getLeadById,
   deleteLead,
   getAllLeads,
+  updateLead,
 };

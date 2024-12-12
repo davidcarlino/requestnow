@@ -16,6 +16,14 @@ const LeadsServices = {
   deleteLead: async (id) => {
     return requests.delete(`/lead/${id}`);
   },
+
+  updateLead: async (id, body) => {
+    return requests.put(`/lead/${id}`, body);
+  },
+
+  getCompanyServices: async () => {
+    return requests.get("/company");
+  },
 };
 
 export default LeadsServices;
