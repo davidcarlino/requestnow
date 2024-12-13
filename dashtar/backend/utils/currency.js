@@ -5,13 +5,18 @@ const currency = [
     status: "show",
   },
   {
-    name: "Dollar",
+    name: "Australian Dollar",
     symbol: "$",
     status: "show",
   },
   {
     name: "Pound",
     symbol: "£",
+    status: "show",
+  },
+  {
+    name: "US Dollar",
+    symbol: "$",
     status: "show",
   },
 ];

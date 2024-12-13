@@ -3,7 +3,7 @@
     "$oid": "643970c6e58a401b6c62c5a2"
   },
   "status": "show",
-  "name": "Dollar",
+  "name": "Australian Dollar",
   "symbol": "$",
   "__v": 0,
   "createdAt": {
@@ -19,6 +19,20 @@
   "status": "show",
   "name": "Pound",
   "symbol": "£",
+  "__v": 0,
+  "createdAt": {
+    "$date": "2023-04-14T15:27:02.394Z"
+  },
+  "updatedAt": {
+    "$date": "2023-04-14T15:27:02.394Z"
+  }
+},{
+  "_id": {
+    "$oid": "643970c6e58a401b6c62c5a3"
+  },
+  "status": "show",
+  "name": "US Dollar",
+  "symbol": "$",
   "__v": 0,
   "createdAt": {
     "$date": "2023-04-14T15:27:02.394Z"

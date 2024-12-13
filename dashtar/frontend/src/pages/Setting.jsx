@@ -97,21 +97,22 @@ const Setting = () => {
                       <Error errorName={errors.default_date_format} />
                     </div>
                   </div>
-
+                  <br></br>
                   <div className="grid md:grid-cols-5 sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
-                    <label className="block text-sm text-gray-600 font-semibold dark:text-gray-400 mb-1 sm:col-span-2">
-                      {t("ReceiptSize")}
-                    </label>
-                    <div className="sm:col-span-3">
-                      <SelectReceiptSize
-                        label="Role"
-                        register={register}
-                        name="receipt_size"
-                        required={true}
-                      />
-                      <Error errorName={errors.receipt_size} />
-                    </div>
-                  </div>
+  <h3 className="col-span-12 text-lg font-semibold text-gray-700 dark:text-gray-200">
+    Your Information
+  </h3>
+
+  <div className="sm:col-span-3">
+    {/* Existing content */}
+  </div>
+  <div className="sm:col-span-3">
+    {/* Existing content */}
+  </div>
+  <div className="sm:col-span-3">
+    {/* Existing content */}
+  </div>
+</div>
 
                   <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                     <label className="block text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1 sm:col-span-2">
