@@ -12,7 +12,7 @@
       "website": "kachabazar-admin.vercel.app",
       "default_currency": "$",
       "default_time_zone": "Australia/Sydney",
-      "default_date_format": "MMM D, YYYY",
+      "default_date_format": "D MMM, YYYY",
       "receipt_size": "57-mm"
     },
     "name": "globalSetting"

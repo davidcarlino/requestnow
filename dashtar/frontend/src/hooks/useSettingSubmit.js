@@ -20,7 +20,11 @@ const useSettingSubmit = (id) => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      default_date_format: "D MMM, YYYY"
+    }
+  });
 
   // console.log("errors", errors);
   // console.log("enabledCOD", enabledCOD);
@@ -88,7 +92,7 @@ const useSettingSubmit = (id) => {
     (async () => {
       try {
         const res = await SettingServices.getGlobalSetting();
-        // console.log("res>>>", res);
+        console.log("res", res);
         if (res) {
           setIsSave(false);
           setValue(
@@ -109,10 +113,11 @@ const useSettingSubmit = (id) => {
           setValue("default_date_format", res?.default_date_format);
         }
       } catch (err) {
+        setValue("default_date_format", "D MMM, YYYY");
         notifyError(err?.response?.data?.message || err?.message);
       }
     })();
-  }, []);
+  }, [setValue]);
 
   return {
     errors,

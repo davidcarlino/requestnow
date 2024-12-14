@@ -84,12 +84,10 @@ const Setting = () => {
                     <div className="sm:col-span-3">
                       <Select
                         {...register(`default_date_format`, {
-                          required: "Default date formate is required",
+                          required: "Default date format is required",
                         })}
                       >
-                        <option value="" defaultValue hidden>
-                          {t("DefaultDateFormat")}
-                        </option>
+                        <option value="" disabled>Select Date Format</option>
                         <option value="MMM D, YYYY">MM/DD/YYYY</option>
                         <option value="D MMM, YYYY">DD/MM/YYYY</option>
                         <option value="YYYY,MMM D">YYYY/MM/DD</option>
@@ -99,20 +97,20 @@ const Setting = () => {
                   </div>
                   <br></br>
                   <div className="grid md:grid-cols-5 sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
-  <h3 className="col-span-12 text-lg font-semibold text-gray-700 dark:text-gray-200">
-    Your Information
-  </h3>
+                  <h3 className="col-span-12 text-lg font-semibold text-gray-700 dark:text-gray-200">
+                    Your Information
+                  </h3>
 
-  <div className="sm:col-span-3">
-    {/* Existing content */}
-  </div>
-  <div className="sm:col-span-3">
-    {/* Existing content */}
-  </div>
-  <div className="sm:col-span-3">
-    {/* Existing content */}
-  </div>
-</div>
+                  <div className="sm:col-span-3">
+                    {/* Existing content */}
+                  </div>
+                  <div className="sm:col-span-3">
+                    {/* Existing content */}
+                  </div>
+                  <div className="sm:col-span-3">
+                    {/* Existing content */}
+                  </div>
+                </div>
 
                   <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                     <label className="block text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1 sm:col-span-2">
