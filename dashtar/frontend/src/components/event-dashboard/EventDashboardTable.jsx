@@ -21,7 +21,7 @@ const EventDahboardTable = (props) => {
   const { showDateFormat } = useUtilsFunction();
   const [songRequests, setSongRequests] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  
+  console.log("activeSection", activeSection);
   const renderSongRequests = () => (
     <TableContainer className="mb-8 dark:bg-gray-900">
       {isRefreshing ? (
@@ -119,18 +119,22 @@ const EventDahboardTable = (props) => {
     <>
       <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-3 py-2">
         <Button
+          layout={activeSection === 'songRequests' ? 'primary' : 'outline'}
+          style={{ color: activeSection === 'songRequests' ? 'white' : '#000000' }}
           onClick={() => setActiveSection('songRequests')}
         >
           {"Song Requests"}
         </Button>
         <Button
-          layout="outline"
+          layout={activeSection === 'playlists' ? 'primary' : 'outline'}
+          style={{ color: activeSection === 'playlists' ? 'white' : '#000000' }}
           onClick={() => setActiveSection('playlists')}
         >
           {"Playlists"}
         </Button>
         <Button
-          layout="outline"
+          layout={activeSection === 'invoices' ? 'primary' : 'outline'}
+          style={{ color: activeSection === 'invoices' ? 'white' : '#000000' }}
           onClick={() => setActiveSection('invoices')}
         >
           {"Invoices"}
