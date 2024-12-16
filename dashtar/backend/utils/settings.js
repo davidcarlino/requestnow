@@ -10,7 +10,7 @@ const setting = [
       contact: "019579034",
       email: "kachabazar@gmail.com",
       website: "kachabazar-admin.vercel.app",
-      default_currency: "$",
+      default_currency: "AU$",
       default_time_zone: "Australia/Sydney",
       default_date_format: "D MMM, YYYY",
       receipt_size: "57-mm",

@@ -22,7 +22,9 @@ const useSettingSubmit = (id) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      default_date_format: "D MMM, YYYY"
+      default_date_format: "D MMM, YYYY",
+      default_time_zone: "Australia/Sydney",
+      default_currency: "AU$"
     }
   });
 
@@ -108,11 +110,19 @@ const useSettingSubmit = (id) => {
           setValue("email", res.email);
           setValue("website", res.website);
           setValue("receipt_size", res.receipt_size);
-          setValue("default_currency", res.default_currency);
-          setValue("default_time_zone", res?.default_time_zone);
-          setValue("default_date_format", res?.default_date_format);
+          setValue("default_currency", res.default_currency || "AU$");
+          setValue(
+            "default_time_zone", 
+            res?.default_time_zone || "Australia/Sydney"
+          );
+          setValue(
+            "default_date_format", 
+            res?.default_date_format || "D MMM, YYYY"
+          );
         }
       } catch (err) {
+        setValue("default_currency", "AU$");
+        setValue("default_time_zone", "Australia/Sydney");
         setValue("default_date_format", "D MMM, YYYY");
         notifyError(err?.response?.data?.message || err?.message);
       }

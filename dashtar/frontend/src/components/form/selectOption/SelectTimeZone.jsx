@@ -12,7 +12,7 @@ const SelectTimeZone = ({ register, name, label, required }) => {
         required: required ? `${label} is required!` : false,
       })}
     >
-      <option value="" defaultValue hidden>
+      <option value="" hidden>
         Default Time Zone
       </option>
       {timeZones.map((timeZone, i) => (

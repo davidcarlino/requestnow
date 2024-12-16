@@ -6,6 +6,11 @@ const settingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    adminId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Admin',
+      required: true
+    },
     setting: {},
   },
   {
@@ -13,7 +18,8 @@ const settingSchema = new mongoose.Schema(
   }
 );
 
-// module.exports = settingSchema;
+// Create compound unique index for name + adminId
+settingSchema.index({ name: 1, adminId: 1 }, { unique: true });
 
 const Setting = mongoose.model("Setting", settingSchema);
 

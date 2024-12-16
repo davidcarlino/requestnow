@@ -4,7 +4,11 @@ const Setting = require("../models/Setting");
 //global setting controller
 const addGlobalSetting = async (req, res) => {
   try {
-    const newGlobalSetting = new Setting(req.body);
+    const adminId = req.user._id; // Changed from req.admin._id
+    const newGlobalSetting = new Setting({
+      ...req.body,
+      adminId: adminId
+    });
     await newGlobalSetting.save();
     res.send({
       message: "Global Setting Added Successfully!",
@@ -18,7 +22,21 @@ const addGlobalSetting = async (req, res) => {
 
 const getGlobalSetting = async (req, res) => {
   try {
-    const globalSetting = await Setting.findOne({ name: "globalSetting" });
+    const adminId = req.user._id; // Changed from req.admin._id
+    const globalSetting = await Setting.findOne({ 
+      name: "globalSetting",
+      adminId: adminId 
+    });
+    
+    if (!globalSetting) {
+      // Return default values if no settings exist
+      return res.send({
+        number_of_image_per_product: "5",
+        default_time_zone: "Australia/Sydney",
+        default_date_format: "D MMM, YYYY"
+      });
+    }
+    
     res.send(globalSetting.setting);
   } catch (err) {
     res.status(500).send({
@@ -29,53 +47,20 @@ const getGlobalSetting = async (req, res) => {
 
 const updateGlobalSetting = async (req, res) => {
   try {
-    const globalSetting = await Setting.updateOne(
+    const adminId = req.user._id; // Changed from req.admin._id
+    
+    const globalSetting = await Setting.findOneAndUpdate(
       {
         name: "globalSetting",
+        adminId: adminId
       },
       {
         $set: {
-          "setting.number_of_image_per_product":
-            req.body.setting.number_of_image_per_product,
-          "setting.shop_name": req.body.setting.shop_name,
-          "setting.company_name": req.body.setting.company_name,
-          "setting.address": req.body.setting.address,
-          "setting.vat_number": req.body.setting.vat_number,
-          "setting.post_code": req.body.setting.post_code,
-          "setting.contact": req.body.setting.contact,
-          "setting.email": req.body.setting.email,
-          "setting.website": req.body.setting.website,
-          "setting.receipt_size": req.body.setting.receipt_size,
-          "setting.default_currency": req.body.setting.default_currency,
-          "setting.default_time_zone": req.body.setting.default_time_zone,
-          "setting.default_date_format": req.body.setting.default_date_format,
-
-          //for store setting
-          "setting.cod_status": req.body.setting.cod_status,
-          "setting.stripe_status": req.body.setting.stripe_status,
-          "setting.fb_pixel_status": req.body.setting.fb_pixel_status,
-          "setting.google_login_status": req.body.setting.google_login_status,
-          "setting.google_analytic_status":
-            req.body.setting.google_analytic_status,
-          "setting.stripe_key": req.body.setting.stripe_key,
-          "setting.stripe_secret": req.body.setting.stripe_secret,
-          "setting.google_client_id": req.body.setting.google_client_id,
-          "setting.google_secret_key": req.body.setting.google_secret_key,
-          "setting.google_analytic_key": req.body.setting.google_analytic_key,
-          "setting.fb_pixel_key": req.body.setting.fb_pixel_key,
-          "setting.tawk_chat_status": req.body.setting.tawk_chat_status,
-          "setting.tawk_chat_property_id":
-            req.body.setting.tawk_chat_property_id,
-          "setting.tawk_chat_widget_id": req.body.setting.tawk_chat_widget_id,
-          // //for seo
-          "setting.meta_img": req.body.setting.meta_img,
-          "setting.favicon": req.body.setting.favicon,
-          "setting.meta_title": req.body.setting.meta_title,
-          "setting.meta_description": req.body.setting.meta_description,
-          "setting.meta_keywords": req.body.setting.meta_keywords,
-          "setting.meta_url": req.body.setting.meta_url,
+          adminId: adminId,
+          setting: req.body.setting
         },
-      }
+      },
+      { upsert: true, new: true }
     );
 
     res.send({

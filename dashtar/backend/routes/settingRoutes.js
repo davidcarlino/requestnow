@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { isAuth } = require("../config/auth"); // Import your admin auth middleware
 
 const {
   addGlobalSetting,
@@ -14,13 +15,13 @@ const {
 } = require("../controller/settingController");
 
 //add a global setting
-router.post("/global/add", addGlobalSetting);
+router.post("/global/add", isAuth, addGlobalSetting);
 
 //get global setting
-router.get("/global/all", getGlobalSetting);
+router.get("/global/all", isAuth, getGlobalSetting);
 
 //update global setting
-router.put("/global/update", updateGlobalSetting);
+router.put("/global/update", isAuth, updateGlobalSetting);
 
 //add a store setting
 router.post("/store-setting/add", addStoreSetting);

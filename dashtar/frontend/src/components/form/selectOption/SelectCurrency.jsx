@@ -3,14 +3,12 @@ import { Select } from "@windmill/react-ui";
 //internal import
 import useAsync from "@/hooks/useAsync";
 import CurrencyServices from "@/services/CurrencyServices";
-// import { CODES } from 'currencies-map';
 
 const SelectCurrency = ({
   register,
   name,
   label,
   required,
-  // loading,
 }) => {
   const { data, loading } = useAsync(CurrencyServices.getShowingCurrency);
 
@@ -26,7 +24,10 @@ const SelectCurrency = ({
           })}
         >
           {data?.map((currency) => (
-            <option key={currency._id} value={`${currency.symbol}`}>
+            <option 
+              key={currency._id} 
+              value={currency.symbol}
+            >
               {currency?.name}
             </option>
           ))}
