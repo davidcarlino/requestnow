@@ -3,6 +3,8 @@ import {
   Card,
   CardBody,
   Button,
+  Dropdown,
+  DropdownItem,
 } from "@windmill/react-ui";
 import { useParams } from "react-router";;
 import { useTranslation } from 'react-i18next'; // Add this line
@@ -30,6 +32,7 @@ const EventDetails = () => {
   console.log(data, "data")
 
   const [songRequests, setSongRequests] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (data?.songRequests) {
@@ -46,6 +49,22 @@ const EventDetails = () => {
     }
   };
 
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handlePrintEventDetails = () => {
+    console.log("Printing event details");
+  };
+
+  const handlePrintQRCode = () => {
+    console.log("Printing QR code");
+  };
+
+  const handlePrintInvoice = () => {
+    console.log("Printing invoice");
+  };
+
   return (
     <>
       <MainDrawer>
@@ -53,19 +72,38 @@ const EventDetails = () => {
       </MainDrawer>
       <PageTitle>{"Event Dashboard"}</PageTitle>
       <AnimatedContent>
-        <div className="grid gap-4 lg:gap-4 xl:gap-6 md:gap-2 md:grid-cols-4 py-2"> 
+        <div className="grid gap-3 lg:gap-3 xl:gap-6 md:gap-2 md:grid-cols-3 py-2"> 
           <Button className="h-12 w-full" onClick={toggleDrawer}>
             {t("Edit Event")}
           </Button>
-          <Button className="h-12 w-full">
-            {t("Print Event Details")}
+          <Button className="h-12 w-full" >
+            {t("Notes")}
           </Button>
-          <Button className="h-12 w-full">
-            {t("Print Song Request QR Code")}
-          </Button>
-          <Button className="h-12 w-full">
-            {t("Print Invoice")}
-          </Button>
+          <div className="relative">
+            <Button
+              className="h-12 w-full"
+              onClick={toggleDropdown}
+            >
+              {t("PrintButton")}
+            </Button>
+            {isDropdownOpen && (
+              <Dropdown
+                className="z-50"
+                isOpen={isDropdownOpen}
+                onClose={() => setIsDropdownOpen(false)}
+              >
+                <DropdownItem className="dark:text-gray-100" onClick={handlePrintEventDetails}>
+                  {t("Print Event Details")}
+                </DropdownItem>
+                <DropdownItem className="dark:text-gray-100" onClick={handlePrintQRCode}>
+                  {t("Print Song Request QR Code")}
+                </DropdownItem>
+                <DropdownItem className="dark:text-gray-100" onClick={handlePrintInvoice}>
+                  {t("PrintInvoice")}
+                </DropdownItem>
+              </Dropdown>
+            )}
+          </div>
         </div>
         
         <div className="grid gap-4 md:grid-cols-2 my-8">
