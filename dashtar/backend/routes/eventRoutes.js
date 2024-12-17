@@ -6,7 +6,9 @@ const {
   getAllEvents,
   updateEvents,
   getEventById,
-  deleteEvent
+  deleteEvent,
+  addNote,
+  deleteNote
 } = require('../controller/eventController');
 
 // Protect all routes with isAuth middleware
@@ -26,5 +28,9 @@ router.get('/:id', getEventById);
 
 //delete a event
 router.delete('/:id', deleteEvent)
+
+// Add these routes to your eventRoutes.js
+router.post('/:id/notes', addNote);
+router.delete('/:eventId/notes/:noteId', deleteNote);
 
 module.exports = router;

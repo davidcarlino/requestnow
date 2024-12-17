@@ -1,5 +1,16 @@
 const mongoose = require('mongoose');
 
+const noteSchema = new mongoose.Schema({
+  content: {
+    type: String,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
 const eventSchema = new mongoose.Schema(
   {
     name: {
@@ -44,7 +55,8 @@ const eventSchema = new mongoose.Schema(
     eventCode: { 
       type: String, 
       default: false 
-    }
+    },
+    notes: [noteSchema],
   },
   {
     timestamps: true,

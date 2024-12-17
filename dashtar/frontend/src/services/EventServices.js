@@ -39,6 +39,17 @@ const EventServices = {
     return requests.delete(`/event/${id}`);
   },
 
+  addNote: async (eventId, noteData) => {
+    const response = await requests.post(`/event/${eventId}/notes`, noteData);
+    console.log("responseServicee", response);
+    return response;
+  },
+
+  deleteNote: async (eventId, noteId) => {
+    const response = await requests.delete(`/event/${eventId}/notes/${noteId}`);
+    return response;
+  }
+
 };
 
 export default EventServices;

@@ -22,6 +22,7 @@ import MainDrawer from "@/components/drawer/MainDrawer";
 import EventDrawer from "@/components/drawer/EventDrawer";
 import EventQrCode from "@/components/qr-code/qrCode"; 
 import EventDahboardTable from "@/components/event-dashboard/EventDashboardTable";
+import NotesDrawer from "@/components/drawer/NotesDrawer";
 
 const EventDetails = () => {
   const { t } = useTranslation(); // Add this line
@@ -33,6 +34,7 @@ const EventDetails = () => {
 
   const [songRequests, setSongRequests] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [activeDrawer, setActiveDrawer] = useState('event');
 
   useEffect(() => {
     if (data?.songRequests) {
@@ -65,18 +67,27 @@ const EventDetails = () => {
     console.log("Printing invoice");
   };
 
+  const handleDrawerChange = (drawer) => {
+    setActiveDrawer(drawer);
+    toggleDrawer();
+  };
+
   return (
     <>
       <MainDrawer>
-        <EventDrawer id={id} />
+        {activeDrawer === 'event' ? (
+          <EventDrawer id={id} />
+        ) : (
+          <NotesDrawer id={id} />
+        )}
       </MainDrawer>
       <PageTitle>{"Event Dashboard"}</PageTitle>
       <AnimatedContent>
         <div className="grid gap-3 lg:gap-3 xl:gap-6 md:gap-2 md:grid-cols-3 py-2"> 
-          <Button className="h-12 w-full" onClick={toggleDrawer}>
+          <Button className="h-12 w-full" onClick={() => handleDrawerChange('event')}>
             {t("Edit Event")}
           </Button>
-          <Button className="h-12 w-full" >
+          <Button className="h-12 w-full" onClick={() => handleDrawerChange('notes')} >
             {t("Notes")}
           </Button>
           <div className="relative">

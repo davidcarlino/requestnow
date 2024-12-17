@@ -165,10 +165,69 @@ const deleteEvent = async (req, res) => {
   }
 };
 
+const addNote = async (req, res) => {
+  try {
+    const event = await Event.findOne({
+      _id: req.params.id,
+      createdBy: req.user._id
+    });
+
+    if (!event) {
+      return res.status(404).send({
+        message: "Event not found or access denied"
+      });
+    }
+
+    event.notes.push({ content: req.body.content });
+    await event.save();
+
+    res.status(200).send({
+      message: "Note added successfully!",
+      notes: event.notes
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const deleteNote = async (req, res) => {
+  try {
+    const event = await Event.findOne({
+      _id: req.params.eventId,
+      createdBy: req.user._id
+    });
+
+    if (!event) {
+      return res.status(404).send({
+        message: "Event not found or access denied"
+      });
+    }
+
+    event.notes = event.notes.filter(note => 
+      note._id.toString() !== req.params.noteId
+    );
+    
+    await event.save();
+
+    res.status(200).send({
+      message: "Note deleted successfully!",
+      notes: event.notes
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
     addEvent,
     getAllEvents,
     updateEvents,
     getEventById,
     deleteEvent,
+    addNote,
+    deleteNote,
 };
