@@ -39,6 +39,16 @@ const leadSchema = new mongoose.Schema(
       ref: 'Admin',
       required: true
     },
+    notes: [{
+      content: {
+        type: String,
+        required: true
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
+    }],
   },
   {
     timestamps: true,

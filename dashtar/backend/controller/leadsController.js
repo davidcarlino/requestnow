@@ -138,10 +138,66 @@ const updateLead = async (req, res) => {
   }
 };
 
+const addNote = async (req, res) => {
+  try {
+    const lead = await Leads.findOne({
+      _id: req.params.id,
+      createdBy: req.user._id
+    });
+    
+    if (!lead) {
+      return res.status(404).json({
+        message: 'Lead not found or access denied',
+      });
+    }
+
+    lead.notes.push({
+      content: req.body.content
+    });
+
+    await lead.save();
+    res.status(200).json(lead);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+const deleteNote = async (req, res) => {
+  try {
+    const lead = await Leads.findOne({
+      _id: req.params.leadId,
+      createdBy: req.user._id
+    });
+    if (!lead) {
+      return res.status(404).json({
+        message: 'Lead not found or access denied',
+      });
+    }
+
+    lead.notes = lead.notes.filter(note => 
+      note._id.toString() !== req.params.noteId
+    );
+
+    await lead.save();
+    res.status(200).json({
+      message: "Note deleted successfully!",
+      notes: lead.notes
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   addLead,
   getLeadById,
   deleteLead,
   getAllLeads,
   updateLead,
+  addNote,
+  deleteNote,
 };

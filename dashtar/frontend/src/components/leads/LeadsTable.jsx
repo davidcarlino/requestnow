@@ -89,9 +89,13 @@ const LeadsTable = ({ isCheck, leads, setIsCheck }) => {
             </TableCell>
 
             <TableCell className="text-xs">
-              <span className="text-sm font-semibold dark:text-[aliceblue]">
-                {formatName(lead?.firstName, lead?.lastName)}
-              </span>
+              <Link
+                to={`/leads/${lead._id}/dashboard`}
+              >
+                <span className="text-sm font-semibold dark:text-[aliceblue]">
+                  {formatName(lead?.firstName, lead?.lastName)}
+                </span>
+              </Link>
             </TableCell>
 
             <TableCell>

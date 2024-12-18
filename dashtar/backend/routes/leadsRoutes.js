@@ -7,6 +7,8 @@ const {
   deleteLead,
   getAllLeads,
   updateLead,
+  addNote,
+  deleteNote,
 } = require('../controller/leadsController');
 
 // Protect all routes with isAuth middleware
@@ -26,5 +28,9 @@ router.put('/:id', updateLead);
 
 //delete a lead
 router.delete('/:id', deleteLead);
+
+// Add these routes to your eventRoutes.js
+router.post('/:id/notes', addNote);
+router.delete('/:leadId/notes/:noteId', deleteNote);
 
 module.exports = router;

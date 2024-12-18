@@ -24,6 +24,16 @@ const LeadsServices = {
   getCompanyServices: async () => {
     return requests.get("/company");
   },
+
+  addNote: async (id, noteData) => {
+    return requests.post(`/lead/${id}/notes`, noteData);
+  },
+
+  deleteNote: async (id, noteId) => {
+    const response = await requests.delete(`/lead/${id}/notes/${noteId}`);
+    console.log("response", response)
+    return response;
+  },
 };
 
 export default LeadsServices;

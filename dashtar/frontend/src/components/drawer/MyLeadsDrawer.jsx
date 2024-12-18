@@ -11,7 +11,7 @@ import useLeadSubmit from "@/hooks/useLeadSubmit";
 import DrawerButton from "@/components/form/button/DrawerButton";
 import Error from "@/components/form/others/Error";
 
-const MyLeadsDrawer = ({ id }) => {
+const LeadsDrawer = ({ id }) => {
   const {
     register,
     handleSubmit,
@@ -177,4 +177,4 @@ const MyLeadsDrawer = ({ id }) => {
   )
 }
 
-export default React.memo(MyLeadsDrawer);
+export default React.memo(LeadsDrawer);
