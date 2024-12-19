@@ -17,10 +17,11 @@ import ImageLight from "@/assets/img/login-office.jpg";
 import ImageDark from "@/assets/img/login-office-dark.jpg";
 import useLoginSubmit from "@/hooks/useLoginSubmit";
 import CMButton from "@/components/form/button/CMButton";
-import Logo from "@/assets/img/logo/logo-light.png";
 import AdminServices from "@/services/AdminServices";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { AdminContext } from "@/context/AdminContext";
+import LogoDark from "@/assets/img/logo/logo-dark.png";
+import LogoLight from "@/assets/img/logo/logo-light.png";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -134,7 +135,8 @@ const Login = () => {
               <div className="w-full">
                 <div className="login-logo">
                   <img
-                  src={Logo}
+                    src={window.localStorage.getItem('theme') === 'light' ? LogoDark : LogoLight}
+                    alt="Logo"
                   />
                 </div>
                 <h1 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
