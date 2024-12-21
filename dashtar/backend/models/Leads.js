@@ -42,8 +42,15 @@ const leadSchema = new mongoose.Schema(
     notes: [{
       content: {
         type: String,
-        required: true
+        default: '',
       },
+      attachments: [{
+        originalName: String,
+        fileName: String,
+        mimeType: String,
+        size: Number,
+        path: String
+      }],
       createdAt: {
         type: Date,
         default: Date.now
@@ -54,6 +61,7 @@ const leadSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
 leadSchema.index({ createdBy: 1 });
 const Leads = mongoose.model('Leads', leadSchema);
 module.exports = Leads;

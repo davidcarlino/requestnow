@@ -6,6 +6,11 @@ node_modules/
 # Production build
 /dashtar/frontend/dist
 
+# Uploaded files
+/dashtar/backend/uploads/
+/dashtar/backend/uploads/*
+!dashtar/backend/uploads/.gitkeep
+
 # Logs
 logs
 *.log

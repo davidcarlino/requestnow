@@ -40,10 +40,27 @@ const app = express();
 app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "4mb" }));
-app.use(helmet());
-app.options("*", cors()); // include before other routes
-app.use(cors());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginEmbedderPolicy: false
+}));
+app.use(cors({
+  origin: [
+    'http://localhost:4100',
+    'https://dashboard.gigmaster.co',  // Add your production frontend URL
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  credentials: true,
+  exposedHeaders: ['Content-Disposition']
+}));
 
+app.use('/uploads', (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+}, express.static(path.join(__dirname, '..', 'uploads')));
 //root route
 app.get("/", (req, res) => {
   res.send("App works properly!");

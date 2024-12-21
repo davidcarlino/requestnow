@@ -1,4 +1,5 @@
 import requests from "./httpService";
+import axios from "axios";
 
 const LeadsServices = {
   addLead: async (body) => {
@@ -25,8 +26,22 @@ const LeadsServices = {
     return requests.get("/company");
   },
 
-  addNote: async (id, noteData) => {
-    return requests.post(`/lead/${id}/notes`, noteData);
+  addNote: async (id, formData) => {
+    try {
+      console.log('FormData contents:'); // Debug log
+      for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]); 
+      }
+      
+      return requests.post(`/lead/${id}/notes`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    } catch (error) {
+      console.error('Error in addNote service:', error);
+      throw error;
+    }
   },
 
   deleteNote: async (id, noteId) => {

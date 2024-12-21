@@ -151,15 +151,35 @@ const addNote = async (req, res) => {
       });
     }
 
-    lead.notes.push({
-      content: req.body.content
-    });
+    // Create note object
+    const note = {
+      content: req.body.content || '',
+      attachments: [],
+      createdAt: new Date()
+    };
 
-    await lead.save();
-    res.status(200).json(lead);
+    // Handle multiple file attachments if present
+    if (req.files && req.files.length > 0) {
+      note.attachments = req.files.map(file => ({
+        originalName: file.originalname,
+        fileName: file.filename,
+        mimeType: file.mimetype,
+        size: file.size,
+        path: file.path
+      }));
+    }
+
+    // Add the note without validation since we're allowing either content or attachments
+    lead.notes.push(note);
+
+    // Save the lead
+    const savedLead = await lead.save({ validateBeforeSave: false }); // Skip mongoose validation
+    
+    // Return the updated lead
+    res.status(200).json(savedLead);
   } catch (error) {
     res.status(500).json({
-      message: error.message,
+      message: error.message || 'Error adding note',
     });
   }
 };
