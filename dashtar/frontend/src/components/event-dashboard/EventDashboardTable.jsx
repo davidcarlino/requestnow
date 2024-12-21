@@ -126,11 +126,11 @@ const EventDahboardTable = (props) => {
           {"Song Requests"}
         </Button>
         <Button
-          layout={activeSection === 'playlists' ? 'primary' : 'outline'}
-          style={{ color: activeSection === 'playlists' ? 'white' : '#000000' }}
-          onClick={() => setActiveSection('playlists')}
+          layout={activeSection === 'Files' ? 'primary' : 'outline'}
+          style={{ color: activeSection === 'Files' ? 'white' : '#000000' }}
+          onClick={() => setActiveSection('Files')}
         >
-          {"Playlists"}
+          {"Files"}
         </Button>
         <Button
           layout={activeSection === 'invoices' ? 'primary' : 'outline'}
