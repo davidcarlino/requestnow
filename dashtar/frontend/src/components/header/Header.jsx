@@ -254,7 +254,7 @@ const Header = () => {
                   >
                     <Scrollbars>
                       {data?.length === 0 ? (
-                        <NotFoundTwo title="No new notification" />
+                        <NotFoundTwo title="No new notifications  " />
                       ) : (
                         <ul className="block text-sm border-t border-gray-100 dark:border-gray-700 rounded-md">
                           {data?.map((value, index) => {

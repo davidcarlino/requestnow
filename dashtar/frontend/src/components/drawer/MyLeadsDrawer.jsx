@@ -39,7 +39,7 @@ const LeadsDrawer = ({ id }) => {
             register={register}
             handleSelectLanguage={handleSelectLanguage}
             title={t("AddLeadTitle")}
-            description={t("AddLeaddescription")}
+            description={t("AddLeadDescription")}
           />
         )}        
       </div>

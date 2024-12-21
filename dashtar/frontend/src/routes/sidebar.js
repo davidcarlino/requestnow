@@ -47,11 +47,11 @@ const sidebar = (adminInfo) => {
       icon: FiMapPin,
       name: "Venues",
     },
-    {
-      path: "/our-staff",
-      icon: FiUser,
-      name: "Staff",
-    },
+    //{
+     // path: "/our-staff",
+      //icon: FiUser,
+      //name: "Staff",
+    //},
     {
       path: "/company-dashboard",
       icon: FiUser,

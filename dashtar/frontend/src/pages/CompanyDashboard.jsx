@@ -139,7 +139,7 @@ const CompanyDashboard = () => {
                           type="text"
                           value={serviceInput}
                           onChange={(e) => setServiceInput(e.target.value)}
-                          placeholder="Enter a service"
+                          placeholder="Enter the services that you provide."
                         />
                         <Button 
                           type="button"

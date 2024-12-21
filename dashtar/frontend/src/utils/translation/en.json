@@ -965,7 +965,7 @@
   "UpdateEvent": "UpdateEvent",
   "UpdateEventdescription": "Edit Your Event Details Below.",
   "AddEventTitle": "Add Event",
-  "AddEventdescription": "Add your event necessary information from here",
+  "AddEventdescription": "Add the details of your upcoming event.",
   "evntName": "Name",
   "evntDescription": "Description",
   "evntStartTime": "Start Time",
@@ -976,5 +976,8 @@
   "CompanyDashboard": "Company Dashboard",
   "Companyname": "Company Name",
   "CompanyEmail": "Email",
-  "CompanyContactNumber": "Contact Number"
+  "CompanyContactNumber": "Contact Number",
+  "AddLeadTitle": "Add a New Lead",
+  "AddLeadDescription": "Enter your new prospect below.",
+  "AddLanguageName": "Language Name"
 }
