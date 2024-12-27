@@ -221,6 +221,7 @@ const EventDetails = () => {
           songs={songRequests} 
           eventCode={data?.eventCode}
           refreshSongs={refreshSongs}
+          files={data?.files || []}
         />
       </AnimatedContent>
     </>

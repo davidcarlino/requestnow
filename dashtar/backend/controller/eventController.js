@@ -1,5 +1,19 @@
 const Event = require("../models/Event");
 const Venue = require("../models/Venue");
+const multer = require('multer');
+const path = require('path');
+
+// Configure multer for file upload
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/events')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+});
+
+const upload = multer({ storage: storage });
 
 const addEvent = async (req, res) => {
   try {
@@ -222,12 +236,84 @@ const deleteNote = async (req, res) => {
   }
 };
 
+const uploadFiles = async (req, res) => {
+  try {
+    const event = await Event.findOne({
+      eventCode: req.params.id,
+      createdBy: req.user._id
+    });
+
+    if (!event) {
+      return res.status(404).send({
+        message: "Event not found or access denied"
+      });
+    }
+
+    // Create proper file documents with correct paths - match the leads implementation
+    const fileDocuments = req.files.map(file => ({
+      name: file.originalname,
+      path: file.path,  // Use the full path as stored by multer
+      type: file.mimetype,
+      size: file.size,
+      uploadedAt: new Date()
+    }));
+
+    // Add new files to the event
+    event.files = event.files.concat(fileDocuments);
+    
+    // Save the event
+    const savedEvent = await event.save();
+
+    res.status(200).send({
+      message: "Files uploaded successfully!",
+      files: savedEvent.files
+    });
+  } catch (err) {
+    console.error('Upload error:', err);
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
+const deleteFile = async (req, res) => {
+  try {
+    const event = await Event.findOne({
+      eventCode: req.params.eventId,
+      createdBy: req.user._id
+    });
+
+    if (!event) {
+      return res.status(404).send({
+        message: "Event not found or access denied"
+      });
+    }
+
+    event.files = event.files.filter(file => 
+      file._id.toString() !== req.params.fileId
+    );
+    
+    await event.save();
+
+    res.status(200).send({
+      message: "File deleted successfully!",
+      files: event.files
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
+
 module.exports = {
-    addEvent,
-    getAllEvents,
-    updateEvents,
-    getEventById,
-    deleteEvent,
-    addNote,
-    deleteNote,
+  addEvent,
+  getAllEvents,
+  updateEvents,
+  getEventById,
+  deleteEvent,
+  addNote,
+  deleteNote,
+  uploadFiles,
+  deleteFile,
 };

@@ -48,6 +48,18 @@ const EventServices = {
   deleteNote: async (eventId, noteId) => {
     const response = await requests.delete(`/event/${eventId}/notes/${noteId}`);
     return response;
+  },
+
+  uploadFiles: async (eventId, formData) => {
+    return requests.post(`/event/${eventId}/files`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
+
+  deleteFile: async (eventId, fileId) => {
+    return requests.delete(`/event/${eventId}/files/${fileId}`);
   }
 
 };

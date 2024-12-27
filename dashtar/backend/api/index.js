@@ -60,7 +60,21 @@ app.use('/uploads', (req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
-}, express.static(path.join(__dirname, '..', 'uploads')));
+}, express.static(path.join(__dirname, '../uploads')));
+
+// Add specific handler for event files
+app.get('/uploads/events/*', (req, res) => {
+  const filePath = req.path.replace('/uploads/events/', '');
+  const absolutePath = path.join(__dirname, '../uploads/events', filePath);
+  
+  res.sendFile(absolutePath, (err) => {
+    if (err) {
+      console.error('File download error:', err);
+      res.status(404).json({ message: 'File not found' });
+    }
+  });
+});
+
 //root route
 app.get("/", (req, res) => {
   res.send("App works properly!");

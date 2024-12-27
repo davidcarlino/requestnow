@@ -11,6 +11,29 @@ const noteSchema = new mongoose.Schema({
   }
 });
 
+const fileSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  path: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    required: true
+  },
+  size: {
+    type: Number,
+    required: true
+  },
+  uploadedAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
 const eventSchema = new mongoose.Schema(
   {
     name: {
@@ -57,6 +80,7 @@ const eventSchema = new mongoose.Schema(
       default: false 
     },
     notes: [noteSchema],
+    files: [fileSchema]
   },
   {
     timestamps: true,
