@@ -1334,3 +1334,74 @@ input[type="number"]::-webkit-outer-spin-button {
 .tab-exit {
   animation: exitAnimation 0.8s ease forwards;
 }
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+  
+  #qr-print-content,
+  #qr-print-content * {
+    visibility: visible;
+  }
+  
+  #qr-print-content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: none;
+    padding: 40mm;
+    background-color: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #qr-print-content img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+.print-preview {
+  background: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.react-responsive-modal-modal {
+  background-color: white !important;
+  border-radius: 8px !important;
+}
+
+.dark .react-responsive-modal-modal {
+  background-color: #1a1c23 !important;
+}
+
+#qr-print-content {
+  background-color: white !important;
+}
+
+@media print {
+  #qr-print-content {
+    background-color: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* Add these styles to handle modal visibility */
+.ReactModal__Overlay {
+  position: fixed !important;
+  z-index: 9998 !important;
+}
+
+.ReactModal__Content {
+  position: relative !important;
+  z-index: 9999 !important;
+}

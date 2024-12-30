@@ -23,6 +23,7 @@ import EventDrawer from "@/components/drawer/EventDrawer";
 import EventQrCode from "@/components/qr-code/qrCode"; 
 import EventDahboardTable from "@/components/event-dashboard/EventDashboardTable";
 import NotesDrawer from "@/components/drawer/NotesDrawer";
+import QRCodePrintPopup from '@/components/print/QRCodePrintPopup';
 
 const EventDetails = () => {
   const { t } = useTranslation(); // Add this line
@@ -30,11 +31,10 @@ const EventDetails = () => {
   const { id } = useParams();
   const { data, loading } = useAsync(() => EventServices.getEventById(id));
   const { showTimeFormat, showDateFormat, showingTranslateValue } = useUtilsFunction();
-  console.log(data, "data")
-
   const [songRequests, setSongRequests] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeDrawer, setActiveDrawer] = useState('event');
+  const [isQRPrintPopupOpen, setIsQRPrintPopupOpen] = useState(false);
 
   useEffect(() => {
     if (data?.songRequests) {
@@ -60,7 +60,11 @@ const EventDetails = () => {
   };
 
   const handlePrintQRCode = () => {
-    console.log("Printing QR code");
+    if (!data?.eventCode) {
+      notifyError('No event code available to print');
+      return;
+    }
+    setIsQRPrintPopupOpen(true);
   };
 
   const handlePrintInvoice = () => {
@@ -70,6 +74,10 @@ const EventDetails = () => {
   const handleDrawerChange = (drawer) => {
     setActiveDrawer(drawer);
     toggleDrawer();
+  };
+
+  const handleCloseQRPrintPopup = () => {
+    setIsQRPrintPopupOpen(false);
   };
 
   return (
@@ -193,7 +201,7 @@ const EventDetails = () => {
                           </p>
                         </div>
                       </div>
-                      <div>
+                      <div id="event-qr-code">
                         <EventQrCode event={data}/> 
                       </div>
                     </div>
@@ -224,6 +232,11 @@ const EventDetails = () => {
           files={data?.files || []}
         />
       </AnimatedContent>
+      <QRCodePrintPopup 
+        isOpen={isQRPrintPopupOpen}
+        onClose={handleCloseQRPrintPopup}
+        event={data}
+      />
     </>
   );
 }
