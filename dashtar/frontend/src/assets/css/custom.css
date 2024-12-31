@@ -1386,7 +1386,49 @@ input[type="number"]::-webkit-outer-spin-button {
 #qr-print-content {
   background-color: white !important;
 }
+.pdf-render {
+  position: static !important;
+  box-shadow: none !important;
+  width: 595pt;
+  height: 842pt;
+  padding: 40pt; /* Add padding for better layout */
+  margin: 0;
+  box-sizing: border-box;
+  background: white;
+  font-size: 14pt; /* Increase base font size */
+}
 
+.pdf-render h1 {
+  font-size: 50pt; /* Increase title size */
+  margin-bottom: 20pt; /* Add spacing for better readability */
+}
+
+.pdf-render h2 {
+  font-size: 45pt; /* Adjust paragraph size */
+  margin-top: 10pt;
+  margin-bottom: 10pt; /* Space out paragraphs */
+}
+
+.pdf-render h3 {
+  font-size: 45pt;
+  margin-bottom: 20pt;
+  line-height: 1; /* Add some line spacing for readability */
+}
+
+.pdf-render h4 {
+  font-size: 50pt; /* Adjust paragraph size */
+  margin-bottom: 20pt; /* Space out paragraphs */
+}
+
+.pdf-render .qr-code-container {
+  width: 275pt; /* Increase QR code size */
+  height: 275pt; /* Match width for a square */
+}
+
+.pdf-render img {
+  max-width: 150pt; /* Adjust logo size */
+  margin-top: 20pt; /* Space between content and logo */
+}
 @media print {
   #qr-print-content {
     background-color: white !important;
