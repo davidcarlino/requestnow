@@ -139,7 +139,8 @@ const QRCodePrintPopup = ({ isOpen, onClose, event }) => {
               </div>
               <div className="print:mb-2">
                 <h3 className="text-3xl md:text-4xl print:text-5xl font-bold text-center mb-6 print:mb-4 text-gray-700 w-full">
-                  Request a Song Below
+                  <span className="first-line">Request a</span>
+                  <span className="second-line">Song Below</span>
                 </h3>
               </div>
               <div className="flex justify-center print:mb-8 mb-8">
