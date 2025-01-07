@@ -230,6 +230,7 @@ const EventDetails = () => {
           eventCode={data?.eventCode}
           refreshSongs={refreshSongs}
           files={data?.files || []}
+          invoices={data?.invoices || []}
         />
       </AnimatedContent>
       <QRCodePrintPopup 

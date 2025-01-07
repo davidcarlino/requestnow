@@ -81,6 +81,7 @@ const getAllEvents = async (req, res) => {
     const events = await Event.find(queryObject)
       .select("_id name address description startTime endTime createdAt updatedAt")
       .populate('venue', 'address')   
+      .populate('invoices')
       .sort({ updatedAt: -1 })
       .skip(skip)
       .limit(limits);
@@ -105,7 +106,8 @@ const getEventById = async (req, res) => {
       createdBy: req.user._id  // Only allow access to own events
     })
     .populate('songRequests')
-    .populate('venue');
+    .populate('venue')
+    .populate('invoices');
 
     if (!event) {
       return res.status(404).send({

@@ -71,6 +71,11 @@ const eventSchema = new mongoose.Schema(
       ref: 'SongRequest',
       required: false
     }],
+    invoices: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Invoice',
+      required: false
+    }],
     status: { 
       type: Boolean, 
       default: false 

@@ -16,12 +16,13 @@ import useUtilsFunction from "@/hooks/useUtilsFunction";
 import SongRequest from "@/pages/SongRequest";
 import SongServices from '@/services/SongRequestServices';
 import EventServices from "@/services/EventServices";
+import Invoice from "@/pages/Invoice";
 
 const API_URL = import.meta.env.VITE_APP_API_BASE_URL.replace('/api', '');
 
 const EventDahboardTable = (props) => {
   console.log("props", props);
-  const {songs, eventCode, refreshSongs} = props
+  const {songs, eventCode, refreshSongs, invoices} = props
   const [activeSection, setActiveSection] = useState('songRequests');
   const [showSearch, setShowSearch] = useState(false);
   const { showDateFormat } = useUtilsFunction();
@@ -328,23 +329,13 @@ const EventDahboardTable = (props) => {
     </div>
   );
 
-  const renderInvoices = () => (
-    <TableContainer className="mb-8 dark:bg-gray-900">
-      <Table>
-        <TableHeader>
-          <tr>
-          </tr>
-        </TableHeader>
-      </Table>
-    </TableContainer>
-  );
   const renderActiveSection = () => {
     if (activeSection === 'songRequests') {
       return renderSongRequests();
     } else if (activeSection === 'Files') {
       return renderFiles();
     } else if (activeSection === 'invoices') {
-      return renderInvoices();
+      return <Invoice invoices={invoices} eventCode={eventCode}/>;
     }
   };
   
