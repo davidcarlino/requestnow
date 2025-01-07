@@ -130,10 +130,10 @@ const Invoice = (props) => {
                     isChecked={isCheckAll}
                   />
                 </TableCell>
-                <TableCell>{t("Referance")}</TableCell>
+                <TableCell>{t("Reference")}</TableCell>
                 <TableCell>{t("Services")}</TableCell>
-                <TableCell>{t("CreatedAt")}</TableCell>
-                <TableCell>{t("DueDate")}</TableCell>
+                <TableCell>{t("Invoice Created")}</TableCell>
+                <TableCell>{t("Due Date")}</TableCell>
                 <TableCell>{t("Amount")}</TableCell>
                 <TableCell className="text-right">{t("Action")}</TableCell>
               </tr>
