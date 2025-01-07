@@ -1,5 +1,28 @@
 const mongoose = require('mongoose');
 
+const fileSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  path: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    required: true
+  },
+  size: {
+    type: Number,
+    required: true
+  },
+  uploadedAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
 const invoiceSchema = new mongoose.Schema(
   {
     reference: {
@@ -24,9 +47,7 @@ const invoiceSchema = new mongoose.Schema(
       enum: ['pending', 'paid', 'overdue', 'cancelled'],
       default: 'pending',
     },
-    files: [{
-      type: String, // Store file paths/URLs
-    }],
+    files: [fileSchema],
     services: [{
       type: String,
       required: true,

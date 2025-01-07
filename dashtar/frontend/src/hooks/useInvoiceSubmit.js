@@ -8,6 +8,7 @@ import { SidebarContext } from "@/context/SidebarContext";
 import LeadsServices from "@/services/LeadsServices";
 
 const useInvoiceSubmit = (id, eventCode) => {
+  console.log("id", id)
   const { isDrawerOpen, closeDrawer, setIsUpdate, lang } = useContext(SidebarContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [language, setLanguage] = useState(lang || "en");
@@ -20,7 +21,6 @@ const useInvoiceSubmit = (id, eventCode) => {
 		const fetchServices = async () => {
 			try {
 				const response = await LeadsServices.getCompanyServices();
-				console.log("response", response);
 				setCompanyServices(response.services);
 			} catch (error) {
 				console.error('Error fetching services:', error);
@@ -71,34 +71,49 @@ const useInvoiceSubmit = (id, eventCode) => {
     getLastInvoiceNumber();
   }, []);
 
-  const onSubmit = async (data) => {
-    console.log("innnnfdata", data);
+  const onSubmit = async (data, attachedFiles) => {
     try {
       setIsSubmitting(true);
-      const invoiceData = {
-        reference: data.reference,
-        description: data.description,
-        amount: parseFloat(data.amount),
-        dueDate: data.dueDate,
-        services: data.services,
-        status: 'pending',
-        files: data.files || []
-      };
-
-      if (id) {
-        const res = await InvoiceServices.updateInvoice(id, invoiceData);
-        setIsUpdate(true);
-        setIsSubmitting(false);
-        notifySuccess(res.message);
-        closeDrawer();
+      
+      // Create FormData object
+      const formData = new FormData();
+      
+      // Append all form fields
+      formData.append('reference', data.reference);
+      formData.append('description', data.description);
+      formData.append('amount', data.amount);
+      formData.append('dueDate', data.dueDate);
+      formData.append('eventCode', eventCode);
+      
+      // Handle multiple services
+      if (Array.isArray(data.services)) {
+        data.services.forEach(service => {
+          formData.append('services', service);
+        });
       } else {
-        const res = await InvoiceServices.addInvoiceToEvent(eventCode, invoiceData);
-        setIsUpdate(true);
-        setIsSubmitting(false);
-        notifySuccess(res.message);
-        closeDrawer();
+        formData.append('services', data.services);
       }
+
+      // Handle files from attachedFiles state
+      if (attachedFiles && attachedFiles.length > 0) {
+        attachedFiles.forEach(file => {
+          formData.append('files', file);
+        });
+      }
+
+      let res;
+      if (id) {
+        res = await InvoiceServices.updateInvoice(id, formData);
+      } else {
+        res = await InvoiceServices.addInvoiceToEvent(eventCode, formData);
+      }
+
+      setIsUpdate(true);
+      setIsSubmitting(false);
+      notifySuccess(res.message);
+      closeDrawer();
     } catch (err) {
+      console.error('Error submitting invoice:', err);
       notifyError(err ? err?.response?.data?.message : err?.message);
       setIsSubmitting(false);
     }
@@ -107,13 +122,15 @@ const useInvoiceSubmit = (id, eventCode) => {
   const getInvoiceData = async () => {
     try {
       const res = await InvoiceServices.getInvoiceById(id);
+      console.log("res", res)
       if (res) {
         setResData(res);
         setValue("reference", res.reference);
         setValue("description", res.description);
-        setValue("amount", res.amount);
-        setValue("dueDate", new Date(res.dueDate).toISOString().split('T')[0]);
         setValue("services", res.services);
+        setValue("amount", res.amount);
+        setValue("createdDate", new Date(res.createdAt).toISOString().split('T')[0]);
+        setValue("dueDate", new Date(res.dueDate).toISOString().split('T')[0]);
       }
     } catch (err) {
       notifyError(err ? err?.response?.data?.message : err?.message);
@@ -129,21 +146,23 @@ const useInvoiceSubmit = (id, eventCode) => {
       setResData({});
       setValue("reference", "");
       setValue("description", "");
-      setValue("amount", "");
-      setValue("dueDate", "");
       setValue("services", "");
+      setValue("amount", "");
+      setValue("createdDate", "");
+      setValue("dueDate", "");
       clearErrors("reference");
       clearErrors("description");
-      clearErrors("amount");
-      clearErrors("dueDate");
       clearErrors("services");
+      clearErrors("amount");
+      clearErrors("createdDate");
+      clearErrors("dueDate");
       setLanguage(lang);
       return;
     }
     if (id) {
       getInvoiceData();
     } else {
-      // Set sequential invoice number for new invoices
+      // For new invoices, set current date as createdDate
       setValue("reference", generateInvoiceNumber());
     }
   }, [id, setValue, isDrawerOpen, clearErrors, lang, lastInvoiceNumber]);

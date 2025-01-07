@@ -20,6 +20,7 @@ import CurrencyServices from "@/services/CurrencyServices";
 import EventServices from "@/services/EventServices";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import VenueServices from "@/services/VenueServices";
+import InvoiceServices from "@/services/InvoiceServices";
 
 const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
   const { isModalOpen, closeModal, setIsUpdate } = useContext(SidebarContext);
@@ -235,6 +236,27 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
           setIsSubmitting(false);
         } else {
           const res = await CurrencyServices.deleteCurrency(id);
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        }
+      }
+
+      if (location.pathname.match(/^\/event\/[^/]+\/dashboard$/)) {
+        if (ids) {
+          const res = await InvoiceServices.deleteManyInvoices({
+            ids: ids,
+          });
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setIsCheck([]);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        } else {
+          const res = await InvoiceServices.deleteInvoice(id);
           setIsUpdate(true);
           notifySuccess(res.message);
           setServiceId();

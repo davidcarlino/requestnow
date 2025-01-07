@@ -18,7 +18,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import useAsync from "@/hooks/useAsync";
 import Status from "@/components/table/Status";
 import OrderServices from "@/services/OrderServices";
-import Invoice from "@/components/invoice/Invoice";
+import InvoiceTable from "@/components/invoice/InvoiceTable";
 import Loading from "@/components/preloader/Loading";
 import logoDark from "@/assets/img/logo/logo-dark.svg";
 import logoLight from "@/assets/img/logo/logo-color.svg";

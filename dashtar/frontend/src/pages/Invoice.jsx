@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Card,
   CardBody,
@@ -25,7 +25,7 @@ const Invoice = (props) => {
   const [selectedFileForDrawer, setSelectedFileForDrawer] = useState(null);
   const [isCheckAll, setIsCheckAll] = useState(false);
   const [isCheck, setIsCheck] = useState([]);
-  const { toggleDrawer } = useContext(SidebarContext);
+  const { toggleDrawer, isDrawerOpen } = useContext(SidebarContext);
   const { serviceId } = useToggleDrawer();
   const { eventCode, invoices } = props;
   const { t } = useTranslation();
@@ -90,11 +90,18 @@ const Invoice = (props) => {
 
   const handleSelectAll = () => {
     setIsCheckAll(!isCheckAll);
-    setIsCheck(data?.events?.map((li) => li._id));
+    setIsCheck(invoices?.map((li) => li._id));
     if (isCheckAll) {
       setIsCheck([]);
     }
   };
+
+  // Reset selected file when drawer closes
+  useEffect(() => {
+    if (!isDrawerOpen) {
+      setSelectedFileForDrawer(null);
+    }
+  }, [isDrawerOpen]);
 
   return (
     <>
@@ -253,11 +260,11 @@ const Invoice = (props) => {
                 <TableCell>{t("CreatedAt")}</TableCell>
                 <TableCell>{t("DueDate")}</TableCell>
                 <TableCell>{t("Amount")}</TableCell>
-                <TableCell>{t("Action")}</TableCell>
+                <TableCell className="text-right">{t("Action")}</TableCell>
               </tr>
             </TableHeader>
 
-            <InvoiceTable invoices={invoices} isCheck={isCheck} setIsCheck={setIsCheck}/>
+            <InvoiceTable invoices={invoices} isCheck={isCheck} setIsCheck={setIsCheck} eventCode={eventCode}/>
           </Table>
         </TableContainer>
       )}

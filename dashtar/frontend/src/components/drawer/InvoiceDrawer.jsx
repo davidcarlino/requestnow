@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { Card, CardBody, Input, Textarea } from "@windmill/react-ui";
 import { useTranslation } from "react-i18next";
-import { BiCloudUpload } from "react-icons/bi";
-import { FiFileText, FiX } from "react-icons/fi";
+import { BiCloudUpload, BiDownload } from "react-icons/bi";
+import { FiFileText, FiX, FiDownload } from "react-icons/fi";
 
 //internal import
 import Title from "@/components/form/others/Title";
@@ -16,7 +16,8 @@ import useInvoiceSubmit from "@/hooks/useInvoiceSubmit";
 const InvoiceDrawer = ({ id, selectedFile, eventCode }) => {
   console.log("selectedFile", selectedFile, eventCode);
   const { t } = useTranslation();
-  
+  const API_URL = import.meta.env.VITE_APP_API_BASE_URL.replace('/api', '');
+
   const {
     register,
     handleSubmit,
@@ -24,17 +25,30 @@ const InvoiceDrawer = ({ id, selectedFile, eventCode }) => {
     onSubmit,
     handleSelectLanguage,
     companyServices,
+    resData,
   } = useInvoiceSubmit(id, eventCode);
-
+  console.log("resData", resData)
   const [isDragging, setIsDragging] = useState(false);
   const [attachedFiles, setAttachedFiles] = useState([]);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
+    console.log("resData", resData)
+    console.log("selectedFile", selectedFile)
     if (selectedFile) {
+      selectedFile.isExisting = false
       setAttachedFiles([selectedFile]);
+    } else if (id && resData?.files?.length > 0) {
+      const existingFiles = resData.files.map(file => ({
+        name: file.name,
+        path: file.path,
+        type: file.type,
+        size: file.size,
+        isExisting: true
+      }));
+      setAttachedFiles(existingFiles);
     }
-  }, [selectedFile]);
+  }, [selectedFile, id, resData]);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -49,21 +63,41 @@ const InvoiceDrawer = ({ id, selectedFile, eventCode }) => {
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-    const droppedFiles = Array.from(e.dataTransfer.files);
+    const droppedFiles = Array.from(e.dataTransfer.files).map(file => ({
+      file,
+      name: file.name,
+      type: file.type,
+      isNew: true
+    }));
     setAttachedFiles(prev => [...prev, ...droppedFiles]);
   };
 
   const handleFileInput = (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length > 0) {
-      setAttachedFiles(prev => [...prev, ...files]);
-    }
+    const files = Array.from(e.target.files).map(file => ({
+      file,
+      name: file.name,
+      type: file.type,
+      isNew: true
+    }));
+    setAttachedFiles(prev => [...prev, ...files]);
   };
 
   const removeFile = (index) => {
     setAttachedFiles(prev => prev.filter((_, i) => i !== index));
   };
   console.log("attachedFiles", attachedFiles);
+
+  const handleFormSubmit = (data) => {
+    const newFiles = attachedFiles
+      .filter(file => file.isNew)
+      .map(file => file.file);
+    
+    const existingFiles = attachedFiles
+      .filter(file => file.isExisting);
+
+    onSubmit(data, newFiles, existingFiles);
+  };
+
   return (
     <>
       <div className="w-full relative p-6 border-b border-gray-100 bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
@@ -87,7 +121,7 @@ const InvoiceDrawer = ({ id, selectedFile, eventCode }) => {
       <Scrollbars className="w-full md:w-7/12 lg:w-8/12 xl:w-8/12 relative dark:bg-gray-700 dark:text-gray-200">
         <Card className="overflow-y-scroll flex-grow scrollbar-hide w-full max-h-full">
           <CardBody>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(handleFormSubmit)}>
               <div className="px-6 pt-8 flex-grow scrollbar-hide w-full max-h-full pb-40">
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <LabelArea label="Invoice Reference" />
@@ -194,67 +228,90 @@ const InvoiceDrawer = ({ id, selectedFile, eventCode }) => {
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <LabelArea label="Attachments" />
                   <div className="col-span-8 sm:col-span-4">
-                    {attachedFiles.length === 0 ? (
-                      // Show drag and drop only when no files are attached
-                      <div
-                        className={`border-2 border-dashed rounded-lg p-4 ${
-                          isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
-                        }`}
-                        onDragOver={handleDragOver}
-                        onDragLeave={handleDragLeave}
-                        onDrop={handleDrop}
-                        onClick={() => fileInputRef.current?.click()}
-                      >
-                        <input
-                          type="file"
-                          {...register("files", {
-                            required: false,
-                          })}
-                          name="files"
-                          ref={fileInputRef}
-                          className="hidden"
-                          multiple
-                          onChange={handleFileInput}
-                          accept="image/*,application/pdf"
-                        />
-                        <div className="text-center">
-                          <BiCloudUpload className="mx-auto h-12 w-12 text-gray-400" />
-                          <p className="mt-1">Drag & drop files here or click to select</p>
-                        </div>
-                      </div>
-                    ) : (
-                      // Show only file previews when files are attached
-                      <div className="grid grid-cols-2 gap-4">
-                        {attachedFiles.map((file, index) => (
-                          <div 
-                            key={index}
-                            className="relative group rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700"
-                          >
-                            {file.type.includes('image') ? (
-                              <img 
-                                src={URL.createObjectURL(file)}
-                                alt={file.name}
-                                className="w-full h-32 object-cover"
-                              />
-                            ) : (
-                              <div className="w-full h-32 flex flex-col items-center justify-center">
-                                <FiFileText className="w-8 h-8 text-gray-400" />
-                                <span className="mt-2 text-sm text-gray-500">
-                                  {file.name}
-                                </span>
-                              </div>
-                            )}
-                            <button
-                              type="button"
-                              onClick={() => removeFile(index)}
-                              className="absolute top-0 right-0 p-1 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-                            >
-                              <FiX className="w-4 h-4" />
-                            </button>
+                    <div className="mb-4">
+                      {attachedFiles.length === 0 ? (
+                        <div
+                          className={`border-2 border-dashed rounded-lg p-4 ${
+                            isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
+                          }`}
+                          onDragOver={handleDragOver}
+                          onDragLeave={handleDragLeave}
+                          onDrop={handleDrop}
+                          onClick={() => fileInputRef.current?.click()}
+                        >
+                          <input
+                            type="file"
+                            ref={fileInputRef}
+                            className="hidden"
+                            multiple
+                            onChange={handleFileInput}
+                            accept="image/*,application/pdf"
+                          />
+                          <div className="text-center">
+                            <BiCloudUpload className="mx-auto h-12 w-12 text-gray-400" />
+                            <p className="mt-1">Drag & drop files here or click to select</p>
                           </div>
-                        ))}
-                      </div>
-                    )}
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 gap-4">
+                          {attachedFiles.map((file, index) => (
+                            <div 
+                              key={index}
+                              className="relative group rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700"
+                            >
+                              {file.isExisting ? (
+                                <a
+                                  href={`${API_URL}/uploads/${file.path.split('uploads/')[1]}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="block w-full h-32 cursor-pointer"
+                                >
+                                  {file.type.includes('image') ? (
+                                    <img 
+                                      src={`/${file.path}`}
+                                      alt={file.name}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  ) : (
+                                    <div className="w-full h-full flex flex-col items-center justify-center">
+                                      <FiFileText className="w-8 h-8 text-gray-400" />
+                                      <span className="mt-2 text-sm text-gray-500">
+                                        {file.name}
+                                      </span>
+                                    </div>
+                                  )}
+                                </a>
+                              ) : (
+                                <div className="w-full h-32">
+                                  {file.type.includes('image') ? (
+                                    <img 
+                                      src={URL.createObjectURL(file)}
+                                      alt={file.name}
+                                      className="w-full h-32 object-cover"
+                                    />
+                                  ) : (
+                                    <div className="w-full h-32 flex flex-col items-center justify-center">
+                                      <FiFileText className="w-8 h-8 text-gray-400" />
+                                      <span className="mt-2 text-sm text-gray-500">
+                                        {file.name}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                              
+                              <button
+                                type="button"
+                                onClick={() => removeFile(index)}
+                                className="absolute top-0 right-0 p-1 rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                              >
+                                <FiX className="w-4 h-4" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

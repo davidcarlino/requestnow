@@ -1,13 +1,20 @@
 import requests from './httpService';
 
 const InvoiceServices = {
-  addInvoiceToEvent: async (eventCode, invoiceData) => {
-    console.log("invoiceData", invoiceData)
-    return requests.post('/invoice/add', { ...invoiceData, eventCode });
+  addInvoiceToEvent: async (eventCode, formData) => {
+    return requests.post('/invoice/add', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   },
 
-  updateInvoice: async (invoiceId, invoice) => {
-    return requests.put(`/invoice/${invoiceId}`, invoice);
+  updateInvoice: async (invoiceId, formData) => {
+    return requests.put(`/invoice/${invoiceId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   },
 
   getInvoiceById: async (invoiceId) => {
