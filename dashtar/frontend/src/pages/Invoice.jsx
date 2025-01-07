@@ -116,6 +116,34 @@ const Invoice = (props) => {
           </h2>
         </div>
 
+        {invoices?.length > 0 && (
+        <TableContainer className="mb-8 dark:bg-gray-900">
+          <Table>
+            <TableHeader>
+              <tr>
+                <TableCell>
+                  <CheckBox
+                    type="checkbox"
+                    name="selectAll"
+                    id="selectAll"
+                    handleClick={handleSelectAll}
+                    isChecked={isCheckAll}
+                  />
+                </TableCell>
+                <TableCell>{t("Referance")}</TableCell>
+                <TableCell>{t("Services")}</TableCell>
+                <TableCell>{t("CreatedAt")}</TableCell>
+                <TableCell>{t("DueDate")}</TableCell>
+                <TableCell>{t("Amount")}</TableCell>
+                <TableCell className="text-right">{t("Action")}</TableCell>
+              </tr>
+            </TableHeader>
+
+            <InvoiceTable invoices={invoices} isCheck={isCheck} setIsCheck={setIsCheck} eventCode={eventCode}/>
+          </Table>
+        </TableContainer>
+      )}
+
         <Card 
           className={`hover:shadow-lg transition-shadow duration-200 w-full mb-6
             ${isDragging ? 'border-2 border-blue-500 bg-blue-50 dark:bg-gray-800' : ''}`}
@@ -241,33 +269,7 @@ const Invoice = (props) => {
           </CardBody>
         </Card>
       </div>
-      {invoices?.length > 0 && (
-        <TableContainer className="mb-8 dark:bg-gray-900">
-          <Table>
-            <TableHeader>
-              <tr>
-                <TableCell>
-                  <CheckBox
-                    type="checkbox"
-                    name="selectAll"
-                    id="selectAll"
-                    handleClick={handleSelectAll}
-                    isChecked={isCheckAll}
-                  />
-                </TableCell>
-                <TableCell>{t("Referance")}</TableCell>
-                <TableCell>{t("Services")}</TableCell>
-                <TableCell>{t("CreatedAt")}</TableCell>
-                <TableCell>{t("DueDate")}</TableCell>
-                <TableCell>{t("Amount")}</TableCell>
-                <TableCell className="text-right">{t("Action")}</TableCell>
-              </tr>
-            </TableHeader>
-
-            <InvoiceTable invoices={invoices} isCheck={isCheck} setIsCheck={setIsCheck} eventCode={eventCode}/>
-          </Table>
-        </TableContainer>
-      )}
+      
     </>
   );
 };
