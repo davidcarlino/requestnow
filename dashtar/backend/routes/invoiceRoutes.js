@@ -11,13 +11,21 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
-// Configure multer for file upload
+// Configure multer for both invoice files and note attachments
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
+    // For both new invoices and notes, store files in invoice-specific directory
+    const invoiceId = req.params.id;
+    let dir = uploadsDir;
+
+    if (invoiceId) {
+      // If we have an invoice ID, store in its directory
+      dir = path.join(uploadsDir, invoiceId);
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
     }
-    cb(null, uploadsDir);
+    cb(null, dir);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -38,6 +46,8 @@ const {
   getInvoiceById,
   getAllInvoices,
   deleteInvoice,
+  addNote,
+  deleteNote,
 } = require('../controller/invoiceController');
 
 // Routes with authentication
@@ -57,5 +67,11 @@ router.get('/', getAllInvoices);
 
 // Delete invoice
 router.delete('/:id', deleteInvoice);
+
+// Add note to invoice (using same storage as invoice files)
+router.post('/:id/notes', upload.array('files'), addNote);
+
+// Delete note from invoice
+router.delete('/:id/notes/:noteId', deleteNote);
 
 module.exports = router;

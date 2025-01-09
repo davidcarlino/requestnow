@@ -23,6 +23,23 @@ const fileSchema = new mongoose.Schema({
   }
 });
 
+const noteSchema = new mongoose.Schema({
+  content: {
+    type: String,
+  },
+  attachments: [{
+    originalName: String,
+    fileName: String,
+    mimeType: String,
+    size: Number,
+    path: String
+  }],
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
+});
+
 const invoiceSchema = new mongoose.Schema(
   {
     reference: {
@@ -61,6 +78,7 @@ const invoiceSchema = new mongoose.Schema(
 			type: Date,
 			default: Date.now,
 		},
+    notes: [noteSchema],
   },
   {
     timestamps: true,

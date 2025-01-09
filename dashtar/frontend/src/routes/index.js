@@ -32,6 +32,7 @@ const StoreSetting = lazy(() => import("@/pages/StoreSetting"));
 const Notifications = lazy(() => import("@/pages/Notifications"));
 const CompanyDashboard = lazy(() => import("@/pages/CompanyDashboard"));
 const LeadsDetails = lazy(() => import("@/pages/LeadsDetails"));
+const InvoiceDetails = lazy(() => import("@/pages/InvoiceDetails"));
 /*
 //  * ⚠ These are internal routes!
 //  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -161,6 +162,10 @@ const routes = [
   {
     path: "/leads/:id/dashboard",
     component: LeadsDetails,
+  },
+  {
+    path: "/event/:id/dashboard/invoice/:id",
+    component: InvoiceDetails,
   },
 
 ];

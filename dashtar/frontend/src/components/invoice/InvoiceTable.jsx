@@ -16,7 +16,7 @@ import Tooltip from "@/components/tooltip/Tooltip";
 
 const InvoiceTable = ({ isCheck, invoices, setIsCheck, eventCode }) => {
   const { t } = useTranslation();
-  const { showDateFormat, showingTranslateValue } = useUtilsFunction();
+  const { showDateFormat, showingTranslateValue, currency } = useUtilsFunction();
   const { title, serviceId, handleModalOpen, handleUpdate } = useToggleDrawer();
   console.log("tableserviceId", serviceId)
   const handleClick = (e) => {
@@ -35,7 +35,7 @@ const InvoiceTable = ({ isCheck, invoices, setIsCheck, eventCode }) => {
     }
     return '';
   };
-
+  console.log("window", window.location)
   return (
     <>
       <DeleteModal id={serviceId} title={title} />
@@ -59,7 +59,9 @@ const InvoiceTable = ({ isCheck, invoices, setIsCheck, eventCode }) => {
 
             <TableCell className="w-40">
               <span className="text-sm font-semibold dark:text-gray-200">
-                {invoice?.reference}
+                <Link to={`${window.location.pathname}/invoice/${invoice?._id}`}>
+                  {invoice?.reference}
+                </Link>
               </span>
             </TableCell>
 
@@ -85,7 +87,7 @@ const InvoiceTable = ({ isCheck, invoices, setIsCheck, eventCode }) => {
 
             <TableCell className="w-24">
               <span className="text-sm font-medium dark:text-gray-200">
-                ${invoice?.amount}
+                {currency} {invoice?.amount}
               </span>
             </TableCell>
 

@@ -232,11 +232,86 @@ const deleteInvoice = async (req, res) => {
   }
 };
 
+const addNote = async (req, res) => {
+  try {
+    const invoice = await Invoice.findOne({
+      _id: req.params.id,
+      createdBy: req.user._id
+    });
+    
+    if (!invoice) {
+      return res.status(404).json({
+        message: 'Invoice not found or access denied',
+      });
+    }
+
+    // Create note object
+    const note = {
+      content: req.body.content || '',
+      attachments: [],
+      createdAt: new Date()
+    };
+
+    // Handle multiple file attachments if present
+    if (req.files && req.files.length > 0) {
+      note.attachments = req.files.map(file => ({
+        originalName: file.originalname,
+        fileName: file.filename,
+        mimeType: file.mimetype,
+        size: file.size,
+        path: file.path
+      }));
+    }
+
+    // Add the note without validation since we're allowing either content or attachments
+    invoice.notes.push(note);
+
+    // Save the lead
+    const savedInvoice = await invoice.save({ validateBeforeSave: false }); // Skip mongoose validation
+    
+    // Return the updated lead
+    res.status(200).json(savedInvoice);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message || 'Error adding note',
+    });
+  }
+};
+
+const deleteNote = async (req, res) => {
+  try {
+    const invoice = await Invoice.findOne({
+      _id: req.params.id,
+      createdBy: req.user._id
+    });
+    if (!invoice) {
+      return res.status(404).json({
+        message: 'Invoice not found or access denied',
+      });
+    }
+
+    invoice.notes = invoice.notes.filter(note => 
+      note._id.toString() !== req.params.noteId
+    );
+
+    await invoice.save();
+    res.status(200).json({
+      message: "Note deleted successfully!",
+      notes: invoice.notes
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   addInvoiceToEvent,
   updateInvoice,
   getInvoiceById,
   getAllInvoices,
   deleteInvoice,
-	
+  addNote,
+  deleteNote,
 };

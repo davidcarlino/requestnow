@@ -28,6 +28,24 @@ const InvoiceServices = {
   deleteInvoice: async (invoiceId) => {
     return requests.delete(`/invoice/${invoiceId}`);
   },
+
+  addNote: async (id, formData) => {
+    try {
+      return requests.post(`/invoice/${id}/notes`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    } catch (error) {
+      console.error('Error in addNote service:', error);
+      throw error;
+    }
+  },
+
+  deleteNote: async (id, noteId) => {
+    const response = await requests.delete(`/invoice/${id}/notes/${noteId}`);
+    return response;
+  },
 };
 
 export default InvoiceServices; 
