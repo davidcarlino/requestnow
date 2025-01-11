@@ -209,7 +209,9 @@ const Events = () => {
                   </Button>
                 </div>
               </div>
-
+              <br></br><Label style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
+  Or Search By: 
+</Label>
               <div className="grid gap-4 lg:gap-6 xl:gap-6 lg:grid-cols-3 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 py-2">
                 <div>
                   <Label>Date Created</Label>
