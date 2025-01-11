@@ -22,7 +22,7 @@ import { FiPlus } from "react-icons/fi";
 import { notifyError } from "@/utils/toast";
 import useAsync from "@/hooks/useAsync";
 import useFilter from "@/hooks/useFilter";
-import EventServices from "@/services/EventServices";
+import InvoiceServices from "@/services/InvoiceServices";
 import NotFound from "@/components/table/NotFound";
 import PageTitle from "@/components/Typography/PageTitle";
 import { SidebarContext } from "@/context/SidebarContext";
@@ -50,7 +50,8 @@ const Events = () => {
     handleChangePage,
     handleSubmitForAll,
     resultsPerPage,
-    toggleDrawer
+    toggleDrawer,
+    addInvoiceToEvent
   } = useContext(SidebarContext);
 
   const { t } = useTranslation();
@@ -58,7 +59,7 @@ const Events = () => {
   const [loadingExport, setLoadingExport] = useState(false);
 
   const { data, loading, error } = useAsync(() =>
-    EventServices.getAllEvents({
+    InvoiceServices.getAllInvoices({
       endTime: endDate,
       startTime: startDate,
       name: searchText,
@@ -198,7 +199,7 @@ const Events = () => {
                 </div>
                 <div>
                   <Button
-                    onClick={toggleDrawer}
+                    onClick={addInvoiceToEvent}
                     className="w-full rounded-md h-12"
                   >
                     <span className="mr-2">
@@ -279,12 +280,12 @@ const Events = () => {
                     isChecked={isCheckAll}
                   />
                 </TableCell>
-                <TableCell>{t("evntName")}</TableCell>
-                <TableCell>{t("evntDescription")}</TableCell>
-                <TableCell>{t("evntStartTime")}</TableCell>
-                <TableCell>{t("evntEndTime")}</TableCell>
-                <TableCell>{t("evntAddress")}</TableCell>
-                <TableCell className="text-right">{t("evntAction")}</TableCell>
+               <TableCell>{t("Reference")}</TableCell>
+                               <TableCell>{t("Services")}</TableCell>
+                               <TableCell>{t("Invoice Created")}</TableCell>
+                               <TableCell>{t("Due Date")}</TableCell>
+                               <TableCell>{t("Amount")}</TableCell>
+                               <TableCell className="text-right">{t("Action")}</TableCell>
               </tr>
             </TableHeader>
 
@@ -353,7 +354,7 @@ export default Events;
 // import { notifyError } from "@/utils/toast";
 // import useAsync from "@/hooks/useAsync";
 // import useFilter from "@/hooks/useFilter";
-// import EventServices from "@/services/EventServices";
+// import InvoiceServices from "@/services/InvoiceServices";
 // import NotFound from "@/components/table/NotFound";
 // import PageTitle from "@/components/Typography/PageTitle";
 // import { SidebarContext } from "@/context/SidebarContext";
@@ -393,7 +394,7 @@ export default Events;
 //   const [loadingExport, setLoadingExport] = useState(false);
 
 //   const { data, loading, error } = useAsync(() =>
-//     EventServices.getAllEvents({
+//     InvoiceServices.getAllEvents({
 //       name: name,
 //       description: description,
 //       startTime: startTime,
