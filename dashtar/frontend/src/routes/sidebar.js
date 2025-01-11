@@ -8,7 +8,9 @@ import {
   FiGlobe,
   FiTarget,
   FiMapPin,
+  FiDollarSign,
 } from "react-icons/fi";
+
 
 /**
  * ⚠ These are used just to render the Sidebar!
@@ -37,10 +39,17 @@ const sidebar = (adminInfo) => {
       icon: FiUsers,
       name: "My Leads",
     },
+
+    
     {
       path: "/event",
       icon: FiCompass,
       name: "My Events",
+    },
+    {
+      path: "/invoices", // Add the path property
+      icon: FiDollarSign,
+      name: "My Invoices",
     },
     {
       path: "/venue",
