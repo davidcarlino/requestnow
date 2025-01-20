@@ -8,7 +8,6 @@ import { SidebarContext } from "@/context/SidebarContext";
 import LeadsServices from "@/services/LeadsServices";
 
 const useInvoiceSubmit = (id, eventCode) => {
-  console.log("id", id)
   const { isDrawerOpen, closeDrawer, setIsUpdate, lang } = useContext(SidebarContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [language, setLanguage] = useState(lang || "en");

@@ -21,8 +21,20 @@ const InvoiceServices = {
     return requests.get(`/invoice/${invoiceId}`);
   },
 
-  getAllInvoices: async () => {
-    return requests.get('/invoice');
+  getAllInvoices: async ({
+    name,
+    page = 1,
+    limit = 8,
+    createTime,
+    dueTime,
+  }) => {
+    const searchName = name !== undefined && name !== null ? name : "";
+    const createT = createTime !== undefined && createTime !== null ? createTime : "";
+    const dueT = dueTime !== undefined && dueTime !== null ? dueTime : "";
+    
+    return requests.get(
+      `/invoice?name=${searchName}&page=${page}&limit=${limit}&createTime=${createT}&dueTime=${dueT}`
+    );
   },
 
   deleteInvoice: async (invoiceId) => {

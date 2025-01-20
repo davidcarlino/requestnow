@@ -172,6 +172,10 @@ const routes = [
     path: "/event/:id/dashboard/invoice/:id",
     component: InvoiceDetails,
   },
+  {
+    path: "/invoices/:id/dashboard",
+    component: InvoiceDetails,
+  },
 
 ];
 

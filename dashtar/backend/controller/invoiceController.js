@@ -179,13 +179,49 @@ const getInvoiceById = async (req, res) => {
 };
 
 const getAllInvoices = async (req, res) => {
+  const {
+    page,
+    limit,
+    dueTime,
+    createTime,
+    name,
+  } = req.query;
+
+  const queryObject = {
+    createdBy: req.user._id
+  };
+
+  if (name && name !== 'undefined') {
+    queryObject.$or = [
+      { "reference": { $regex: name, $options: "i" } },
+      { "services": { $regex: name, $options: "i" } }
+    ];
+  }
+
+  if (createTime && dueTime) {
+    queryObject.createdAt = {
+      $gte: new Date(createTime),
+      $lte: new Date(dueTime),
+    };
+  }
+
+  const pages = Number(page) || 1;
+  const limits = Number(limit) || 8;
+  const skip = (pages - 1) * limits;
+
   try {
-    const invoices = await Invoice.find({ createdBy: req.user._id })
-      .sort({ createdAt: -1 });
-    
+    const totalDoc = await Invoice.countDocuments(queryObject);
+    const invoices = await Invoice.find(queryObject)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limits);
+
     res.status(200).json({
       success: true,
       invoices,
+      totalDoc,
+      limits,
+      pages,
     });
   } catch (error) {
     res.status(500).json({

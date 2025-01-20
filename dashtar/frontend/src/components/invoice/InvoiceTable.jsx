@@ -14,11 +14,10 @@ import MainDrawer from "@/components/drawer/MainDrawer";
 import InvoiceDrawer from "@/components/drawer/InvoiceDrawer";
 import Tooltip from "@/components/tooltip/Tooltip";
 
-const InvoiceTable = ({ isCheck, invoices, setIsCheck, eventCode }) => {
+const InvoiceTable = ({ isCheck, invoices, setIsCheck, eventCode, fromInvoices }) => {
   const { t } = useTranslation();
   const { showDateFormat, showingTranslateValue, currency } = useUtilsFunction();
   const { title, serviceId, handleModalOpen, handleUpdate } = useToggleDrawer();
-  console.log("tableserviceId", serviceId)
   const handleClick = (e) => {
     const { id, checked } = e.target;
     setIsCheck([...isCheck, id]);
@@ -35,7 +34,14 @@ const InvoiceTable = ({ isCheck, invoices, setIsCheck, eventCode }) => {
     }
     return '';
   };
-  console.log("window", window.location)
+
+  const getInvoiceLink = (invoice) => {
+    if (fromInvoices) {
+      return `/invoices/${invoice?._id}/dashboard`;
+    }
+    return `${window.location.pathname}/invoice/${invoice?._id}`;
+  };
+
   return (
     <>
       <DeleteModal id={serviceId} title={title} />
@@ -59,7 +65,7 @@ const InvoiceTable = ({ isCheck, invoices, setIsCheck, eventCode }) => {
 
             <TableCell className="w-40">
               <span className="text-sm font-semibold dark:text-gray-200">
-                <Link to={`${window.location.pathname}/invoice/${invoice?._id}`}>
+                <Link to={getInvoiceLink(invoice)}>
                   {invoice?.reference}
                 </Link>
               </span>

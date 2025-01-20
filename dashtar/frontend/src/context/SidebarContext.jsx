@@ -40,6 +40,8 @@ export const SidebarProvider = ({ children }) => {
   const { i18n } = useTranslation();
   const [tabIndex, setTabIndex] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [createTime, setCreateTime] = useState("");
+  const [dueTime, setDueTime] = useState("");
 
   const closeSidebar = () => setIsSidebarOpen(false);
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -182,6 +184,10 @@ export const SidebarProvider = ({ children }) => {
         setTabIndex,
         isAuthenticated,
         setIsAuthenticated,
+        createTime,
+        setCreateTime,
+        dueTime,
+        setDueTime,
       }}
     >
       {children}
