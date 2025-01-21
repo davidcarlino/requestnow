@@ -21,7 +21,6 @@ import Invoice from "@/pages/Invoice";
 const API_URL = import.meta.env.VITE_APP_API_BASE_URL.replace('/api', '');
 
 const EventDahboardTable = (props) => {
-  console.log("props", props);
   const {songs, eventCode, refreshSongs, invoices} = props
   const [activeSection, setActiveSection] = useState('songRequests');
   const [showSearch, setShowSearch] = useState(false);

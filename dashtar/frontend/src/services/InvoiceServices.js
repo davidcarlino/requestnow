@@ -21,20 +21,26 @@ const InvoiceServices = {
     return requests.get(`/invoice/${invoiceId}`);
   },
 
-  getAllInvoices: async ({
-    name,
-    page = 1,
-    limit = 8,
-    createTime,
-    dueTime,
-  }) => {
-    const searchName = name !== undefined && name !== null ? name : "";
-    const createT = createTime !== undefined && createTime !== null ? createTime : "";
-    const dueT = dueTime !== undefined && dueTime !== null ? dueTime : "";
-    
-    return requests.get(
-      `/invoice?name=${searchName}&page=${page}&limit=${limit}&createTime=${createT}&dueTime=${dueT}`
-    );
+  getAllInvoices: async (params = {}) => {
+    const {
+      name = '',
+      page = 1,
+      limit = 8,
+      createTime = '',
+      dueTime = '',
+      sort = '',
+    } = params;
+
+    const queryParams = new URLSearchParams({
+      name,
+      page: page.toString(),
+      limit: limit.toString(),
+      createTime,
+      dueTime,
+      ...(sort && { sort }),
+    }).toString();
+
+    return requests.get(`/invoice?${queryParams}`);
   },
 
   deleteInvoice: async (invoiceId) => {
@@ -57,6 +63,10 @@ const InvoiceServices = {
   deleteNote: async (id, noteId) => {
     const response = await requests.delete(`/invoice/${id}/notes/${noteId}`);
     return response;
+  },
+
+  getDashboardAmount: async () => {
+    return requests.get('/invoice/dashboard/amount');
   },
 };
 

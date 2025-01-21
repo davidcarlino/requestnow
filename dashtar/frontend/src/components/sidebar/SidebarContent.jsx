@@ -24,7 +24,6 @@ const SidebarContent = () => {
   };
 
   const routes = sidebar(state.adminInfo);
-  console.log("routes", routes);
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
       <a className=" text-gray-900 dark:text-gray-200" href="/dashboard">

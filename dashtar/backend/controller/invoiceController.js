@@ -2,6 +2,7 @@ const Invoice = require('../models/Invoice');
 const Event = require('../models/Event');
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose');
 
 const addInvoiceToEvent = async (req, res) => {
 	console.log("req", req.body)
@@ -185,6 +186,7 @@ const getAllInvoices = async (req, res) => {
     dueTime,
     createTime,
     name,
+    sort,
   } = req.query;
 
   const queryObject = {
@@ -211,10 +213,19 @@ const getAllInvoices = async (req, res) => {
 
   try {
     const totalDoc = await Invoice.countDocuments(queryObject);
-    const invoices = await Invoice.find(queryObject)
-      .sort({ createdAt: -1 })
+    
+    let query = Invoice.find(queryObject)
       .skip(skip)
       .limit(limits);
+
+    // Add sorting if provided
+    if (sort) {
+      query = query.sort(sort);
+    } else {
+      query = query.sort({ createdAt: -1 }); // Default sort
+    }
+
+    const invoices = await query;
 
     res.status(200).json({
       success: true,
@@ -342,6 +353,127 @@ const deleteNote = async (req, res) => {
   }
 };
 
+const getDashboardAmount = async (req, res) => {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const startOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+    const endOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+
+    // Convert string ID to ObjectId
+    const userId = new mongoose.Types.ObjectId(req.user._id);
+
+    // Get all amounts
+    const totalAmount = await Invoice.aggregate([
+      {
+        $match: { 
+          createdBy: userId  // Now matching with ObjectId
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          total: { $sum: "$amount" },
+          todayAmount: {
+            $sum: {
+              $cond: [
+                { 
+                  $and: [
+                    { $gte: ["$createdAt", today] },
+                    { $lt: ["$createdAt", new Date(today.getTime() + 24 * 60 * 60 * 1000)] }
+                  ]
+                },
+                "$amount",
+                0
+              ]
+            }
+          },
+          yesterdayAmount: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $gte: ["$createdAt", yesterday] },
+                    { $lt: ["$createdAt", today] }
+                  ]
+                },
+                "$amount",
+                0
+              ]
+            }
+          },
+          thisMonthAmount: {
+            $sum: {
+              $cond: [
+                { 
+                  $and: [
+                    { $gte: ["$createdAt", startOfMonth] },
+                    { $lt: ["$createdAt", new Date()] }
+                  ]
+                },
+                "$amount",
+                0
+              ]
+            }
+          },
+          lastMonthAmount: {
+            $sum: {
+              $cond: [
+                {
+                  $and: [
+                    { $gte: ["$createdAt", startOfLastMonth] },
+                    { $lt: ["$createdAt", startOfMonth] }
+                  ]
+                },
+                "$amount",
+                0
+              ]
+            }
+          }
+        }
+      }
+    ]);
+
+    // Add debug logging
+    console.log('User ID (ObjectId):', userId);
+    console.log('Today:', today);
+    console.log('Yesterday:', yesterday);
+    console.log('Start of Month:', startOfMonth);
+    console.log('Start of Last Month:', startOfLastMonth);
+    console.log('Aggregation Result:', totalAmount);
+
+    // Let's also log a sample invoice to check its structure
+    const sampleInvoice = await Invoice.findOne({ createdBy: userId });
+    console.log('Sample Invoice:', sampleInvoice);
+
+    // Check if there are any invoices before aggregation
+    const invoiceCount = await Invoice.countDocuments({ createdBy: userId });
+    console.log('Total invoices for user:', invoiceCount);
+
+    res.status(200).json({
+      success: true,
+      data: {
+        totalAmount: totalAmount[0]?.total || 0,
+        todayAmount: totalAmount[0]?.todayAmount || 0,
+        yesterdayAmount: totalAmount[0]?.yesterdayAmount || 0,
+        thisMonthAmount: totalAmount[0]?.thisMonthAmount || 0,
+        lastMonthAmount: totalAmount[0]?.lastMonthAmount || 0
+      }
+    });
+  } catch (error) {
+    console.error('Error in getDashboardAmount:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 module.exports = {
   addInvoiceToEvent,
   updateInvoice,
@@ -350,4 +482,5 @@ module.exports = {
   deleteInvoice,
   addNote,
   deleteNote,
+  getDashboardAmount,
 };

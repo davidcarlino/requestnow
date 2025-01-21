@@ -58,7 +58,7 @@ const MyInvoices = () => {
     InvoiceServices.getAllInvoices({
       dueTime: dueTime,
       createTime: createTime,
-      name: searchText,
+      name: searchText || "",
       page: currentPage,
       limit: resultsPerPage,
     })

@@ -12,7 +12,7 @@ i18n
       en: { translation: en },
       de: { translation: de },
     },
-    debug: true,
+    debug: false,
     fallbackLng: "en",
     // lag: "en",
     nonExplicitSupportedLngs: true,

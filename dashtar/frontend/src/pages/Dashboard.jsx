@@ -31,6 +31,7 @@ import PageTitle from "@/components/Typography/PageTitle";
 import { SidebarContext } from "@/context/SidebarContext";
 import OrderServices from "@/services/OrderServices";
 import AnimatedContent from "@/components/common/AnimatedContent";
+import InvoiceServices from "@/services/InvoiceServices";
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -71,6 +72,11 @@ const Dashboard = () => {
     OrderServices.getDashboardAmount
   );
 
+  const { data: invoiceDashboardData, loading: loadingInvoice } = useAsync(
+    InvoiceServices.getDashboardAmount
+  );
+
+  console.log("invoiceDashboardData", invoiceDashboardData)
   // console.log("dashboardOrderCount", dashboardOrderCount);
 
   const { dataTable, serviceData } = useFilter(dashboardRecentOrder?.orders);
@@ -243,55 +249,49 @@ const Dashboard = () => {
         <div className="grid gap-2 mb-8 xl:grid-cols-5 md:grid-cols-2">
           <CardItemTwo
             mode={mode}
-            title="Today Order"
-            title2="TodayOrder"
+            title="Today's Invoices"
+            title2="TodayInvoices"
             Icon={ImStack}
-            cash={todayCashPayment || 0}
-            card={todayCardPayment || 0}
-            credit={todayCreditPayment || 0}
-            price={todayOrderAmount || 0}
+            price={invoiceDashboardData?.data?.todayAmount || 0}
             className="text-white dark:text-emerald-100 bg-teal-600"
-            loading={loadingOrderAmount}
+            loading={loadingInvoice}
           />
 
           <CardItemTwo
             mode={mode}
-            title="Yesterday Order"
-            title2="YesterdayOrder"
+            title="Yesterday's Invoices"
+            title2="YesterdayInvoices"
             Icon={ImStack}
-            cash={yesterdayCashPayment || 0}
-            card={yesterdayCardPayment || 0}
-            credit={yesterdayCreditPayment || 0}
-            price={yesterdayOrderAmount || 0}
+            price={invoiceDashboardData?.data?.yesterdayAmount || 0}
             className="text-white dark:text-orange-100 bg-orange-400"
-            loading={loadingOrderAmount}
+            loading={loadingInvoice}
           />
 
           <CardItemTwo
             mode={mode}
-            title2="ThisMonth"
+            title2="ThisMonthInvoices"
             Icon={FiShoppingCart}
-            price={dashboardOrderAmount?.thisMonthlyOrderAmount || 0}
+            price={invoiceDashboardData?.data?.thisMonthAmount || 0}
             className="text-white dark:text-emerald-100 bg-blue-500"
-            loading={loadingOrderAmount}
+            loading={loadingInvoice}
           />
 
           <CardItemTwo
             mode={mode}
-            title2="LastMonth"
+            title2="LastMonthInvoices"
             Icon={ImCreditCard}
-            loading={loadingOrderAmount}
-            price={dashboardOrderAmount?.lastMonthOrderAmount || 0}
+            price={invoiceDashboardData?.data?.lastMonthAmount || 0}
             className="text-white dark:text-teal-100 bg-cyan-600"
+            loading={loadingInvoice}
           />
 
           <CardItemTwo
             mode={mode}
-            title2="AllTimeSales"
+            title2="TotalInvoices"
             Icon={ImCreditCard}
-            price={dashboardOrderAmount?.totalAmount || 0}
+            price={invoiceDashboardData?.data?.totalAmount || 0}
             className="text-white dark:text-emerald-100 bg-emerald-600"
-            loading={loadingOrderAmount}
+            loading={loadingInvoice}
           />
         </div>
 

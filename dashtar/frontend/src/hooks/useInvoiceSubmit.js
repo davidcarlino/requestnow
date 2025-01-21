@@ -42,20 +42,23 @@ const useInvoiceSubmit = (id, eventCode) => {
   // Function to get the last invoice number from existing invoices
   const getLastInvoiceNumber = async () => {
     try {
-      const response = await InvoiceServices.getAllInvoices();
-      const invoices = response.invoices || [];
+      // Only fetch if drawer is open and we're creating a new invoice (no id)
+      if (!isDrawerOpen || id) return;
+
+      const response = await InvoiceServices.getAllInvoices({
+        limit: 1,
+        sort: '-reference',
+      });
       
+      const invoices = response.invoices || [];
       if (invoices.length > 0) {
-        // Extract numbers from reference strings and find the highest one
-        const numbers = invoices.map(invoice => {
-          const match = invoice.reference.match(/INV-(\d+)/);
-          return match ? parseInt(match[1]) : 0;
-        });
-        const maxNumber = Math.max(...numbers);
-        setLastInvoiceNumber(maxNumber);
+        const match = invoices[0].reference?.match(/INV-(\d+)/);
+        const lastNumber = match ? parseInt(match[1]) : 0;
+        setLastInvoiceNumber(lastNumber);
       }
     } catch (error) {
       console.error('Error fetching last invoice number:', error);
+      setLastInvoiceNumber(0);
     }
   };
 
@@ -65,10 +68,12 @@ const useInvoiceSubmit = (id, eventCode) => {
     return `INV-${nextNumber}`;
   };
 
-  // Fetch last invoice number when component mounts
+  // Fetch last invoice number when drawer opens
   useEffect(() => {
-    getLastInvoiceNumber();
-  }, []);
+    if (isDrawerOpen && !id) {
+      getLastInvoiceNumber();
+    }
+  }, [isDrawerOpen, id]);
 
   const onSubmit = async (data, attachedFiles) => {
     try {

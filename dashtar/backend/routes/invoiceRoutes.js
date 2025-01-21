@@ -48,6 +48,7 @@ const {
   deleteInvoice,
   addNote,
   deleteNote,
+  getDashboardAmount,
 } = require('../controller/invoiceController');
 
 // Routes with authentication
@@ -73,5 +74,8 @@ router.post('/:id/notes', upload.array('files'), addNote);
 
 // Delete note from invoice
 router.delete('/:id/notes/:noteId', deleteNote);
+
+// Get dashboard amount
+router.get('/dashboard/amount', getDashboardAmount);
 
 module.exports = router;

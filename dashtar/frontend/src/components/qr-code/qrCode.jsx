@@ -2,7 +2,6 @@ import React from "react";
 import QRCode from "react-qr-code";
 
 const EventQrCode = ({event}) =>{
-  console.log("event", event)
   return (
     // <div style={{ height: "auto", margin: "0 auto", maxWidth: 125, width: "100%" }}>
       <QRCode
