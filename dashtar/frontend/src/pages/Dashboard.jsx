@@ -15,6 +15,7 @@ import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiCheck, FiRefreshCw, FiShoppingCart, FiTruck } from "react-icons/fi";
 import { ImCreditCard, ImStack } from "react-icons/im";
+import { FiCalendar } from "react-icons/fi";
 
 //internal import
 import useAsync from "@/hooks/useAsync";
@@ -246,55 +247,40 @@ const Dashboard = () => {
       <PageTitle>{t("DashboardOverview")}</PageTitle>
 
       <AnimatedContent>
-        <div className="grid gap-2 mb-8 xl:grid-cols-5 md:grid-cols-2">
+        <div className="grid gap-2 mb-8 xl:grid-cols-3 md:grid-cols-2">
           <CardItemTwo
             mode={mode}
-            title="Today's Invoices"
-            title2="TodayInvoices"
-            Icon={ImStack}
+            title="Total Events"
+            title2="Total Events"
+            Icon={FiCalendar}
             price={invoiceDashboardData?.data?.todayAmount || 0}
-            className="text-white dark:text-emerald-100 bg-teal-600"
+            className="text-white dark:text-emerald-100 bg-red-700"
             loading={loadingInvoice}
           />
 
-          <CardItemTwo
-            mode={mode}
-            title="Yesterday's Invoices"
-            title2="YesterdayInvoices"
-            Icon={ImStack}
-            price={invoiceDashboardData?.data?.yesterdayAmount || 0}
-            className="text-white dark:text-orange-100 bg-orange-400"
-            loading={loadingInvoice}
-          />
 
           <CardItemTwo
             mode={mode}
-            title2="ThisMonthInvoices"
+            title2="This Month's Invoices"
             Icon={FiShoppingCart}
             price={invoiceDashboardData?.data?.thisMonthAmount || 0}
-            className="text-white dark:text-emerald-100 bg-blue-500"
+            className="text-white dark:text-emerald-100 bg-blue-700"
             loading={loadingInvoice}
           />
 
-          <CardItemTwo
-            mode={mode}
-            title2="LastMonthInvoices"
-            Icon={ImCreditCard}
-            price={invoiceDashboardData?.data?.lastMonthAmount || 0}
-            className="text-white dark:text-teal-100 bg-cyan-600"
-            loading={loadingInvoice}
-          />
 
           <CardItemTwo
             mode={mode}
-            title2="TotalInvoices"
+            title2="Total All Invoices"
             Icon={ImCreditCard}
             price={invoiceDashboardData?.data?.totalAmount || 0}
-            className="text-white dark:text-emerald-100 bg-emerald-600"
+            className="text-white dark:text-emerald-100 bg-red-700"
             loading={loadingInvoice}
           />
         </div>
 
+
+  {/*
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <CardItem
             title="Total Order"
@@ -327,30 +313,12 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 my-8">
-          <ChartCard
-            mode={mode}
-            loading={loadingOrderAmount}
-            title={t("WeeklySales")}
-          >
-            <LineChart salesReport={salesReport} />
-          </ChartCard>
+          */}
 
-          <ChartCard
-            mode={mode}
-            loading={loadingBestSellerProduct}
-            title={t("BestSellingProducts")}
-          >
-            <PieChart data={bestSellerProductChart} />
-          </ChartCard>
-        </div>
-      </AnimatedContent>
-
-      <PageTitle>{t("RecentOrder")}</PageTitle>
-
-      {/* <Loading loading={loading} /> */}
-
-      {loadingRecentOrder ? (
+        <div className="grid gap-1  my-1">
+         
+        <PageTitle>{t("Upcoming Events")}</PageTitle>
+        {loadingRecentOrder ? (
         <TableLoading row={5} col={4} />
       ) : error ? (
         <span className="text-center mx-auto text-red-500">{error}</span>
@@ -384,6 +352,31 @@ const Dashboard = () => {
       ) : (
         <NotFound title="Sorry, There are no Events right now." />
       )}
+         
+         
+         
+         
+         
+         
+         
+         
+          <ChartCard
+            mode={mode}
+            loading={loadingOrderAmount}
+            title={t("WeeklySales")}
+          >
+            <LineChart salesReport={salesReport} />
+          </ChartCard>
+
+          
+        </div>
+      </AnimatedContent>
+
+  
+
+      {/* <Loading loading={loading} /> */}
+
+    
     </>
   );
 };
