@@ -362,8 +362,6 @@ const getDashboardAmount = async (req, res) => {
     yesterday.setDate(yesterday.getDate() - 1);
 
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    const startOfLastMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-    const endOfLastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
 
     // Convert string ID to ObjectId
     const userId = new mongoose.Types.ObjectId(req.user._id);
@@ -379,34 +377,6 @@ const getDashboardAmount = async (req, res) => {
         $group: {
           _id: null,
           total: { $sum: "$amount" },
-          todayAmount: {
-            $sum: {
-              $cond: [
-                { 
-                  $and: [
-                    { $gte: ["$createdAt", today] },
-                    { $lt: ["$createdAt", new Date(today.getTime() + 24 * 60 * 60 * 1000)] }
-                  ]
-                },
-                "$amount",
-                0
-              ]
-            }
-          },
-          yesterdayAmount: {
-            $sum: {
-              $cond: [
-                {
-                  $and: [
-                    { $gte: ["$createdAt", yesterday] },
-                    { $lt: ["$createdAt", today] }
-                  ]
-                },
-                "$amount",
-                0
-              ]
-            }
-          },
           thisMonthAmount: {
             $sum: {
               $cond: [
@@ -421,35 +391,9 @@ const getDashboardAmount = async (req, res) => {
               ]
             }
           },
-          lastMonthAmount: {
-            $sum: {
-              $cond: [
-                {
-                  $and: [
-                    { $gte: ["$createdAt", startOfLastMonth] },
-                    { $lt: ["$createdAt", startOfMonth] }
-                  ]
-                },
-                "$amount",
-                0
-              ]
-            }
-          }
         }
       }
     ]);
-
-    // Add debug logging
-    console.log('User ID (ObjectId):', userId);
-    console.log('Today:', today);
-    console.log('Yesterday:', yesterday);
-    console.log('Start of Month:', startOfMonth);
-    console.log('Start of Last Month:', startOfLastMonth);
-    console.log('Aggregation Result:', totalAmount);
-
-    // Let's also log a sample invoice to check its structure
-    const sampleInvoice = await Invoice.findOne({ createdBy: userId });
-    console.log('Sample Invoice:', sampleInvoice);
 
     // Check if there are any invoices before aggregation
     const invoiceCount = await Invoice.countDocuments({ createdBy: userId });
@@ -459,10 +403,7 @@ const getDashboardAmount = async (req, res) => {
       success: true,
       data: {
         totalAmount: totalAmount[0]?.total || 0,
-        todayAmount: totalAmount[0]?.todayAmount || 0,
-        yesterdayAmount: totalAmount[0]?.yesterdayAmount || 0,
         thisMonthAmount: totalAmount[0]?.thisMonthAmount || 0,
-        lastMonthAmount: totalAmount[0]?.lastMonthAmount || 0
       }
     });
   } catch (error) {

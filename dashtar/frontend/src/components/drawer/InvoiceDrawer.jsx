@@ -32,6 +32,8 @@ const InvoiceDrawer = ({ id, selectedFile, eventCode }) => {
   const [attachedFiles, setAttachedFiles] = useState([]);
   const fileInputRef = useRef(null);
 
+  const today = new Date().toISOString().split('T')[0];
+
   useEffect(() => {
     console.log("resData", resData)
     console.log("selectedFile", selectedFile)
@@ -205,6 +207,7 @@ const InvoiceDrawer = ({ id, selectedFile, eventCode }) => {
                       label="Created Date"
                       name="createdDate"
                       type="date"
+                      min={today}
                       className="border text-sm focus:ring-2 focus:ring-blue-500 block w-full bg-gray-50 dark:bg-gray-700"
                     />
                     <Error errorName={errors?.createdDate} />
@@ -213,12 +216,14 @@ const InvoiceDrawer = ({ id, selectedFile, eventCode }) => {
                 <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <LabelArea label="Due Date" />
                   <div className="col-span-8 sm:col-span-4">
-                    <InputArea
-                      required={true}
-                      register={register}
+                    <Input
+                      {...register('dueDate', {
+                        required: "Due Date is required",
+                      })}
                       label="Due Date"
                       name="dueDate"
                       type="date"
+                      min={today}
                     />
                     <Error errorName={errors?.dueDate} />
                   </div>
