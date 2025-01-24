@@ -9,6 +9,7 @@ import {
   FiTarget,
   FiMapPin,
   FiDollarSign,
+  FiCalendar
 } from "react-icons/fi";
 
 
@@ -33,6 +34,11 @@ const sidebar = (adminInfo) => {
       path: "/dashboard",
       icon: FiGrid,
       name: "Dashboard",
+    },
+    {
+      path: "/calendar",
+      icon: FiCalendar,
+      name: "My Calendar",
     },
     {
       path: "/leads",

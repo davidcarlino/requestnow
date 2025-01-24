@@ -1536,3 +1536,137 @@ input[type="number"]::-webkit-outer-spin-button {
   position: relative !important;
   z-index: 9999 !important;
 }
+
+/* Calendar Styles */
+.calendar-container {
+  width: 100%;
+}
+
+.fc {
+  width: 100%;
+}
+
+.fc-daygrid-day {
+  min-width: 80px !important;
+}
+
+.fc-daygrid-day-frame {
+  min-height: 80px !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.fc-header-toolbar {
+  display: flex;
+  justify-content: center !important;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 1em !important;
+}
+
+.dark .fc-col-header-cell-cushion {
+  color: #000 !important;
+}
+
+.fc-toolbar-chunk {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fc-prev-button, .fc-next-button {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 8px !important;
+}
+
+.fc-prev-button:hover, .fc-next-button:hover {
+  background-color: rgba(0,0,0,0.1) !important;
+}
+
+.fc-toolbar-title {
+  font-size: 1.2em !important;
+  margin: 0 16px !important;
+}
+
+.fc .fc-day-today {
+  background-color: transparent !important;
+}
+
+.fc .fc-day-today .fc-daygrid-day-number {
+  background-color: #3788d8;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px;
+}
+
+.fc-daygrid-day-events {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  order: -1;
+}
+
+.fc-daygrid-event {
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: right;
+}
+
+.fc-event-title {
+  font-size: 0.8em;
+  padding: 1px 3px;
+  background-color: #3788d8;
+  color: white;
+  border-radius: 3px;
+  display: inline-block;
+  max-width: 95%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dark .fc-prev-button, .dark .fc-next-button {
+  color: #fff !important;
+}
+
+.dark .fc-prev-button:hover, .dark .fc-next-button:hover {
+  background-color: rgba(255,255,255,0.1) !important;
+}
+
+@media (max-width: 1024px) {
+  .fc-daygrid-day {
+    min-width: 70px !important;
+  }
+  .fc-daygrid-day-frame {
+    min-height: 70px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .fc-daygrid-day {
+    min-width: 60px !important;
+  }
+  .fc-daygrid-day-frame {
+    min-height: 60px !important;
+  }
+  .fc-toolbar-title {
+    font-size: 1.1em !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .fc-daygrid-day {
+    min-width: 50px !important;
+  }
+  .fc-daygrid-day-frame {
+    min-height: 50px !important;
+  }
+  .fc-event-title {
+    font-size: 0.7em;
+  }
+}
