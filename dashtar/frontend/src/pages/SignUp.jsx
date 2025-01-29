@@ -3,6 +3,14 @@ import { Link } from "react-router-dom";
 import { Input, Label, Button } from "@windmill/react-ui";
 import { ImFacebook, ImAppleinc, ImGoogle } from "react-icons/im";
 import { useTranslation } from "react-i18next";
+import { GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie';
+import { useHistory } from "react-router-dom";
+import { useContext } from "react";
+import { AdminContext } from "@/context/AdminContext";
+import AdminServices from "@/services/AdminServices";
+import { notifyError, notifySuccess } from "@/utils/toast";
 
 //internal import
 import Error from "@/components/form/others/Error";
@@ -18,6 +26,75 @@ const SignUp = () => {
   const { t } = useTranslation();
   const { onSubmit, register, handleSubmit, errors, loading } =
     useLoginSubmit();
+  const { dispatch } = useContext(AdminContext);
+  const history = useHistory();
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    const cookieTimeOut = 0.5;
+    try {
+      const decoded = jwtDecode(credentialResponse.credential);
+      // Generate a random password
+      const generatePassword = () => {
+        const length = 12;
+        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+        let password = "";
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * charset.length);
+          password += charset[randomIndex];
+        }
+        return password;
+      };
+      const password = generatePassword();
+
+      try {
+        const staffResponse = await AdminServices.addStaff({ 
+          name: {
+            firstName: decoded.given_name || decoded.name.split(' ')[0],
+            lastName: decoded.family_name || decoded.name.split(' ')[1] || ''
+          },
+          email: decoded.email,
+          password: password,
+          role: "Admin",
+          image: decoded.picture,
+          phone: '',
+        });
+
+        if (staffResponse) {
+          if (staffResponse.requireVerification) {
+            notifySuccess("Registration successful! Please check your email to verify your account.");
+            history.replace("/login");
+          } else {
+            notifySuccess("Register Success!");
+            // Now try logging in with the new account
+            const loginResponse = await AdminServices.loginAdmin({
+              email: decoded.email,
+              password: password,
+              isGoogleLogin: true
+            });
+            
+            if (loginResponse) {
+              dispatch({ type: "USER_LOGIN", payload: loginResponse });
+              Cookies.set("adminInfo", JSON.stringify(loginResponse), {
+                expires: cookieTimeOut,
+                sameSite: "None",
+                secure: true,
+              });
+              history.replace("/");
+            }
+          }
+        }
+      } catch (error) {
+        notifyError(error?.response?.data?.message || error?.message);
+      }
+    } catch (error) {
+      console.error('Google signup error:', error);
+      notifyError('Failed to process Google signup');
+    }
+  };
+
+  const handleGoogleError = () => {
+    console.error('Google signup failed');
+  };
 
   return (
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
@@ -108,19 +185,21 @@ const SignUp = () => {
 
               <hr className="my-10" />
 
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                theme="outline"
+                size="large"
+                width="100%"
+                text="signup_with"
+              />
+
               <button
                 disabled
                 className="text-sm inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center rounded-md focus:outline-none text-gray-700 bg-gray-100 shadow-sm my-2 md:px-2 lg:px-3 py-4 md:py-3.5 lg:py-4 hover:text-white hover:bg-blue-600 h-11 md:h-12 w-full mr-2"
               >
                 <ImAppleinc className="w-4 h-4 mr-2" />{" "}
                 <span className="ml-2"> {t("LoginWithApple")} </span>
-              </button>
-              <button
-                disabled
-                className="text-sm inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center rounded-md focus:outline-none text-gray-700 bg-gray-100 shadow-sm my-2  md:px-2 lg:px-3 py-4 md:py-3.5 lg:py-4 hover:text-white hover:bg-red-500 h-11 md:h-12 w-full"
-              >
-                <ImGoogle className="w-4 h-4 mr-2" />{" "}
-                <span className="ml-2">{t("LoginWithGoogle")}</span>
               </button>
 
               <p className="mt-4">
