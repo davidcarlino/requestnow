@@ -168,19 +168,13 @@ const EventTable = ({ isCheck, events, setIsCheck, setEvents }) => {
               </div>
             </TableCell>
 
-            <TableCell>
-              <span className="text-sm">
-                {event?.description}
-              </span>
-            </TableCell>
+           
 
             <TableCell>
               {showDateTimeFormat(event?.startTime)}
             </TableCell>
 
-            <TableCell>
-              {showDateTimeFormat(event?.endTime)}
-            </TableCell>
+            
 
             <TableCell>
               <span className="text-sm">
