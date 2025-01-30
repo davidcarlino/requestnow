@@ -968,6 +968,7 @@
   "AddEventdescription": "Add the details of your upcoming event.",
   "evntName": "Name",
   "evntDescription": "Description",
+  "evntStatus": "Status",
   "evntStartTime": "Start Time",
   "evntEndTime": "End Time",
   "evntAction": "Action",

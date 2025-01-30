@@ -82,6 +82,7 @@ const getAllEvents = async (req, res) => {
       .select("_id name address description startTime endTime createdAt updatedAt")
       .populate('venue', 'address')   
       .populate('invoices')
+      .populate('status')
       .sort({ updatedAt: -1 })
       .skip(skip)
       .limit(limits);
@@ -107,7 +108,8 @@ const getEventById = async (req, res) => {
     })
     .populate('songRequests')
     .populate('venue')
-    .populate('invoices');
+    .populate('invoices')
+    .populate('status');
 
     if (!event) {
       return res.status(404).send({
@@ -127,7 +129,7 @@ const updateEvents = async (req, res) => {
   try {
     const event = await Event.findOne({
       _id: req.params.id,
-      createdBy: req.user._id  // Only allow updating own events
+      createdBy: req.user._id
     });
     
     if (!event) {
@@ -136,18 +138,23 @@ const updateEvents = async (req, res) => {
       });
     }
 
-    const venue = await Venue.findById(req.body.venueId);
-    if (venue) {
-      venue.name = req.body.location;
-      venue.address = req.body.location;
-      await venue.save();
+    // Handle venue updates if venueId is provided
+    if (req.body.venueId) {
+      const venue = await Venue.findById(req.body.venueId);
+      if (venue) {
+        venue.name = req.body.location;
+        venue.address = req.body.location;
+        await venue.save();
+      }
+      event.venue = venue._id;
     }
 
-    event.name = req.body.name;
-    event.description = req.body.description;
-    event.startTime = req.body.startTime;
-    event.endTime = req.body.endTime;
-    event.venue = venue._id;
+    // Update event fields
+    if (req.body.name) event.name = req.body.name;
+    if (req.body.description) event.description = req.body.description;
+    if (req.body.startTime) event.startTime = req.body.startTime;
+    if (req.body.endTime) event.endTime = req.body.endTime;
+    if (req.body.status) event.status = req.body.status;
 
     await event.save();
     res.send({ message: "Event Updated Successfully!" });

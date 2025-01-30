@@ -8,7 +8,7 @@ import {
 } from "@windmill/react-ui";
 import { useParams } from "react-router";;
 import { useTranslation } from 'react-i18next'; // Add this line
-import { FiCheck, FiRefreshCw, FiShoppingCart, FiTruck } from "react-icons/fi";
+import { FiCheck, FiRefreshCw, FiShoppingCart, FiTruck, FiClock, FiSend, FiPause, FiDollarSign, FiCheckCircle, FiChevronDown } from "react-icons/fi";
 
 //internal import
 import useAsync from "@/hooks/useAsync";
@@ -35,12 +35,67 @@ const EventDetails = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeDrawer, setActiveDrawer] = useState('event');
   const [isQRPrintPopupOpen, setIsQRPrintPopupOpen] = useState(false);
+  const [eventData, setEventData] = useState(null);
+
+  console.log("data", data);
+  const statusConfig = [
+    { 
+      value: 'To Quote',
+      icon: <FiClock className="text-yellow-700 dark:text-yellow-100" />,
+      color: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-700 dark:text-yellow-100',
+      iconColor: 'text-yellow-700 dark:text-yellow-100'
+    },
+    { 
+      value: 'Quote Sent',
+      icon: <FiSend className="text-blue-700 dark:text-blue-100" />,
+      color: 'bg-blue-100 text-blue-700 dark:bg-blue-700 dark:text-blue-100',
+      iconColor: 'text-blue-700 dark:text-blue-100'
+    },
+    { 
+      value: 'On Hold',
+      icon: <FiPause className="text-gray-700 dark:text-gray-100" />,
+      color: 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-100',
+      iconColor: 'text-gray-700 dark:text-gray-100'
+    },
+    { 
+      value: 'Awaiting Deposit',
+      icon: <FiDollarSign className="text-purple-700 dark:text-purple-100" />,
+      color: 'bg-purple-100 text-purple-700 dark:bg-purple-700 dark:text-purple-100',
+      iconColor: 'text-purple-700 dark:text-purple-100'
+    },
+    { 
+      value: 'Booked',
+      icon: <FiCheckCircle className="text-green-700 dark:text-green-100" />,
+      color: 'bg-green-100 text-green-700 dark:bg-green-700 dark:text-green-100',
+      iconColor: 'text-green-700 dark:text-green-100'
+    }
+  ];
+
+  const getStatusColor = (status) => {
+    return statusConfig.find(s => s.value === status)?.color || statusConfig[0].color;
+  };
+
+  const getStatusIcon = (status) => {
+    return statusConfig.find(s => s.value === status)?.icon || statusConfig[0].icon;
+  };
 
   useEffect(() => {
-    if (data?.songRequests) {
-      setSongRequests(data.songRequests);
+    if (data) {
+      setEventData(data);
     }
   }, [data]);
+
+  const handleStatusChange = async (newStatus) => {
+    try {
+      await EventServices.updateEvents(id, { status: newStatus });
+      setEventData(prevData => ({
+        ...prevData,
+        status: newStatus
+      }));
+    } catch (err) {
+      console.error('Error updating status:', err);
+    }
+  };
 
   const refreshSongs = async () => {
     try {
@@ -131,61 +186,104 @@ const EventDetails = () => {
               <div className="inline-block overflow-y-auto h-full align-middle transition-all transform">
                 <div className="flex flex-col lg:flex-row md:flex-row w-full overflow-hidden">
                   <div className="w-full flex flex-col p-5 md:p-8 text-left">
-                    <div className="mb-5 block">
-                      <h2 className="text-heading text-lg md:text-xl lg:text-2xl uppercase font-serif font-semibold font-serif dark:text-[aliceblue]">
-                        {data?.name}
-                      </h2>
-                    </div>
-                    <div className="font-serif font-bold dark:text-gray-400">
-                      <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                        {"Address"} :{" "}
-                        <span className="font-bold text-gray-500 dark:text-gray-500">
-                          {data.venue?.address}
-                        </span>
-                      </p>
-                    </div>
-                    <div className="font-serif font-bold dark:text-gray-400">
-                      <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                        {"Description"} :{" "}
-                        <span className="font-bold text-gray-500 dark:text-gray-500">
-                          {data?.description}
-                        </span>
-                      </p>
-                    </div>
-                    <div className="font-serif font-bold dark:text-gray-400">
-                      <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                        {"Date"} :{" "}
-                        <span className="font-bold text-gray-500 dark:text-gray-500">
-                          {showDateFormat(data?.startTime)} - {showDateFormat(data?.endTime)}
-                        </span>
-                      </p>
-                    </div>
-                    <div className="font-serif font-bold dark:text-gray-400">
-                      <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                        {"Time"} :{" "}
-                        <span className="font-bold text-gray-500 dark:text-gray-500">
-                          {showTimeFormat(data?.startTime, "h:mm A")} - {showTimeFormat(data?.endTime, "h:mm A")}
-                        </span>
-                      </p>
-                    </div>
-                    <div className="font-serif font-bold dark:text-gray-400">
-                      <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                        {"Category"} :{" "}
-                        <span className="font-bold text-gray-500 dark:text-gray-500">
-                          {data?.category}
-                        </span>
-                      </p>
-                    </div>
-                    <div className="font-serif font-bold dark:text-gray-400">
-                      <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
-                        {"Custom Category"} :{" "}
-                        <span className="font-bold text-gray-500 dark:text-gray-500">
-                          {data?.category}
-                        </span>
-                      </p>
+                    <div className="flex justify-between items-start w-full">
+                      <div className="flex flex-col flex-grow">
+                        <h2 className="text-heading text-lg md:text-xl lg:text-2xl uppercase font-serif font-semibold dark:text-[aliceblue] truncate mb-5">
+                          {data?.name}
+                        </h2>
+                        
+                        <div className="font-serif font-bold dark:text-gray-400">
+                          <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
+                            {"Address"} :{" "}
+                            <span className="font-bold text-gray-500 dark:text-gray-500">
+                              {data.venue?.address}
+                            </span>
+                          </p>
+                        </div>
+                        
+                        <div className="font-serif font-bold dark:text-gray-400">
+                          <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
+                            {"Description"} :{" "}
+                            <span className="font-bold text-gray-500 dark:text-gray-500">
+                              {data?.description}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="font-serif font-bold dark:text-gray-400">
+                          <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
+                            {"Date"} :{" "}
+                            <span className="font-bold text-gray-500 dark:text-gray-500">
+                              {showDateFormat(data?.startTime)} - {showDateFormat(data?.endTime)}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="font-serif font-bold dark:text-gray-400">
+                          <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
+                            {"Time"} :{" "}
+                            <span className="font-bold text-gray-500 dark:text-gray-500">
+                              {showTimeFormat(data?.startTime, "h:mm A")} - {showTimeFormat(data?.endTime, "h:mm A")}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="font-serif font-bold dark:text-gray-400">
+                          <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
+                            {"Category"} :{" "}
+                            <span className="font-bold text-gray-500 dark:text-gray-500">
+                              {data?.category}
+                            </span>
+                          </p>
+                        </div>
+                        <div className="font-serif font-bold dark:text-gray-400">
+                          <p className="font-medium p-1 text-gray-500 dark:text-gray-400 text-sm">
+                            {"Custom Category"} :{" "}
+                            <span className="font-bold text-gray-500 dark:text-gray-500">
+                              {data?.category}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="relative w-48 flex-shrink-0 ml-16">
+                        <select 
+                          className={`
+                            ${getStatusColor(eventData?.status)}
+                            w-full
+                            pl-9  
+                            pr-8 
+                            py-2 
+                            rounded-lg
+                            font-semibold
+                            text-sm
+                            cursor-pointer
+                            focus:outline-none
+                            appearance-none
+                          `}
+                          value={eventData?.status}
+                          onChange={(e) => handleStatusChange(e.target.value)}
+                        >
+                          {statusConfig.map(({ value }) => (
+                            <option 
+                              key={value} 
+                              value={value}
+                              className="text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800"
+                            >
+                              {value}
+                            </option>
+                          ))}
+                        </select>
+                        <div className="pointer-events-none absolute left-2.5 top-1/2 transform -translate-y-1/2">
+                          {getStatusIcon(eventData?.status)}
+                        </div>
+                        <div className="pointer-events-none absolute right-1 top-1/2 transform -translate-y-1/2">
+                          <FiChevronDown className={`w-4 h-4 ${
+                            statusConfig.find(s => s.value === eventData?.status)?.iconColor || statusConfig[0].iconColor
+                          }`} />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
+                
               </div>
               <div className="grid gap-1 md:grid-cols-1 xl:grid-cols-1">
                 <Card className="flex h-full">

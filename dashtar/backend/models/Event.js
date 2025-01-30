@@ -77,8 +77,9 @@ const eventSchema = new mongoose.Schema(
       required: false
     }],
     status: { 
-      type: Boolean, 
-      default: false 
+      type: String,
+      enum: ['To Quote', 'Quote Sent', 'On Hold', 'Awaiting Deposit', 'Booked'],
+      default: 'To Quote'
     },
     eventCode: { 
       type: String, 

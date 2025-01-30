@@ -26,8 +26,7 @@ const EventServices = {
   },
 
   updateEvents: async (id, body, venueId) => {
-    console.log("venueId", venueId)
-    const updatedBody = { ...body, venueId };
+    const updatedBody = venueId ? { ...body, venueId } : body;
     return requests.put(`/event/${id}`, updatedBody);
   },
 
